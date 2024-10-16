@@ -1,0 +1,31 @@
+<!-- ===팝업 영역=== -->
+<div id="popupBackground" class="popupBackground"></div>
+<section id="popupArea" class="popupArea">
+    <%- include( popupContent ) %>
+</section>
+
+<script>
+    const closePopup = document.getElementById("closePopup");
+    if (closePopup !== null) {
+        closePopup.style = "cursor: pointer;";
+        closePopup.addEventListener("click", () => {
+            //document.getElementById("popupArea").style.display = "none";
+            history.back();
+        });
+    }
+</script>
+
+<style>
+    .popupBackground {
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .popupContent {
+        padding: 0;
+    }
+</style>

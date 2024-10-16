@@ -1,0 +1,30 @@
+<section class="progressSidebar">
+    <div id="stepSelectMovie" class="progressSettings remainingStep"><span class="stepLabel">영화<br>선택</span></div>
+    <div id="stepSelectTime" class="progressSettings remainingStep"><span class="stepLabel">시간<br>선택</span></div>
+    <div id="stepSelectSeat" class="progressSettings remainingStep"><span class="stepLabel">좌석<br>선택</span></div>
+    <div id="stepPayment" class="progressSettings remainingStep paymentStep"><span class="stepLabel">결제</span></div>
+</section>
+
+<script>
+    const currentPage = new URL(window.location.href).pathname;
+
+    const pages = {
+        "/movie_selection": "stepSelectMovie",
+        "/select_movie_time": "stepSelectTime",
+        "/select_headcount": "stepSelectTime",
+        "/select_seat": "stepSelectSeat",
+        "/payment": "stepPayment",
+        "/earn_point": "stepPayment",
+        "/point_confirmation": "stepPayment",
+        "/input_point": "stepPayment"
+    };
+
+    const updateSideBar = ( page ) => {
+        document.getElementById( page ).classList.replace( "remainingStep", "completedStep" );
+    }
+
+    ( pages[currentPage] ) && ( updateSideBar( pages[currentPage] ) );
+    
+
+
+</script>

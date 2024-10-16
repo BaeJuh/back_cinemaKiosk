@@ -1,0 +1,547 @@
+<section class="seatSelectArea">
+    <section class="sectionTop">
+        <div id="ticketCountArea" class="ticketCountArea">
+            <button id="adultCountMinusBtn">-</button>성인<span id="adultCount">0</span><button
+                id="adultCountPlusBtn">+</button>
+            <button id="youthCountMinusBtn">-</button>청소년<span id="youthCount">0</span><button
+                id="youthCountPlusBtn">+</button>
+            <button id="specialCountMinusBtn">-</button>우대<span id="specialCount">0</span><button
+                id="specialCountPlusBtn">+</button>
+        </div>
+
+    </section>
+
+    <section class="sectionMiddle">
+        <p class="screen">screen</p>
+    </section>
+
+    <section id="sectionBottom" class="sectionBottom">
+        <div class="seatsArea">
+            <empty></empty>
+            <input id="A1" type="checkbox" class="seat-checkbox">
+            <label for="A1">A1</label>
+
+            <input id="A2" type="checkbox" class="seat-checkbox">
+            <label for="A2">A2</label>
+
+            <input id="A3" type="checkbox" class="seat-checkbox">
+            <label for="A3">A3</label>
+
+            <input id="A4" type="checkbox" class="seat-checkbox">
+            <label for="A4">A4</label>
+
+            <input id="A5" type="checkbox" class="seat-checkbox">
+            <label for="A5">A5</label>
+
+            <input id="A6" type="checkbox" class="seat-checkbox">
+            <label for="A6">A6</label>
+
+            <input id="A7" type="checkbox" class="seat-checkbox">
+            <label for="A7">A7</label>
+
+            <input id="A8" type="checkbox" class="seat-checkbox">
+            <label for="A8">A8</label>
+            <empty></empty>
+
+        </div>
+        <div class="seatsArea">
+            <input id="B1" type="checkbox" class="seat-checkbox">
+            <label for="B1">B1</label>
+
+            <input id="B2" type="checkbox" class="seat-checkbox">
+            <label for="B2">B2</label>
+
+            <input id="B3" type="checkbox" class="seat-checkbox">
+            <label for="B3">B3</label>
+
+            <input id="B4" type="checkbox" class="seat-checkbox">
+            <label for="B4">B4</label>
+            <empty></empty>
+            <empty></empty>
+
+            <input id="B5" type="checkbox" class="seat-checkbox">
+            <label for="B5">B5</label>
+
+            <input id="B6" type="checkbox" class="seat-checkbox">
+            <label for="B6">B6</label>
+
+            <input id="B7" type="checkbox" class="seat-checkbox">
+            <label for="B7">B7</label>
+
+            <input id="B8" type="checkbox" class="seat-checkbox">
+            <label for="B8">B8</label>
+
+        </div>
+        <div class="seatsArea">
+            <input id="C1" type="checkbox" class="seat-checkbox">
+            <label for="C1">C1</label>
+
+            <input id="C2" type="checkbox" class="seat-checkbox">
+            <label for="C2">C2</label>
+
+            <input id="C3" type="checkbox" class="seat-checkbox">
+            <label for="C3">C3</label>
+
+            <input id="C4" type="checkbox" class="seat-checkbox">
+            <label for="C4">C4</label>
+            <empty></empty>
+            <empty></empty>
+
+            <input id="C5" type="checkbox" class="seat-checkbox">
+            <label for="C5">C5</label>
+
+            <input id="C6" type="checkbox" class="seat-checkbox">
+            <label for="C6">C6</label>
+
+            <input id="C7" type="checkbox" class="seat-checkbox">
+            <label for="C7">C7</label>
+
+            <input id="C8" type="checkbox" class="seat-checkbox">
+            <label for="C8">C8</label>
+        </div>
+
+        <div class="seatsArea">
+            <input id="D1" type="checkbox" class="seat-checkbox">
+            <label for="D1">D1</label>
+
+            <input id="D2" type="checkbox" class="seat-checkbox">
+            <label for="D2">D2</label>
+
+            <input id="D3" type="checkbox" class="seat-checkbox">
+            <label for="D3">D3</label>
+
+            <input id="D4" type="checkbox" class="seat-checkbox">
+            <label for="D4">D4</label>
+            <empty></empty>
+            <empty></empty>
+
+            <input id="D5" type="checkbox" class="seat-checkbox">
+            <label for="D5">D5</label>
+
+            <input id="D6" type="checkbox" class="seat-checkbox">
+            <label for="D6">D6</label>
+
+            <input id="D7" type="checkbox" class="seat-checkbox">
+            <label for="D7">D7</label>
+
+            <input id="D8" type="checkbox" class="seat-checkbox">
+            <label for="D8">D8</label>
+
+        </div>
+        <div class="seatsArea">
+            <input id="E1" type="checkbox" class="seat-checkbox">
+            <label for="E1">E1</label>
+
+            <input id="E2" type="checkbox" class="seat-checkbox">
+            <label for="E2">E2</label>
+
+            <input id="E3" type="checkbox" class="seat-checkbox">
+            <label for="E3">E3</label>
+
+            <input id="E4" type="checkbox" class="seat-checkbox">
+            <label for="E4">E4</label>
+            <empty></empty>
+            <empty></empty>
+
+            <input id="E5" type="checkbox" class="seat-checkbox">
+            <label for="E5">E5</label>
+
+            <input id="E6" type="checkbox" class="seat-checkbox">
+            <label for="E6">E6</label>
+
+            <input id="E7" type="checkbox" class="seat-checkbox">
+            <label for="E7">E7</label>
+
+            <input id="E8" type="checkbox" class="seat-checkbox">
+            <label for="E8">E8</label>
+        </div>
+
+        <div class="seatImgBoxAll">
+            <div class="seatImgBox selectedSeat"></div>
+            <p>선택좌석</p>
+            <div class="seatImgBox selectable"></div>
+            <p>선택가능</p>
+            <div class="seatImgBox notSelectable"></div>
+            <p>선택불가</p>
+        </div>
+
+        <button id="choosenSeat" class="chosenBtn disalbledBtn">선택완료</button>
+
+    </section>
+</section>
+
+<script>
+    // 임시 데이터
+    procedureSeatSelection = (DbValue) => {
+        // const DbValue = [
+        //     { showtime: '11:00', theather: 'A관', seat_name: 'A1', reservation_status: true },
+        //     { showtime: '11:00', theather: 'A관', seat_name: 'B1', reservation_status: true },
+        //     { showtime: '11:00', theather: 'A관', seat_name: 'C1', reservation_status: true },
+        //     { showtime: '11:00', theather: 'A관', seat_name: 'D1', reservation_status: true },
+        //     { showtime: '11:00', theather: 'A관', seat_name: 'E1', reservation_status: true },
+        // ];
+
+        // 예약된 자석 확인
+        DbValue.forEach((item, index) => {
+            const label = document.querySelector(`label[for="${item.seat_name}"]`);
+            label.classList.add("reservationSeat");
+        })
+
+        // 보내져야하는 데이터
+        const headCount = {
+            adult: 0,
+            youth: 0,
+            special: 0,
+            seatCount: 0,
+            reservationSeat: []
+        }
+
+        const queryData = <%- JSON.stringify(queryData) %>;
+        const countDom = {} // dom id 객체
+
+        const applyQuery = (headCount = headCount, queryData = queryData) => {
+            for (const clientType in headCount) {
+                if (clientType in queryData) {
+                    headCount[clientType] = Number(queryData[clientType]);
+                }
+            }
+        }
+
+        applyQuery(headCount, queryData);
+
+        // countDom < dom id 동적 할당
+        for (let key in headCount) {
+            if (document.getElementById(`${key}Count`)) {
+                const typeByHeadcount = document.getElementById(`${key}Count`);
+                countDom[`${key}Count`] = typeByHeadcount
+                typeByHeadcount.innerText = headCount[key];
+            }
+        }
+
+        //applyQuery(countDom, queryData);
+        const { adultCount, youthCount, specialCount } = countDom;
+        const choosenSeat = document.getElementById("choosenSeat");
+
+
+
+        // 버튼 예외처리
+        const disalbledBtnFunc = () => {
+            const totalCount = (headCount.adult + headCount.youth + headCount.special);
+            if (totalCount == headCount.seatCount) {
+                choosenSeat.classList.remove("disalbledBtn");
+            } else {
+                choosenSeat.classList.add("disalbledBtn");
+            }
+        }
+
+        // 발생한 event가 plus인지 아닌지(minus) 검사 후 코드 실행
+        document.getElementById("ticketCountArea").addEventListener("click", (event) => {
+            if (event.target.id != null && event.target.id != "ticketCountArea") {
+                const isPlus = /.*Plus.*/.test(event.target.id);
+                if (isPlus) {
+                    // plus 
+                    if (Number(adultCount.innerText) + Number(youthCount.innerText) + Number(specialCount.innerText) == 8) {
+                        adultCount.innerText = headCount.adult;
+                        youthCount.innerText = headCount.youth;
+                        specialCount.innerText = headCount.special;
+                        disalbledBtnFunc();
+
+                    } else {
+                        const idTotalLen = Number(event.target.id.length);
+                        const targetId = event.target.id.slice(0, (idTotalLen - 12));
+                        const targetDOM = document.getElementById(`${targetId}Count`);
+                        const currentValue = Number(targetDOM.innerHTML);
+                        headCount[targetId] = Number(currentValue + 1);
+                        targetDOM.innerHTML = Number(currentValue + 1);
+                        disalbledBtnFunc();
+                    }
+
+                } else {
+                    // minus 
+                    const idTotalLen = Number(event.target.id.length);
+                    const targetId = event.target.id.slice(0, (idTotalLen - 13));
+                    const targetDOM = document.getElementById(`${targetId}Count`);
+                    if (Number(targetDOM.innerHTML) == 0) {
+                        targetDOM.innerHTML = 0;
+                        disalbledBtnFunc();
+
+                    } else {
+                        const currentValue = Number(targetDOM.innerHTML);
+                        headCount[targetId] = Number(currentValue - 1);
+                        targetDOM.innerHTML = Number(currentValue - 1);
+                        disalbledBtnFunc();
+                    }
+                }
+            }
+        })
+
+        // 좌석
+        document.getElementById("sectionBottom").addEventListener("change", (event) => {
+            const totalCount = (headCount.adult + headCount.youth + headCount.special);
+            if (document.getElementById(event.target.id).checked) {
+                if (totalCount > headCount.seatCount) {
+                    headCount.seatCount++;
+                    disalbledBtnFunc();
+                    headCount.reservationSeat.push(event.target.id);
+                } else {
+                    document.getElementById(event.target.id).checked = false;
+                }
+                console.log(headCount);
+            } else {
+                headCount.seatCount--;
+                disalbledBtnFunc();
+                // 배열에서 값 제거
+                const index = headCount.reservationSeat.indexOf(event.target.id);
+                if (index > -1) {
+                    headCount.reservationSeat.splice(index, 1);
+                }
+                console.log(headCount);
+            }
+        });
+
+        const makeQuery = (queryData) => {
+            let query = "";
+
+            queryData["seat_names"] = headCount["reservationSeat"];
+            for (const key in queryData) {
+                query += `${key}=${queryData[key]}&`;
+            }
+            console.log(query);
+            return query;
+        }
+
+        choosenSeat.addEventListener("click", () => {
+            const query = makeQuery(queryData);
+            location.href = `/payment?${query}`;
+        });
+
+    }
+    const runSeatSelection = (async () => {
+        const settings = {
+            method: "POST",
+            headers: {
+                "Accept": 'application/json',
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify(<%- JSON.stringify(queryData) %>)
+        }
+        const response = await fetch("/select_seat", settings);
+
+        const seatData = await response.json(); // 서버 응답 처리
+        procedureSeatSelection(seatData);
+        console.log("select_seat")
+    })();
+</script>
+
+<style>
+    .seatSelectArea {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
+
+    .sectionTop {
+        margin-top: 8rem;
+        width: 100%;
+        height: 8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* background-color: whitesmoke; */
+    }
+
+    .ticketCountArea {
+        width: 60rem;
+        height: 6rem;
+        color: #E0E0E0;
+        font-size: 2.4rem;
+        line-height: 6rem;
+        text-align: center;
+        background-color: #3B3B44;
+        border-radius: .5rem;
+        padding: 0.5rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .ticketCountArea button {
+        font-size: 2.4rem;
+        width: 3rem;
+        height: 3rem;
+        background-color: #4A4A5A;
+        border: none;
+        border-radius: 0.5rem;
+        color: #E0E0E0;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .ticketCountArea button:hover {
+        background-color: #6A6A7A;
+    }
+
+    .ticketCountArea span {
+        font-size: 2.4rem;
+        margin: 0 0.5rem 0 0.5rem;
+    }
+
+    .sectionMiddle {
+        width: 60rem;
+        height: 10rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* background-color:floralwhite; */
+
+    }
+
+    .screen {
+        width: 60rem;
+        height: 3rem;
+        line-height: 3rem;
+        font-size: 1.8rem;
+        background-color: #939393;
+        text-align: center;
+        letter-spacing: .5rem;
+        border-radius: 0.2rem;
+    }
+
+    .sectionBottom {
+        width: 100%;
+        height: 70%;
+        padding: 2rem;
+        /* background-color: silver; */
+    }
+
+    .seatsArea {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        /* 좌석 8개 한 줄 */
+        justify-items: center;
+        /* 좌석들 각자의 중앙 정렬 */
+        justify-content: center;
+        /* 그리드 자체를 부모 요소 내에서 중앙 정렬 */
+        /* gap: 1rem;                             좌석 간격 조정 (원하는 대로 변경 가능) */
+        width: fit-content;
+        /* 좌석들이 필요한 만큼만 차지하게 */
+        margin: 0 auto;
+        /* 전체 그리드를 화면 가운데에 정렬 */
+    }
+
+    .seatsArea label {
+        margin: 0.5rem;
+        font-size: 1.6rem;
+        background-color: #D9D9D9;
+    }
+
+    .seat {
+        width: 5rem;
+        height: 5rem;
+        background-color: #ccc;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+    }
+
+    /* 체크박스를 숨기고 라벨로 스타일을 지정 */
+    input[type="checkbox"] {
+        display: none;
+    }
+
+    /* 선택되지 않은 좌석 */
+    label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        background-color: #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    /* 선택된 좌석 */
+    .sectionBottom input[type="checkbox"]:checked+label {
+        background-color: #ff9933;
+
+    }
+
+    /* 예약된 좌석 */
+    label.reservationSeat {
+        background-color: #646464;
+        color: #a4a4a4;
+        pointer-events: none;
+    }
+
+    .chosenBtn {
+        position: absolute;
+        right: 3%;
+        bottom: 4%;
+        width: 13rem;
+        height: 4.5rem;
+        font-size: 1.6rem;
+        /* background-color: #3B3B44; */
+        /* color: #F0F0F0; */
+        cursor: pointer;
+        border: none;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: #DE1E2D;
+        color: #ffffff;
+    }
+
+    .chosenBtn:hover {
+        background-color: #b41c2b;
+    }
+
+    .chosenBtn:active {
+        background-color: #2F2F3B;
+        transform: scale(0.98);
+    }
+
+    .disalbledBtn {
+        background-color: #3b3b3b;
+        color: #9d9d9d;
+        pointer-events: none;
+    }
+
+    /* 선택좌석 선택가능 선택불가 좌석 라인 css  */
+    .seatImgBoxAll {
+        margin-top: 2rem;
+        margin-left: 33rem;
+        display: flex;
+        align-items: center;
+        gap: 5rem;
+    }
+
+    .seatImgBox {
+        width: 17px;
+        height: 17px;
+    }
+
+    .selectedSeat {
+        background-color: #FF9933;
+    }
+
+    .selectable {
+        background-color: #D9D9D9;
+    }
+
+    .notSelectable {
+        background-color: #646464;
+    }
+
+    /* p 태그의 기본 마진 제거 */
+    .seatImgBoxAll p {
+        margin-left: -4rem;
+        font-size: 15px;
+        color: #ccc;
+    }
+</style>

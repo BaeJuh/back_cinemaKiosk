@@ -1,0 +1,202 @@
+<section class="popupArea">
+    <article class="popupBar">
+        <p class="popupTitle popupBarTextCommon">포인트 입력 요청</p>
+        <div id="closePopup"><i class="popupBarTextCommon fa-solid fa-x"></i></div>
+    </article>
+    <section class="popupContent">
+        <!-- ~여기에 작성~ -->
+        <section class="allOfPointArea">
+            <section class="pointArea">
+                <div class="pointInfoBox howManyPointLeft"><span class="inputArea">보유 포인트: <input type="text"
+                            id="ownedPoint" class="inputTextArea" readonly> </span></div>
+                <div class="pointInfoBox howManyPointUse"><span class="inputArea">사용 포인트: <input type="text"
+                            id="usePoint" class="inputTextArea" readonly> </span></div>
+                <div class="pointInfoBox howManyLeft"><span class="inputArea">결제 할 금액: <input type="text"
+                            class="inputTextArea" readonly> </span></div>
+            </section>
+            <section class="pointinputArea">
+                <h2 class="popupTitleText">사용하실 포인트를 입력해주세요.</h2>
+                <%- include("keypadFrame", {title: "" }) %>
+            </section>
+        </section>
+    </section>
+</section>
+
+<script>
+    // placeholder수정
+    document.getElementById('phoneNumber').placeholder = '1000원부터 사용가능';
+
+    const [pointData] = [
+        { user_id: 1, phone_number: "01011112222", point: 3750 }
+    ];
+
+    class PointUse {
+        constructor(id) {
+            this.id = id;
+            this.ownedPoint = 0;
+        }
+
+        setPoint(pointData) {
+            this.ownedPoint = pointData["point"];
+        }
+
+        displayOwnedPoint() {
+            const ownedPointArea = document.getElementById("ownedPoint");
+            ownedPointArea.value = `${this.ownedPoint}`;
+        }
+
+        updatePoint() {
+            const keypad = document.getElementById("keypadFrame");
+            const checkBtn = document.getElementById("checkBtn");
+            const usePointArea = document.getElementById("usePoint");
+
+            keypad.addEventListener("click", (event) => {
+                const keyValue = event.target.value;
+                if (keyValue) {
+                    this.displayUsePoint(usePointArea);
+
+                    checkBtn.disabled = ((Number(usePointArea.value) < 1000));
+                }
+            });
+        }
+
+        displayUsePoint(usePointArea) {
+            const displayNumber = document.getElementById("phoneNumber");
+            usePointArea.value = displayNumber.value;
+            if (Number(usePointArea.value) > this.ownedPoint) {
+                usePointArea.value = this.ownedPoint;
+                document.getElementById("phoneNumber").value = this.ownedPoint;
+            }
+        }
+
+        goToNextPage() {
+            const checkBtn = document.getElementById("checkBtn");
+            checkBtn.addEventListener("click", () => {
+                // 보낼 쿼리 데이터는 여기서 처리, usePointArea.value를 기준으로 보내야함.
+                window.location.href = "/buying";
+            });
+        }
+
+        runPage(pointData) {
+            this.setPoint(pointData);
+            this.displayOwnedPoint();
+            this.updatePoint();
+            this.goToNextPage();
+        }
+    }
+
+    const page = new PointUse("point_confirmation");
+    page.runPage(pointData);
+
+
+
+</script>
+
+<style>
+    .keypadArea {
+        width: 35rem;
+        height: 35rem;
+        text-align: center;
+        padding: 2rem;
+        border-radius: 0.5rem;
+    }
+
+    .bookingNumberText {
+        margin-bottom: 0rem;
+    }
+
+    /* 포인트 정보 영역 */
+    .popupContent {
+        padding-top: 0rem;
+    }
+
+    .allOfPointArea {
+        display: flex;
+        height: 100%;
+    }
+
+    /* 왼쪽 영역 박스 */
+    .pointArea {
+        width: 50%;
+        text-align: center;
+        color: white;
+    }
+
+    /* 왼쪽 영역 글자 박스 */
+    .pointInfoBox {
+        height: 13rem;
+        line-height: 17rem;
+    }
+
+    /* 왼쪽 영역 글자 박스의 글자영역 */
+    .inputArea {
+        font-size: 1.8rem;
+    }
+
+    /* 왼쪽 영역 글자 박스에 포인트 영역 */
+    .inputTextArea {
+        margin-left: 3rem;
+        margin-top: 10rem;
+        padding-left: 1rem;
+
+        border: none;
+        outline: none;
+        background: none;
+        border-bottom: 0.1rem solid #444444;
+
+        font-size: 1.8rem;
+        font-weight: 500;
+        color: white;
+    }
+
+    /* 오른쪽 영역 박스 */
+
+    .pointinputArea {
+        border-left: 1px solid gray;
+        width: 50%;
+    }
+
+    /* 키패드 영역 */
+
+    .enterPointsLabel {
+        color: #fff;
+        font-size: 1.9rem;
+        margin-top: 5.5rem;
+        letter-spacing: 1px;
+    }
+
+    .popupTitleText {
+        font-size: 2rem;
+        letter-spacing: 1px;
+        color: #FFFFFF;
+        padding-bottom: 2.5rem;
+
+        text-align: center;
+        padding-top: 4rem;
+    }
+
+    /* .keypadArea {
+        
+        margin-top: 6rem;
+        height: 38rem;
+    } */
+
+    /* 포인트를 얼만큼 사용 하실 건가요?  를 넣는 박스*/
+    .pointText {
+        width: 26.5rem;
+        height: 4.5rem;
+        text-align: center;
+        line-height: 4.5rem;
+        margin: 0.4rem;
+        font-size: 1.8rem;
+        outline: none;
+        background-color: #ffffffcf;
+        color: #EDEDED;
+        border-radius: 0.5rem;
+        margin-left: 2rem;
+        box-shadow:
+            inset 0 1px 1px rgba(49, 49, 49, 0.51),
+            inset 0 2px 2px rgba(53, 53, 53, 0.53);
+
+    }
+</style>

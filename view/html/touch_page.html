@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+  <!-- icon -->
+  <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+  <!-- css -->
+  <link rel="stylesheet" href="style.css">
+  <title>touch_page</title>
+  <style>
+    .adminModeBtn {
+      position: relative;
+      width: 4rem;
+      height: 4rem;
+      background-color: #353742a2;
+      color: #cacfd1;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+      margin-left: -3.5rem;
+      z-index: 1100;
+    }
+    
+    .adminModeIcon{
+      pointer-events: none;
+    }
+
+    .fa-solid {
+      font-size: 1.6rem;
+    }
+
+    .logoImg {
+      padding-left: 20rem;
+    }
+
+    .topBar {
+      width: 100%;
+      height: 9%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #24242C;
+      padding: 0 5rem;
+    }
+
+    /* 영상 예고편 광고  */
+    .movieTeaserArea {
+      width: 72rem;
+      height: 59.61rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('image/파일럿.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .movieTeaser {
+      background-color: #515151;
+      width: 72rem;
+      height: 40.5rem;
+    }
+
+    .bottomBar {
+      box-shadow: 0px 0px 0px 0px;
+    }
+
+    /* 하단바 영역 */
+    .tapTarget {
+      color: #EDEDED;
+      font-size: 2.4rem;
+      letter-spacing: 0.5rem;
+      padding-left: 45.3rem;
+    }
+
+    .touchScreenArea {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      left: 0;
+      top: 0;
+      cursor: pointer;
+      background: transparent;
+      z-index: 999;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===최상위 컨테이너=== -->
+  <div class="wrap">
+    <!-- ===레이아웃 영역=== -->
+    <section class="layoutArea">
+      <!--#상단바#-->
+      <section class="topBar">
+        <button id="adminModeBtn" class="adminModeBtn"><i class="adminModeIcon fa-solid fa-screwdriver-wrench"></i></button>
+        <img class="logoImg" src="images/logo.png" alt="로고이미지">
+        <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span class="timeDisplay"
+            id="touchPageClock">12:00</span>
+        </article>
+      </section>
+      <section class="movieTeaserArea">
+        <video class="movieTeaser" src="./video/[파일럿] ✨조정석 is Back!✨ 런칭 예고편.mp4" autoplay muted controls>비디오가
+          지원되지 않습니다.</video>
+      </section>
+      <!-- ===하단바 영역=== -->
+    </section>
+    <section class="bottomBar">
+      <p class="tapTarget">화면을 터치해 주세요.</p>
+    </section>
+    <!-- #터치영역# -->
+    <section id="touchScreen" class="touchScreenArea"></section>
+  </div>
+
+  <!-- ==script== -->
+  <script>
+    const touchScreen = document.getElementById("touchScreen");
+
+    touchScreen.addEventListener("click", () => {
+      window.location.href = "/home";
+    });
+
+    const clock = document.getElementById("touchPageClock");
+
+    const updateClock = () => {
+      const time = new Date();
+      const [hour, minute] = [time.getHours().toString().padStart(2, "0"), time.getMinutes().toString().padStart(2, "0")];
+      clock.innerText = `${hour}:${minute}`;
+    }
+
+    updateClock();
+    setInterval(() => {
+      updateClock();
+    }, 5000);
+
+    const adminModeBtn = document.getElementById("adminModeBtn");
+    adminModeBtn.addEventListener("click", () => {
+      window.location.href = "/admin_password";
+    });
+  </script>
+</body>
+
+</html>

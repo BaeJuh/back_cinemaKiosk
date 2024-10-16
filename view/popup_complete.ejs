@@ -1,0 +1,74 @@
+<section class="popupArea">
+    <article class="popupBar">
+        <p class="popupTitle popupBarTextCommon">결제 완료 안내</p>
+        <!-- <i class="popupBarTextCommon fa-solid fa-x"></i> -->
+    </article>
+    <section class="popupContent">
+        <!-- ~여기에 작성~ -->
+
+        <!-- 타이틀 박스 -->
+        <p class="popupContentText">결제가 완료되었습니다.</p>
+        <p class="popupContentText"><span id="timer" class="popupContentText">5</span>초 후에 메인화면으로 돌아갑니다.</p>
+
+        <!-- 결제완료 이미지 -->
+        <div class="popupContentImg"></div>
+    </section>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {// 5초뒤 종료
+        const timer = document.getElementById("timer");
+        timer.style.color = "white";
+        const timerSecond = 5;
+        for (let i = 1; i <= timerSecond; i++) {
+            setTimeout(() => {
+                timer.innerText = `${(timerSecond + 1) - i}`;
+
+                if (i === timerSecond) {
+                    window.location.href = "/";
+                }
+            }, i * 1000);
+        }
+    });
+</script>
+
+<style>
+    .popupContent {
+        display: flex;
+        padding: 5rem 2rem;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .popupContentText {
+        position: relative;
+        font-size: 2.2rem;
+        width: 100%;
+        text-align: center;
+        margin: 1rem 0 1rem 0;
+        color: rgb(192, 192, 192);
+        z-index: 999;
+        padding-top: 3rem;
+    }
+
+    /*  결제완료 이미지 박스 */
+    .popupContentImg {
+        width: 50rem;
+        height: 30rem;
+        margin-left: 9rem;
+        background-image: url("images/payment_completed.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        transform: scale(1.15);
+    }
+
+    .showTimerArea {
+        height: 3rem;
+        width: 100%;
+    }
+
+    .showTimer {
+        font-size: 1.6rem;
+        text-align: center;
+    }
+</style>

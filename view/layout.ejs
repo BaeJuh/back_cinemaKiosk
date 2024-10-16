@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+    <title>Hexagon Cinema</title>
+</head>
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <!-- ===사이드바 영역=== -->
+            <% if ( sideBar !== "") { %>
+                <%- include( sideBar ) %>
+            <% } %>
+            <!-- 페이지 콘텐츠 영역 -->
+            <% if ( content !== "" ) { %>
+                <%- include( content, {queryData: queryData}) %>
+            <% } %>
+            
+            <!-- 팝업 영역 -->
+            <% if ( popup !== "") { %>
+                <%- include( "popup_layout", { popupContent: popup } ) %>
+            <% } %>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <% if ( bottomBar !== "" ) { %>
+            <%- include( bottomBar ) %>
+        <% } %>
+    </div>
+    <script>
+        
+    </script>
+</body>
+</html>

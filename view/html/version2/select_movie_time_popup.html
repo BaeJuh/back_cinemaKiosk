@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+
+    <!-- 외부 CSS 파일 링크 -->
+    <link rel="stylesheet" href="style.css">
+
+
+    <title>select_movie_time_popup</title>
+
+    <style>
+        /* 시간선택팝업 */
+        .posterBasicInformation {
+            width: 100%;
+            display: flex;
+            padding-top: 3.5rem;
+            position: relative;
+            justify-content: center;
+        }
+
+        .posterImg {
+            width: 25rem;
+            height: 35rem;
+            background-color: #3b3b3b;
+            /*border: 1px solid blue;*/
+        }
+
+        .posterInformation {
+            width: 25rem;
+            height: 5rem;
+            margin-left: 6.5rem;
+            margin-top: .5rem;
+            text-align: center;
+            line-height: 5rem;
+        }
+
+        .mvName {
+            height: 100%;
+            width: 60%;
+            float: left;
+            color: #90979D;
+            font-size: 1.6rem;
+        }
+
+        .mvTime {
+            height: 100%;
+            width: 35%;
+            float: right;
+            color: #90979D;
+            font-size: 1.6rem;
+        }
+
+        .allMvTime {
+            width: 41rem;
+            height: 30rem;
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 4rem;
+            margin-right: -1.3rem;
+            margin-top: 3rem;
+            gap: 2rem;
+        }
+
+        .mvTimeList {
+            width: 12rem;
+            height: 6rem;
+            list-style: none;
+            border: .06rem solid rgba(255, 255, 255, 0.479);
+            text-align: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <!-- ===사이드바 영역=== -->
+            <section class="progressSidebar">
+                <div class="progressSettings completedStep"><span class="stepLabel">영화 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">시간 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">좌석 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">결제</span></div>
+            </section>
+            <!-- ===팝업 영역=== -->
+            <section class="popupArea">
+                <article class="popupBar">
+                    <p class="popupTitle popupBarTextCommon">상영 시간 선택</p>
+                    <i class="popupBarTextCommon fa-solid fa-x"></i>
+                </article>
+                <section class="popupContent">
+                    <!-- ~여기에 작성~ -->
+
+                    <!-- 시간선택팝업 -->
+                    <div class="timePopupAll">
+                        <div class="posterBasicInformation">
+
+                            <div class="posterImg"></div>
+                            <ul class="allMvTime" id="allMvTime">
+                                <li class="mvTimeList">
+                                    <p class="theather">A관</p>
+                                    <p class="startAndEndTime">09시00분~12시00분</p>
+                                </li>
+
+                                <li class="mvTimeList">
+                                    <p class="theather">A관</p>
+                                    <p class="startAndEndTime">09시00분~12시00분</p>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="posterInformation">
+                            <p id="mvName" class="mvName">영화제목</p>
+                            <p id="mvTime" class="mvTime">시간</p>
+                        </div>
+
+
+                </section>
+            </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+        </section>
+
+    </div>
+    <!-- ==script== -->
+    <script>
+        function objectToQueryString(obj) {
+            return Object.keys(obj)
+                .map(key => { return `${key}=${obj[key]}` })
+                .join('&');
+        }
+
+        const movieData = {
+            name: "",
+            movieDuration: "", //상영시간
+            theater: "",
+            startAndEndTime: ""
+        }
+
+        movieData.name = document.getElementById("mvName").innerHTML;
+        movieData.movieDuration = document.getElementById("mvTime").innerHTML;
+
+        document.getElementById("allMvTime").addEventListener("click", (event) => {
+            if (event.target && event.target.closest("li")) {
+                const paragraphs = event.target.closest("li").getElementsByTagName("p");
+                movieData.theater = paragraphs[0].innerHTML;
+                movieData.startAndEndTime = paragraphs[1].innerHTML;
+                console.log(movieData);
+                const query = objectToQueryString(movieData);
+                location.href = `/select_headcount_popup?${query}`;
+            }
+        });
+
+    </script>
+</body>
+
+</html>

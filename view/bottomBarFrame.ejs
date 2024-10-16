@@ -1,0 +1,46 @@
+<!-- <link rel="stylesheet" href="style.css" /> -->
+
+<section class="bottomBar">
+    <article class="barButtonsArea">
+        <button class="barButtons staffCallButton">직원호출</button>
+        <button id="homeButton" class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+        <button id="backButton" class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+    </article>
+    <img class="logoImg" src="images/logo.png" alt="로고이미지">
+    <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span id="touchPageClock" class="timeDisplay">00:00</span>
+    </article>
+</section>
+
+<script>
+    const clock = document.getElementById("touchPageClock");
+
+    const updateClock = () => {
+        const time = new Date();
+        const [hour, minute] = [time.getHours().toString().padStart(2, "0"), time.getMinutes().toString().padStart(2, "0")];
+        clock.innerText = `${hour}:${minute}`;
+    }
+
+    updateClock();
+    setInterval(() => {
+        updateClock();
+    }, 5000);
+
+    const homeButton = document.getElementById("homeButton");
+    homeButton.addEventListener( "click", (e) => {
+        if (currentLocation === "/home" ) {
+            e.preventDefault();
+        } else {
+            window.location.href = "/home";
+        }
+    } );
+
+    const backButton = document.getElementById("backButton");
+    backButton.addEventListener( "click", () => {
+        if (currentLocation === "/home" ) {
+            e.preventDefault();
+        }
+        history.back();
+    } );
+
+    const currentLocation = new URL( location.href ).pathname;
+</script>

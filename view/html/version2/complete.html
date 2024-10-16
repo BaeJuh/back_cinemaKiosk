@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+    <!-- 외부 CSS 파일 링크 -->
+    <link rel="stylesheet" href="style.css">
+
+    <title>complete</title>
+    <style>
+        .popupContent {
+            display: flex;
+            padding: 2rem;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .popupContentText {
+            font-size: 2.4rem;
+            width: 100%;
+            text-align: center;
+            margin: 2rem 0 3rem 0;
+            color: white;
+        }
+
+        /*  결제완료 이미지 박스 */
+        .popupContentImg {
+            width: 50rem;
+            height: 50rem;
+            margin-left: 2rem;
+            background-image: url("images/card_input.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body></body>
+<!-- ===최상위 컨테이너=== -->
+<div class="wrap">
+    <!-- ===레이아웃 영역=== -->
+    <section class="layoutArea">
+        <!-- ===사이드바 영역=== -->
+        <section class="progressSidebar">
+            <div class="progressSettings completedStep"><span class="stepLabel">영화 선택</span></div>
+            <div class="progressSettings remainingStep"><span class="stepLabel">시간 선택</span></div>
+            <div class="progressSettings remainingStep"><span class="stepLabel">좌석 선택</span></div>
+            <div class="progressSettings remainingStep"><span class="stepLabel">결제</span></div>
+        </section>
+        <!-- ===팝업 영역=== -->
+        <section class="popupArea">
+            <article class="popupBar">
+                <p class="popupTitle popupBarTextCommon">결제 완료</p>
+                <i class="popupBarTextCommon fa-solid fa-x"></i>
+            </article>
+            <section class="popupContent">
+                <!-- ~여기에 작성~ -->
+
+                <!-- 타이틀 박스 -->
+                <p class="popupContentText">결제 완료</p>
+
+                <!-- 결제완료 이미지 -->
+                <div class="popupContentImg"></div>
+
+
+            </section>
+        </section>
+    </section>
+    <!-- ===하단바 영역=== -->
+    <section class="bottomBar">
+        <article class="barButtonsArea">
+            <button class="barButtons staffCallButton">직원호출</button>
+            <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+            <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+        </article>
+        <img class="logoImg" src="images/logo.png" alt="로고이미지">
+        <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                class="timeDisplay">12:00</span>
+        </article>
+    </section>
+
+</div>
+<!-- ==script== -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => { // 5초뒤 종료
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 5000);
+    });
+</script>
+</body>
+
+</html>

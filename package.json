@@ -1,0 +1,28 @@
+{
+  "name": "hexagoncinema",
+  "version": "1.0.0",
+  "description": "\"Kiosk Web For Cinema\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "supervisor ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamGaston/cinemaKiosk.git"
+  },
+  "author": "Team Gaston",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TeamGaston/cinemaKiosk/issues"
+  },
+  "homepage": "https://github.com/TeamGaston/cinemaKiosk#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "ejs": "^3.1.10",
+    "express": "^4.20.0",
+    "mysql": "^2.18.1",
+    "supervisor": "^0.12.0"
+  },
+  "type": "module"
+}

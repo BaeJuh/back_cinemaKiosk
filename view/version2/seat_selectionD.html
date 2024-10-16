@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+    <title>seat_selectionD</title>
+    <style>
+
+        .layoutArea{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        .sectionTop {
+            margin-top: 8rem;
+            width: 100%;
+            height: 8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* background-color: whitesmoke; */
+        }
+
+        .ticketCountArea {
+            width: 60rem;
+            height: 5.5rem;
+            color: white;
+            font-size: 2.4rem;
+            line-height: 5.5rem;
+            text-align: center;
+            margin: 0 2rem 0 2rem;
+        }
+
+        .ticketCountArea span {
+            font-size: 2.4rem;
+            margin: 0 0.5rem 0 0.5rem;
+        }
+
+        .ticketCountArea button {
+            font-size: 2.4rem;
+            margin: 0 0.5rem 0 0.5rem;
+            width: 4rem;
+            height: 4rem;
+        }
+
+        .sectionMiddle {
+            width: 60rem;
+            height: 10rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* background-color:floralwhite; */
+
+        }
+
+        .screen {
+            width: 60rem;
+            height: 3rem;
+            line-height: 3rem;
+            font-size: 1.8rem;
+            background-color: #939393;
+            text-align: center;
+            letter-spacing: .5rem;
+        }
+
+        .sectionBottom {
+            width: 100%;
+            height: 70%;
+            padding: 2rem;
+            /* background-color: silver; */
+        }
+
+        .seatsArea {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            /* 좌석 8개 한 줄 */
+            justify-items: center;
+            /* 좌석들 각자의 중앙 정렬 */
+            justify-content: center;
+            /* 그리드 자체를 부모 요소 내에서 중앙 정렬 */
+            /* gap: 1rem;                             좌석 간격 조정 (원하는 대로 변경 가능) */
+            width: fit-content;
+            /* 좌석들이 필요한 만큼만 차지하게 */
+            margin: 0 auto;
+            /* 전체 그리드를 화면 가운데에 정렬 */
+        }
+
+        .seatsArea label {
+            margin: 0.5rem;
+            font-size: 1.6rem;
+            background-color: #D9D9D9;
+        }
+
+        .seat {
+            width: 5rem;
+            height: 5rem;
+            background-color: #ccc;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        /* 체크박스를 숨기고 라벨로 스타일을 지정 */
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        /* 선택되지 않은 좌석 */
+        label{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            background-color: #ccc;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* 선택된 좌석 */
+        input[type="checkbox"]:checked+label {
+            background-color: #ff9933;
+        }
+
+        .chosenBtn{
+            position: absolute;
+            left : 90%;
+            bottom: 4%;
+            width: 8rem;
+            height: 4.5rem;
+            font-size: 1.6rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+
+            <!-- ~여기에 작성~ -->
+            <section class="sectionTop">
+                <div class="ticketCountArea">
+                    <button>+</button>성인<span>0</span><button>-</button>
+                    <button>+</button>청소년<span>0</span><button>-</button>
+                    <button>+</button>우대<span>0</span><button>-</button>
+                </div>
+
+            </section>
+
+            <section class="sectionMiddle">
+                <p class="screen">screen</p>
+            </section>
+
+            <section class="sectionBottom">
+                <div class="seatsArea">
+                    
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat1">A1</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat2">A2</label>
+                    <empty></empty>
+                    <empty></empty>
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat3">A3</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat4">A4</label>
+                    
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat5">A5</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat6">A6</label>
+                    <empty></empty>
+                    <empty></empty>
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat7">A7</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat8">A8</label>
+                    
+
+                </div>
+                <div class="seatsArea">
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat1">1</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat2">2</label>
+                    <empty></empty>
+                    <empty></empty>
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat3">3</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat4">4</label>
+                    
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat5">5</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat6">6</label>
+                    <empty></empty>
+                    <empty></empty>
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat7">7</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat8">8</label>
+
+                </div>
+                <div class="seatsArea">
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat1">1</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat2">2</label>
+                    <empty></empty>
+                    <empty></empty>
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat3">3</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat4">4</label>
+                    
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat5">5</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat6">6</label>
+                    <empty></empty>
+                    <empty></empty>
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat7">7</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat8">8</label>
+
+                </div>
+                <div class="seatsArea">
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat1">1</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat2">2</label>
+                    <empty></empty>
+                    <empty></empty>
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat3">3</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat4">4</label>
+                    
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat5">5</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat6">6</label>
+                    <empty></empty>
+                    <empty></empty>
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat7">7</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat8">8</label>
+
+                </div>
+                <div class="seatsArea">
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat1">1</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat2">2</label>
+                    <empty></empty>
+                    <empty></empty>
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat3">3</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat4">4</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat5">5</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat6">6</label>
+                    <empty></empty>
+                    <empty></empty>
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat7">7</label>
+
+                    <input type="checkbox" class="seat-checkbox">
+                    <label for="seat8">8</label>
+
+                </div>
+                <button class="chosenBtn">선택완료</button>
+            </section>
+            <!-- ===사이드바 영역=== -->
+            <section class="progressSidebar">
+                <div class="progressSettings completedStep"><span class="stepLabel">영화 선택</span></div>
+                <div class="progressSettings completedStep"><span class="stepLabel">시간 선택</span></div>
+                <div class="progressSettings completedStep"><span class="stepLabel">좌석 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">결제</span></div>
+            </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+        </section>
+
+    </div>
+</body>
+
+</html>

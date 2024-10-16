@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+
+    <!-- 외부 CSS 파일 링크 -->
+    <link rel="stylesheet" href="style.css">
+
+
+    <title>select_movie_time_popup</title>
+
+    <style>
+        /* 시간선택팝업 */
+        .posterBasicInformation {
+            width: 100%;
+            display: flex;
+            padding-top: 5.5rem;
+            position: relative;
+            justify-content: center;
+        }
+
+        .posterImg {
+            width: 25rem;
+            height: 35rem;
+            background-image: url("images/베테랑.png");
+            background-size: cover;
+            /*border: 1px solid blue;*/
+        }
+
+        .posterInformation {
+            width: 25rem;
+            height: 5rem;
+            margin-left: 6.5rem;
+            margin-top: .5rem;
+            text-align: center;
+            line-height: 5rem;
+        }
+
+        .mvName {
+            height: 100%;
+            width: 60%;
+            float: left;
+            color: #90979D;
+            font-size: 1.6rem;
+        }
+
+        .mvTime {
+            height: 100%;
+            width: 35%;
+            float: right;
+            color: #90979D;
+            font-size: 1.6rem;
+        }
+
+        .allMvTime {
+            width: 39.2rem;
+            height: 30rem;
+            flex-wrap: wrap;
+            margin-left: 4rem;
+            margin-right: -1.3rem;
+            margin-top: 3rem;
+            gap: 2rem;
+        }
+
+        .mvTimeList {
+            display: inline-block;
+            width: 12rem;
+            height: 7rem;
+            list-style: none;
+            border: .06rem solid rgba(255, 255, 255, 0.479);
+            text-align: center;
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 1rem 0.78rem 0 0;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .mvTimeList:hover {
+            background-color: #1F1F1F;
+            border-color: #FFDD00;
+        }
+
+        .activeMvTime {
+            background: #DE1E2D;
+        }
+
+        .activeMvTime:hover {
+            background: #DE1E2D;
+        }
+
+        .theather {
+            font-size: 1.4rem;
+            margin-top: 2px;
+        }
+
+        .startAndEndTime {
+            font-size: 1.3rem;
+            line-height: 2rem;
+        }
+
+        /* 확인 버튼 스타일 */
+
+        .popupContent {
+            position: relative;
+        }
+
+        .timeSelectionBtn {
+            position: absolute;
+            right: 5%;
+            bottom: 5%;
+            height: 4rem;
+            width: 11rem;
+            line-height: 4rem;
+            font-size: 1.6rem;
+            background-color: #DE1E2D;
+            color: #ffffff;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.6rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+
+        .timeSelectionBtn:hover {
+            background-color: #b41c2b;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeSelectionBtn:active {
+            background-color: #b41c2b;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .disalbledBtn {
+            background-color: #3b3b3b;
+            color: #9d9d9d;
+            pointer-events: none;
+        }
+
+        p {
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <!-- ===사이드바 영역=== -->
+            <section class="progressSidebar">
+                <div class="progressSettings completedStep"><span class="stepLabel">영화<br>선택</span></div>
+                <div class="progressSettings completedStep"><span class="stepLabel">시간<br>선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">좌석<br>선택</span></div>
+                <div class="progressSettings remainingStep paymentStep"><span class="stepLabel">결제</span></div>
+            </section>
+            <!-- ===팝업 영역=== -->
+            <section class="popupArea">
+                <article class="popupBar">
+                    <p class="popupTitle popupBarTextCommon">영화 시간을 선택해주세요.</p>
+                    <i class="popupBarTextCommon fa-solid fa-x"></i>
+                </article>
+                <section class="popupContent">
+                    <!-- ~여기에 작성~ -->
+
+                    <!-- 시간선택팝업 -->
+                    <div class="timePopupAll">
+                        <div class="posterBasicInformation">
+
+                            <div class="posterImg"></div>
+                            <ul class="allMvTime" id="allMvTime">
+                                <!-- 1 -->
+                                <li class="mvTimeList" id="list01">
+                                    <p class="theather">A관</p>
+                                    <p class="startAndEndTime">11시00분</p>
+                                    <p class="startAndEndTime">~12시00분</p>
+                                </li>
+                                <!-- 2 -->
+                                <li class="mvTimeList" id="list02">
+                                    <p class="theather">A관</p>
+                                    <p class="startAndEndTime">12시00분</p>
+                                    <p class="startAndEndTime">~13시00분</p>
+                                </li>
+                                <!-- 3 -->
+                                <li class="mvTimeList" id="list03">
+                                    <p class="theather">A관</p>
+                                    <p class="startAndEndTime">13시00분</p>
+                                    <p class="startAndEndTime">~14시00분</p>
+                                </li>
+                                <!-- 4 -->
+                                <li class="mvTimeList" id="list04">
+                                    <p class="theather">A관</p>
+                                    <p class="startAndEndTime">14시00분</p>
+                                    <p class="startAndEndTime">~15시00분</p>
+                                </li>
+                                <!-- 5 -->
+                                <li class="mvTimeList" id="list05">
+                                    <p class="theather">A관</p>
+                                    <p class="startAndEndTime">15시00분</p>
+                                    <p class="startAndEndTime">~16시00분</p>
+                                </li>
+                                <!-- 6 -->
+                                <li class="mvTimeList" id="list06">
+                                    <p class="theather">A관</p>
+                                    <p class="startAndEndTime">16시00분</p>
+                                    <p class="startAndEndTime">~17시00분</p>
+                                </li>
+                                <!-- 7 -->
+                                <li class="mvTimeList" id="list07">
+                                    <p class="theather">A관</p>
+                                    <p class="startAndEndTime">17시00분</p>
+                                    <p class="startAndEndTime">~18시00분</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="posterInformation">
+                            <p id="mvName" class="mvName">영화명</p>
+                            <p id="mvTime" class="mvTime"></p>
+                        </div>
+                        <button id="timeSelectionCompleteBtn" class="timeSelectionBtn disalbledBtn">선택 완료</button>
+                    </div>
+                </section>
+            </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+        </section>
+    </div>
+    <!-- ==script== -->
+    <script>
+        const mvTimeList = document.querySelectorAll(".mvTimeList");
+        const timeSelectionBtn = document.getElementById("timeSelectionCompleteBtn");
+        const mvTime = document.getElementById("mvTime");
+
+        function objectToQueryString(obj) {
+            return Object.keys(obj)
+                .map(key => { return `${key}=${obj[key]}` })
+                .join('&');
+        }
+
+        const movieData = {
+            name: "",
+            theater: "",
+            startTime: "", //시작시간
+            endTime: "" //끝시간
+        }
+
+        movieData.name = document.getElementById("mvName").innerHTML;
+
+        mvTimeList.forEach((item) => {
+            // click event : 클릭된 item -> movieData 값 할당 //
+            item.addEventListener("click", (event) => {
+                const paragraphs = event.target.getElementsByTagName("p");
+                movieData.theater = paragraphs[0].innerHTML;
+                movieData.startTime = paragraphs[1].innerHTML;
+                movieData.endTime = paragraphs[2].innerHTML.slice(1);
+                mvTime.innerHTML = movieData.startTime;
+                console.log(movieData);
+
+                // 라디오 버튼 처럼 기능 구현 //
+                mvTimeList.forEach((listItem) => {
+                    listItem.classList.remove("activeMvTime");
+                });
+                item.classList.add("activeMvTime");
+                timeSelectionBtn.classList.remove("disalbledBtn");
+            });
+        });
+
+        // 클릭시 query+페이지 이동 //
+        timeSelectionBtn.addEventListener("click", (event) => {
+            const query = objectToQueryString(movieData);
+            location.href = `/select_headcount_popup?${query}`;
+        });
+
+    </script>
+</body>
+
+</html>

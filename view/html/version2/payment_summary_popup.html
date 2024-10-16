@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+    <title>payment_summary_popup</title>
+    <style>
+        .completePaymentPopup {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            justify-content: center;
+        }
+
+        .paymentInfoArea {
+            width: 100%;
+            height: 50%;
+            
+            margin: 4rem 1rem 0;
+        }
+
+        .paymentCompleteMessage {
+            font-size: 2.4rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            display: block;
+            color: white;
+        }
+
+        .paymentTimerMessage{
+            font-size: 2.4rem;
+            color: white;
+        }
+
+        .paymentInfo {
+            width: 40rem;
+            height: 5rem;
+
+            color: #ffffff;
+
+            border: 0.1rem solid #ffffff;
+
+            margin-left: 21rem;
+            margin-top: 4rem;
+            padding: 0 3rem;
+
+            display: flex;
+            align-content: center;
+            justify-content: space-between;
+        }
+
+        /* .receiptText {
+            margin-bottom: 2rem;
+        } */
+        .paymentInfoText {
+            font-size: 1.8rem;
+            line-height: 5rem;
+        }
+
+        .printReciptQuestion {
+            width: 40%;
+            display: flex;
+            flex-wrap: wrap;
+
+            margin-top: 6rem;
+            justify-content: space-evenly;
+        }
+
+        /* .printReciptQuestionBtn {
+            width: 8rem;
+            height: 4.5rem;
+
+            font-size: 1.6rem;
+        } */
+    </style>
+</head>
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <!-- ===사이드바 영역=== -->
+            <section class="progressSidebar">
+                <div class="progressSettings completedStep"><span class="stepLabel">영화 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">시간 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">좌석 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">결제</span></div>
+            </section>
+            <!-- ===팝업 영역=== -->
+            <section class="popupArea">
+                <article class="popupBar">
+                    <p class="popupTitle popupBarTextCommon">팝업제목</p>
+                    <i class="popupBarTextCommon fa-solid fa-x"></i>
+                </article>
+                <section class="popupContent">
+                    <!-- ~여기에 작성~ -->
+                    <div id="completePaymentPopup" class="completePaymentPopup">
+
+                        <div id="paymentInfoArea" class="paymentInfoArea">
+                            <h2 class="paymentCompleteMessage">결제가 완료 되었습니다.</h2>
+                            <div id="paymentPrice" class="paymentInfo">
+                                <p class="paymentInfoText">금액</p>
+                                <p class="paymentInfoText">--원</p>
+                            </div>
+                            <div id="discountPrice" class="paymentInfo">
+                                <p class="paymentInfoText">할인</p>
+                                <p class="paymentInfoText">--원</p>
+                            </div>
+                            <div id="totalPrice" class="paymentInfo">
+                                <p class="paymentInfoText">총 금액</p>
+                                <p class="paymentInfoText">--원</p>
+                            </div>
+                        </div>
+                        <div id="printReciptQuestion" class="printReciptQuestion">
+                            <h2 class="paymentCompleteMessage receiptText"><span id="timer" class="paymentTimerMessage">5</span>초 뒤에 티켓이 출력됩니다.</h2>
+                            <!-- <button class="printReciptQuestionBtn">아니요</button>
+                            <button class="printReciptQuestionBtn">예</button> -->
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+        </section>
+        <!-- ==script== -->
+        <script>
+            document.addEventListener("DOMContentLoaded", () => { // 5초뒤 종료
+                const timer = document.getElementById("timer");
+                timer.style.color = "white";
+                for (let i = 1; i <= 5; i++) {
+                    setTimeout(() => {
+                        timer.innerText = `${6 - i}`;
+    
+                        if (i === 5) {
+                            window.location.href = "/printTicket";
+                        }
+                    }, i * 1000);
+                }
+            });
+        </script>
+    </div>
+</body>
+
+</html>

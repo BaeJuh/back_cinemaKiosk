@@ -1,0 +1,69 @@
+    <article class="popupBar">
+        <p class="popupTitle popupBarTextCommon">포인트 적립 번호 요청</p>
+        <div id="closePopup"><i class="popupBarTextCommon fa-solid fa-x"></i></div>
+    </article>
+    <section class="popupContent">
+        <!-- 키패드 영역 -->
+        <div class="keypadAreaBackgruond">
+            <%- include("keypadFrame", { title: "포인트 적립할 번호를 입력해 주세요" }) %>
+        </div>
+        <!-- 건너뛰기 버튼 -->
+        <button id="notEarnPointBtn" class="nextBtn">건너뛰기</button>
+    </section>
+
+<script>
+    const earnPointBtn = document.getElementById("checkBtn");
+    const notEarnPointBtn = document.getElementById("notEarnPointBtn");
+
+    const buttons = [ earnPointBtn, notEarnPointBtn ];
+
+    buttons.forEach( ( button )=>{
+        button.addEventListener("click", ()=>{
+            window.location.href = "/buying";
+        });
+    });
+</script>
+
+<style>
+    /* 타이틀박스 */
+    .keypadAreaBackgruond {
+        padding-top: 5rem;
+    }
+
+    .popupContent {
+        text-align: center;
+    }
+
+    /* 확인 버튼 스타일 */
+    .nextBtn {
+        width: 12rem;
+        height: 4rem;
+        font-size: 1.6rem;
+        background-color: #3D3F4D;
+        color: #ffffff;
+        border: none;
+        border-radius: 0.5rem;
+        margin: 1rem 0 0 67rem;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 호버 시 스타일 */
+    .nextBtn:hover {
+        background-color: #2C2F3A;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+        transform: translateY(-2px);
+    }
+
+    /* 클릭 시 스타일 */
+    .nextBtn:active {
+        background-color: #1F2026;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transform: translateY(0);
+    }
+
+    .keypadArea {
+        height: 37.5rem;
+    }
+</style>

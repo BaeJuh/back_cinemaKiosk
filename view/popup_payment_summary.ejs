@@ -1,0 +1,122 @@
+<section class="popupArea">
+    <article class="popupBar">
+        <p class="popupTitle popupBarTextCommon">결제 완료 안내</p>
+        <!-- <i class="popupBarTextCommon fa-solid fa-x"></i> -->
+    </article>
+    <section class="popupContent">
+        <!-- ~여기에 작성~ -->
+        <div id="completePaymentPopup" class="completePaymentPopup">
+
+            <div id="paymentInfoArea" class="paymentInfoArea">
+                <h2 class="paymentCompleteMessage">결제가 완료 되었습니다.</h2>
+                <div id="paymentPrice" class="paymentInfo">
+                    <p class="paymentInfoText">금액</p>
+                    <p class="paymentInfoText"><span class="paymentInfoText" id="amountValue">10,000</span>원</p>
+                </div>
+                <div id="discountPrice" class="paymentInfo">
+                    <p class="paymentInfoText">할인</p>
+                    <p class="paymentInfoText"><span class="paymentInfoText" id="discountValue">0</span>원</p>
+                </div>
+                <div id="totalPrice" class="paymentInfo">
+                    <p class="paymentInfoText">총 금액</p>
+                    <p class="paymentInfoText"><span class="paymentInfoText" id="totalValue">10,000</span>원</p>
+                </div>
+            </div>
+            <div id="printReciptQuestion" class="printReciptQuestion">
+                <h2 class="paymentCompleteMessage receiptText"><span id="timer" class="paymentTimerMessage">5</span>초 뒤에
+                    티켓이 출력됩니다.</h2>
+                <!-- <button class="printReciptQuestionBtn">아니요</button>
+                <button class="printReciptQuestionBtn">예</button> -->
+            </div>
+        </div>
+    </section>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => { // 5초뒤 종료
+        const timer = document.getElementById("timer");
+        const timerSecond = 5;
+        timer.style.color = "white";
+        for (let i = 1; i <= timerSecond; i++) {
+            setTimeout(() => {
+                timer.innerText = `${(timerSecond + 1) - i}`;
+
+                if (i === timerSecond) {
+                    window.location.href = "/printTicket";
+                }
+            }, i * 1000);
+        }
+    });
+</script>
+
+<style>
+    .completePaymentPopup {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        justify-content: center;
+    }
+
+    .paymentInfoArea {
+        width: 100%;
+        height: 50%;
+        margin: 4rem 1rem 0;
+    }
+
+    .paymentCompleteMessage {
+        font-size: 2.4rem;
+        text-align: center;
+        margin-bottom: 4rem;
+        display: block;
+        color: white;
+    }
+
+    .paymentTimerMessage {
+        font-size: 2.4rem;
+        color: white;
+    }
+
+    .paymentInfo {
+        width: 40rem;
+        height: 6rem;
+
+        margin-left: 21rem;
+        margin-top: 4rem;
+        padding: 0 3rem;
+
+        display: flex;
+        align-content: center;
+        justify-content: space-between;
+        color: #ffffff;
+        border: .06rem solid #EDEDED;
+        border-radius: 0.5rem;
+        margin: 3rem auto;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+    }
+
+    /* .receiptText {
+        margin-bottom: 2rem;
+    } */
+    .paymentInfoText {
+        font-size: 1.8rem;
+        line-height: 5rem;
+    }
+
+    .printReciptQuestion {
+        width: 40%;
+        display: flex;
+        flex-wrap: wrap;
+
+        margin-top: 2rem;
+        justify-content: space-evenly;
+    }
+
+    /* .printReciptQuestionBtn {
+        width: 8rem;
+        height: 4.5rem;
+
+        font-size: 1.6rem;
+    } */
+</style>

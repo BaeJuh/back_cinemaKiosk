@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+  <!-- icon -->
+  <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+  <!-- css -->
+  <title>movie_time_selection</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ##영화-시간 토글## */
+    .toggleContainer {
+      width: 100%;
+      height: 20%;
+      padding-top: 4.5rem;
+    }
+
+    .toggleGroup {
+      width: 40rem;
+      height: 6.2rem;
+      background: #444;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      margin: 0 auto;
+      text-align: center;
+      border-radius: 0.5rem;
+    }
+
+    .toggleItem {
+      font-size: 1.5rem;
+      width: 45%;
+      height: 3.8rem;
+      line-height: 3.7rem;
+      border-radius: 0.3rem;
+      background-color: #6d6d6d83;
+      color: #ffffff75;
+      cursor: pointer;
+    }
+
+    .activeToggle {
+      background-color: #6F122D;
+      color: #fff;
+    }
+
+
+    /* ##영화-시간 메인 콘텐츠 영역## */
+    .mainPosterContainer {
+      width: 100%;
+      height: 80%;
+      padding: 0 3rem;
+      overflow-y: scroll;
+    }
+
+    .mainPosterContainer::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* #영화별선택# */
+    .posterGallery {
+      display: flex;
+      width: 62%;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      /* display: none; */
+    }
+
+    .posterItem {
+      width: 21rem;
+      height: 31.5rem;
+      background: #ddd;
+      margin-top: 3rem;
+      margin: 2rem;
+      cursor: pointer;
+    }
+
+    /* #시간대별선택# */
+    .scheduleGalleryWrap {
+      display: none;
+    }
+
+    .scheduleGallery {
+      width: 65%;
+      height: 25rem;
+      display: flex;
+      border-bottom: 0.2rem solid #a8a8a8;
+      margin-left: 23rem;
+      margin-top: 3rem;
+      padding: 0 0 3rem 0.5rem;
+    }
+
+    .schedulePoster {
+      width: 16rem;
+      height: 100%;
+      background: #ddd;
+      background: url("images/베테랑.png") no-repeat;
+      background-size: contain;
+    }
+
+    .scheduleSection {
+      width: calc(100% - 16rem);
+      height: 100%;
+      padding-left: 2rem;
+    }
+
+    .movietitle {
+      color: #fff;
+      font-size: 1.8rem;
+    }
+
+    .timeContainer {
+      width: 100%;
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      /* border: 1px solid green; */
+    }
+
+    .timeSlot {
+      width: 7.8rem;
+      height: 4.2rem;
+      line-height: 4.2rem;
+      margin: 1rem;
+      background-color: #d5d5d5;
+      border-radius: 0.3rem;
+      font-size: 1.42rem;
+      font-weight: bold;
+      text-align: center;
+      color: #222;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+
+    .timeSlot:hover {
+      background-color: #ababab;
+      color: #000;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===최상위 컨테이너=== -->
+  <div class="wrap">
+    <!-- ===레이아웃 영역=== -->
+    <section class="layoutArea">
+
+      <!-- ===사이드바 영역=== -->
+      <section class="progressSidebar">
+        <div class="progressSettings completedStep"><span class="stepLabel">영화 선택</span></div>
+        <div class="progressSettings remainingStep"><span class="stepLabel">시간 선택</span></div>
+        <div class="progressSettings remainingStep"><span class="stepLabel">좌석 선택</span></div>
+        <div class="progressSettings remainingStep"><span class="stepLabel">결제</span></div>
+      </section>
+
+      <!-- ##영화/시간 토글## -->
+      <section class="toggleContainer">
+        <article id="toggleGroup" class="toggleGroup">
+          <div id="movieSelectionStatus" class="toggleItem activeToggle">영화별 선택</div>
+          <div id="timeSelectionStatus" class="toggleItem">시간대별 선택</div>
+        </article>
+      </section>
+
+      <!-- ##포스터영역## -->
+      <section class="mainPosterContainer">
+        <!-- #영화별선택# -->
+        <article id="posterGallery" class="posterGallery">
+          <div class="posterItem">포스터영역</div>
+          <div class="posterItem">포스터영역</div>
+          <div class="posterItem">포스터영역</div>
+          <div class="posterItem">포스터영역</div>
+          <div class="posterItem">포스터영역</div>
+          <div class="posterItem">포스터영역</div>
+          <div class="posterItem">포스터영역</div>
+          <div class="posterItem">포스터영역</div>
+        </article>
+
+        <!-- #시간대별선택# -->
+        <section id="scheduleGalleryWrap" class="scheduleGalleryWrap">
+          <section class="scheduleGallery">
+            <div class="schedulePoster"></div>
+            <article class="scheduleSection">
+              <h2 class="movietitle">영화제목</h2>
+              <div class="timeContainer">
+                <div class="timeSlot">11:00</div>
+                <div class="timeSlot">12:00</div>
+                <div class="timeSlot">13:00</div>
+                <div class="timeSlot">14:00</div>
+                <div class="timeSlot">15:00</div>
+                <div class="timeSlot">16:00</div>
+                <div class="timeSlot">17:00</div>
+                <div class="timeSlot">18:00</div>
+                <div class="timeSlot">19:00</div>
+              </div>
+            </article>
+          </section>
+          <!-- 2 -->
+          <section class="scheduleGallery">
+            <div class="schedulePoster"></div>
+            <article class="scheduleSection">
+              <h2 class="movietitle">영화제목</h2>
+              <div class="timeContainer">
+                <div class="timeSlot">11:00</div>
+                <div class="timeSlot">12:00</div>
+                <div class="timeSlot">13:00</div>
+                <div class="timeSlot">14:00</div>
+                <div class="timeSlot">15:00</div>
+                <div class="timeSlot">16:00</div>
+                <div class="timeSlot">17:00</div>
+                <div class="timeSlot">18:00</div>
+                <div class="timeSlot">19:00</div>
+              </div>
+            </article>
+          </section>
+          <!-- 3 -->
+          <section class="scheduleGallery">
+            <div class="schedulePoster"></div>
+            <article class="scheduleSection">
+              <h2 class="movietitle">영화제목</h2>
+              <div class="timeContainer">
+                <div class="timeSlot">11:00</div>
+                <div class="timeSlot">12:00</div>
+                <div class="timeSlot">13:00</div>
+                <div class="timeSlot">14:00</div>
+                <div class="timeSlot">15:00</div>
+                <div class="timeSlot">16:00</div>
+                <div class="timeSlot">17:00</div>
+                <div class="timeSlot">18:00</div>
+                <div class="timeSlot">19:00</div>
+              </div>
+            </article>
+          </section>
+        </section>
+
+      </section>
+
+    </section>
+    <!-- ===하단바 영역=== -->
+    <section class="bottomBar">
+      <article class="barButtonsArea">
+        <button class="barButtons staffCallButton">직원호출</button>
+        <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+        <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+      </article>
+      <img class="logoImg" src="images/logo.png" alt="로고이미지">
+      <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span class="timeDisplay">12:00</span>
+      </article>
+    </section>
+
+  </div>
+  <!-- ==script== -->
+  <script>
+
+    class SelectionSwitcher {
+      constructor(id) {
+        this.id = id;
+      }
+      setElementId() {
+        const domElement = {
+          toggleGroup: "",
+          movieSelectionStatus: "",
+          timeSelectionStatus: "",
+          posterGallery: "",
+          scheduleGalleryWrap: ""
+        }
+        // dom요소 할당
+        const applyIdToElement = (item) => {
+          for (let key in item) {
+            if (document.getElementById(key)) {
+              item[key] = document.getElementById(key);
+            }
+          }
+        }
+        applyIdToElement(domElement);
+        this.setToggleState(domElement);
+      }//
+      setToggleState(domElement) {
+        const { toggleGroup } = domElement;
+        toggleGroup.addEventListener("click", (event) => {
+          const eventId = event.target.id;
+          this.processSelectionChange(eventId, domElement);
+        })
+      }//
+      processSelectionChange(eventId, domElement) {
+        const { movieSelectionStatus, timeSelectionStatus, posterGallery, scheduleGalleryWrap } = domElement;
+        const selectionStatus = (activate, deactivate) => {
+          if (!activate.classList.contains('activeToggle')) {
+            activate.classList.add('activeToggle');
+            deactivate.classList.remove('activeToggle');
+          }
+        }
+        // 이벤트 처리 //
+        switch (eventId) {
+          case "movieSelectionStatus":
+            selectionStatus(movieSelectionStatus, timeSelectionStatus);
+            posterGallery.style.display = "flex";
+            scheduleGalleryWrap.style.display = "none";
+            break;
+          case "timeSelectionStatus":
+            selectionStatus(timeSelectionStatus, movieSelectionStatus);
+            posterGallery.style.display = "none";
+            scheduleGalleryWrap.style.display = "block";
+        }
+      }//
+      control() {
+        this.setElementId();
+      }//
+    }//$SelectionSwitcher
+
+    const selectionSwitcher = new SelectionSwitcher('selectionSwitcher');
+    selectionSwitcher.control();
+    const posters = document.querySelectorAll(".posterItem");
+    posters.forEach((poster) => {
+      poster.addEventListener("click", () => {
+        window.location.href = "/select_movie_time_popup";
+      });
+    });
+
+  </script>
+</body>
+
+</html>

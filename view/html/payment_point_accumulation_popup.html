@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+
+    <!-- 외부 CSS 파일 링크 -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="keypad.css">
+    <title>payment_point_accumulation_popup</title>
+    <style>
+        /* 타이틀박스 */
+        .titleBox {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3.5rem;
+            color: #ffffff;
+        }
+
+        .popupContent {
+            padding-top: 4rem;
+            text-align: center;
+        }
+
+        /* 확인 버튼 스타일 */
+        .nextBtn {
+            width: 12rem;
+            height: 4rem;
+            font-size: 1.6rem;
+            background-color: #3D3F4D;
+            color: #ffffff;
+            border: none;
+            border-radius: 0.5rem;
+            margin: 1rem 0 0 67rem;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 호버 시 스타일 */
+        .nextBtn:hover {
+            background-color: #2C2F3A;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* 클릭 시 스타일 */
+        .nextBtn:active {
+            background-color: #1F2026;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <!-- ===사이드바 영역=== -->
+            <!-- <section class="progressSidebar">
+                <div class="progressSettings completedStep"><span class="stepLabel">영화<br>선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">시간<br>선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">좌석<br>선택</span></div>
+                <div class="progressSettings remainingStep paymentStep"><span class="stepLabel">결제</span></div>
+            </section> -->
+            <!-- ===팝업 영역=== -->
+            <section class="popupArea">
+                <article class="popupBar">
+                    <p class="popupTitle popupBarTextCommon">포인트 적립 번호 요청</p>
+                    <i class="popupBarTextCommon fa-solid fa-x"></i>
+                </article>
+                <section class="popupContent">
+
+                    <!-- 키패드 영역 -->
+                    <p class="titleBox">포인트 적립할 번호를 입력해 주세요.</p>
+                    <div class="keypadAreaBackgruond">
+                        <section class="keypadArea">
+                            <div class="phoneNumber"></div>
+                            <button class="key">1</button>
+                            <button class="key">2</button>
+                            <button class="key">3</button>
+                            <button class="key">4</button>
+                            <button class="key">5</button>
+                            <button class="key">6</button>
+                            <button class="key">7</button>
+                            <button class="key">8</button>
+                            <button class="key">9</button>
+                            <button class="key delete"><i class="fa-solid fa-delete-left"></i></button>
+                            <button class="key">0</button>
+                            <button class="key">재입력</button>
+                            <button id="earnPointBtn" class="check">확인</button>
+                        </section>
+                    </div>
+                    <!-- 건너뛰기 버튼 -->
+                    <button id="notEarnPointBtn" class="nextBtn">건너뛰기</button>
+
+                </section>
+            </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+        </section>
+
+    </div>
+    <!-- ==script== -->
+    <script>
+        const earnPointBtn = document.getElementById("earnPointBtn");
+        const notEarnPointBtn = document.getElementById("notEarnPointBtn");
+
+        const buttons = [ earnPointBtn, notEarnPointBtn ];
+
+        buttons.forEach( ( button )=>{
+            button.addEventListener("click", ()=>{
+                window.location.href = "/buying";
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+  <!-- icon -->
+  <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+  <!-- css -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="keypad.css">
+  <title>home</title>
+  <style>
+    .layoutArea {
+      display: flex;
+    }
+
+    .bookingNumberText {
+      color: white;
+      margin-bottom: 2rem;
+      font-size: 2.4rem;
+    }
+
+    .keypadArea {
+      width: 35rem;
+      padding: 2rem;
+      height: 37.5rem;
+      align-content: center;
+      margin: auto;
+      padding-left: 2.5rem;
+      text-align: center;
+    }
+
+    .check {
+      width: 96%;
+      height: 4.5rem;
+      font-size: 1.8rem;
+      background-color: #EDEDED;
+    }
+
+    /* 현장예매 영역 */
+    .ticketBookingArea {
+      position: relative;
+      width: 50%;
+      height: 100%;
+      background-color: gray;
+    }
+
+    /* 현장예매 이미지 */
+    .ticketBookingImg {
+      position: absolute;
+      display: block;
+      width: 48%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      transition: 0.3s;
+      border-radius: 1rem;
+    }
+
+    .ticketBookingTouchArea {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      left: 0;
+      top: 0;
+      z-index: 100;
+    }
+
+    .ticketBookingTouchArea:hover~.ticketBookingImg {
+      box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .phoneNumberInput {
+      width: 96%;
+      height: 4.5rem;
+      font-size: 1.8rem;
+      background-color: #EDEDED;
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- ===최상위 컨테이너=== -->
+  <div class="wrap">
+    <!-- ===레이아웃 영역=== -->
+    <section class="layoutArea">
+      <!-- 키패드 영역 -->
+      <section class="ticketBookingArea">
+        <div id="ticketBookingTouchArea" class="ticketBookingTouchArea"></div>
+        <img class="ticketBookingImg" src="./images/on-site_booking.png" alt="현장예매이미지">
+      </section>
+      <section class="keypadArea">
+        <p class="bookingNumberText">
+          예매 티켓 조회
+        </p>
+
+        <input type="number" class="phoneNumberInput">
+        <button class="key">1</button>
+        <button class="key">2</button>
+        <button class="key">3</button>
+        <button class="key">4</button>
+        <button class="key">5</button>
+        <button class="key">6</button>
+        <button class="key">7</button>
+        <button class="key">8</button>
+        <button class="key">9</button>
+        <button class="key delete"><i class="fa-solid fa-delete-left"></i></button>
+        <button class="key">0</button>
+        <button class="key">재입력</button>
+        <button class="check">확인</button>
+      </section>
+    </section>
+    <!-- ===하단바 영역=== -->
+    <section class="bottomBar">
+      <article class="barButtonsArea">
+        <button class="barButtons staffCallButton">직원호출</button>
+        <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+        <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+      </article>
+      <img class="logoImg" src="./images/logo.png" alt="로고이미지">
+      <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span class="timeDisplay">12:00</span>
+      </article>
+    </section>
+
+  </div>
+  <!-- ==script== -->
+  <script>
+    const ticketBookingTouchArea = document.getElementById("ticketBookingTouchArea");
+
+    ticketBookingTouchArea.addEventListener("click", () => {
+      window.location.href = "/movie_selection";
+    });
+  </script>
+</body>
+
+</html>

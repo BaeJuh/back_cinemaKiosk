@@ -1,0 +1,57 @@
+<!-- ===팝업 영역=== -->
+    <article class="popupBar">
+        <p class="popupTitle popupBarTextCommon">회원번호 입력 안내</p>
+        <div id="closePopup"><i class="popupBarTextCommon fa-solid fa-x"></i></div>
+    </article>
+    <section class="popupContent">
+        <!-- 키패드 영역 -->
+        <section class="keypadBoxArea">
+            <%- include("keypadFrame", { title: "회원번호를 입력해주세요" }) %>
+        </section>
+
+    </section>
+
+
+<script>
+    const checkBtn = document.getElementById("checkBtn");
+    //const queryData_popup = <%- JSON.stringify(queryData) %>;
+
+    // const makeQuery = (queryData) => {
+    //     let query = "";
+
+    //     for (const key in queryData) {
+    //         query += `${key}=${queryData[key]}&`;
+    //     }
+    //     console.log(query);
+    //     return query;
+    // }
+
+    checkBtn.addEventListener("click", () => {
+        const query = makeQuery(queryData);
+        window.location.href = `/point_confirmation?${query}`;
+    });
+</script>
+
+<style>
+    .keypadBoxArea{
+        padding-top: 5.5rem;;
+    }
+
+    .popupContent {
+        padding-top: 3.5rem;
+    }
+
+    .popupTitleText{
+        font-size: 2rem;
+        letter-spacing: 1px;
+        color: #FFFFFF;
+        padding-bottom: 2.5rem;
+        text-align: center;
+        padding-top: 2rem;
+    }
+
+    .keypadArea {
+        height: 37.5rem;
+    }
+    
+</style>

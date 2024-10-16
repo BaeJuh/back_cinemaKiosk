@@ -1,0 +1,61 @@
+    <article class="popupBar">
+        <p class="popupTitle popupBarTextCommon">카드 삽입 안내</p>
+        <!-- <div id="closePopup"><i class="popupBarTextCommon fa-solid fa-x"></i></div> -->
+    </article>
+    <section class="popupContent">
+        <!-- ~여기에 작성~ -->
+        <p class="popupContentText">카드를 카드 리더기에 삽입해 주세요.</p>
+        <p class="timeoutText"><span id="timer" class="timer">5</span>초 후 자동종료 됩니다.</p>
+        <div class="popupContentImg"></div>
+    </section>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", () => { // 5초뒤 종료
+        const timer = document.getElementById("timer");
+        const timerSecond = 5;
+        timer.style.color = "white";
+        for (let i = 1; i <= timerSecond; i++) {
+            setTimeout(() => {
+                timer.innerText = `${(timerSecond + 1) - i}`;
+
+                if (i === timerSecond) {
+                    window.location.href = "/show_payment";
+                }
+            }, i * 1000);
+        }
+    });
+</script>
+
+<style>
+    .popupContent {
+        display: flex;
+        padding: 2rem;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .popupContentText {
+        font-size: 2.4rem;
+        width: 100%;
+        text-align: center;
+        color: white;
+        padding-top: 4rem;
+
+    }
+
+    .popupContentImg {
+        width: 80%;
+        height: 80%;
+        background-image: url("images/card_input.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .timeoutText,
+    .timer {
+        font-size: 2rem;
+        color: #d6d6d6;
+        margin-top: 2rem;
+    }
+</style>

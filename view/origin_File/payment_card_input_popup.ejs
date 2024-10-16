@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+    <title>payment_card_input_popup</title>
+    <style>
+        .popupContent {
+            display: flex;
+            padding: 2rem;
+            align-items: center;
+            flex-direction: column;
+            padding-top: 4rem;
+        }
+
+        .popupContentText {
+            font-size: 2.4rem;
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+
+        .popupContentImg {
+            width: 80%;
+            height: 80%;
+            background-image: url("images/card_input.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .timeoutText,
+        .timer {
+            font-size: 2rem;
+            color: #d6d6d6;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <!-- ===사이드바 영역=== -->
+            <!-- <section class="progressSidebar">
+                <div class="progressSettings completedStep"><span class="stepLabel">영화<br>선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">시간<br>선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">좌석<br>선택</span></div>
+                <div class="progressSettings remainingStep paymentStep"><span class="stepLabel">결제</span></div>
+            </section> -->
+            <!-- ===팝업 영역=== -->
+            <section class="popupArea">
+                <article class="popupBar">
+                    <p class="popupTitle popupBarTextCommon">카드 삽입 안내</p>
+                    <i class="popupBarTextCommon fa-solid fa-x"></i>
+                </article>
+                <section class="popupContent">
+                    <!-- ~여기에 작성~ -->
+                    <p class="popupContentText">카드를 카드 리더기에 삽입해 주세요.</p>
+                    <p class="timeoutText"><span id="timer" class="timer">5</span>초 후 자동종료 됩니다.</p>
+                    <div class="popupContentImg"></div>
+                </section>
+            </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+        </section>
+    </div>
+    <!-- ==script== -->
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => { // 5초뒤 종료
+            const timer = document.getElementById("timer");
+            const timerSecond = 5;
+            timer.style.color = "white";
+            for (let i = 1; i <= timerSecond; i++) {
+                setTimeout(() => {
+                    timer.innerText = `${(timerSecond + 1) - i}`;
+
+                    if (i === timerSecond) {
+                        window.location.href = "/show_payment";
+                    }
+                }, i * 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>

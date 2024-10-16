@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+    <title>selectPeople</title>
+    <style>
+        /* 숫자 카운트 박스 공통된 부분  */
+        .selectPeople {
+            width: 65%;
+            height: 5rem;
+            background-color: #5c5c5c;
+            position: relative;
+            margin-bottom: 5rem;
+            top: 15%;
+            left: 17.5%;
+        }
+
+        .selectPeopleBtn {
+            position: relative;
+            top: 16%;
+            left: 47%;
+            height: 3rem;
+            width: 6.5rem;
+            font-size: 1.3rem;
+            margin-top: 2rem;
+        }
+
+        .adult,
+        .youth,
+        .preferential {
+            display: flex;
+        }
+
+        /* 숫자 선택 박스 */
+        .countPeople {
+            flex-grow: 1;
+            border: 1px solid #0a0a0a;
+            text-align: center;
+            line-height: 5rem;
+            font-size: 1.5rem;
+        }
+
+        /* 숫자 선택박스의 텍스트 */
+        .adultText,
+        .youthText,
+        .preferentialText {
+            width: 4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <!-- ===사이드바 영역=== -->
+            <section class="progressSidebar">
+                <div class="progressSettings completedStep"><span class="stepLabel">영화 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">시간 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">좌석 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">결제</span></div>
+            </section>
+            <!-- ===팝업 영역=== -->
+            <section class="popupArea">
+                <article class="popupBar">
+                    <p class="popupTitle popupBarTextCommon">팝업제목</p>
+                    <i class="popupBarTextCommon fa-solid fa-x"></i>
+                </article>
+                <section class="popupContent">
+                    <!-- ~여기에 작성~ -->
+                    <div class="adult selectPeople">
+                        <div class="countPeople adultText">성인</div>
+                        <div class="countPeople">0</div>
+                        <div class="countPeople">1</div>
+                        <div class="countPeople">2</div>
+                        <div class="countPeople">3</div>
+                        <div class="countPeople">4</div>
+                        <div class="countPeople">5</div>
+                        <div class="countPeople">6</div>
+                        <div class="countPeople">7</div>
+                        <div class="countPeople">8</div>
+                    </div>
+                    <!-- 청소년 부분 숫자 -->
+                    <div class="youth selectPeople">
+                        <div class="countPeople youthText">청소년</div>
+                        <div class="countPeople">0</div>
+                        <div class="countPeople">1</div>
+                        <div class="countPeople">2</div>
+                        <div class="countPeople">3</div>
+                        <div class="countPeople">4</div>
+                        <div class="countPeople">5</div>
+                        <div class="countPeople">6</div>
+                        <div class="countPeople">7</div>
+                        <div class="countPeople">8</div>
+                    </div>
+                    <!-- 우대 부분 숫자 -->
+                    <div class="preferential selectPeople">
+                        <div class="countPeople preferentialText">우대</div>
+                        <div class="countPeople">0</div>
+                        <div class="countPeople">1</div>
+                        <div class="countPeople">2</div>
+                        <div class="countPeople">3</div>
+                        <div class="countPeople">4</div>
+                        <div class="countPeople">5</div>
+                        <div class="countPeople">6</div>
+                        <div class="countPeople">7</div>
+                        <div class="countPeople">8</div>
+                    </div>
+                    <button id="selectPeopleBtn" class="selectPeopleBtn">확인</button>
+                </section>
+            </section>
+        </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+            <p>test: <%= time.time %></p>
+        </section>
+    </div>
+    <script>
+        const reservationMoiveData = {
+            time: "<%= time.time%>"
+        }
+
+        
+        console.log( reservationMoiveData );
+
+        document.getElementById("selectPeopleBtn").addEventListener(
+            "click",()=>{
+                //const url = `time={}`
+                //alert("test");
+                // seatSelection
+            }
+        );
+
+    </script>
+</body>
+
+</html>

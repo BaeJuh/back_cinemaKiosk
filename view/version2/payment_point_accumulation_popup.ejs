@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+
+    <!-- 외부 CSS 파일 링크 -->
+    <link rel="stylesheet" href="style.css">
+    <title>payment_point_accumulation_popup</title>
+    <style>
+        /* 타이틀박스 */
+        .titleBox {
+            text-align: center;
+            font-size: 2.4rem;
+            margin-bottom: 3.5rem;
+            color: #ffffff;
+        }
+
+        /* 키패드 영역 */
+        i {
+            pointer-events: none;
+            font-size: 1.5rem;
+        }
+
+        .key {
+            width: 8rem;
+            height: 4rem;
+            margin: 0.4rem;
+            font-size: 1.8rem;
+            background-color: #444444;
+            color: #EDEDED;
+        }
+
+        .check {
+            width: 26.5rem;
+            height: 4.5rem;
+            font-size: 1.8rem;
+            background-color: #EDEDED;
+        }
+
+        .keypadArea {
+            width: 25rem;
+            height: 25rem; text-align: center;
+            position: relative;
+        }
+
+        .phoneNumber {
+            width: 26.5rem;
+            height: 4.5rem;
+            margin: 0.4rem;
+            font-size: 1.8rem;
+            background-color: #444444;
+            color: #EDEDED;
+        }
+
+        .popupContent {
+            padding-top: 4rem;
+            text-align: center;
+        }
+
+        .keypadArea {
+            width: 35rem;
+            padding: 2rem;
+            height: 33rem;
+            background-color: #D9D9D9;
+            align-content: center;
+            margin: auto;
+            padding-left: 2.5rem;
+        }
+
+        .nextBtn {
+            width: 8rem;
+            height: 3.5rem;
+            font-size: 1.8rem;
+            background-color: #EDEDED;
+            color: #444444;
+            margin-left: 70rem;
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <!-- ===사이드바 영역=== -->
+            <section class="progressSidebar">
+                <div class="progressSettings completedStep"><span class="stepLabel">영화 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">시간 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">좌석 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">결제</span></div>
+            </section>
+            <!-- ===팝업 영역=== -->
+            <section class="popupArea">
+                <article class="popupBar">
+                    <p class="popupTitle popupBarTextCommon">전화번호 확인</p>
+                    <i class="popupBarTextCommon fa-solid fa-x"></i>
+                </article>
+                <section class="popupContent">
+
+                    <!-- 키패드 영역 -->
+                    <p class="titleBox">포인트 적립</p>
+                    <div class="keypadAreaBackgruond">
+                        <section class="keypadArea">
+                            <input type="text" class="phoneNumber">
+                            <button class="key">1</button>
+                            <button class="key">2</button>
+                            <button class="key">3</button>
+                            <button class="key">4</button>
+                            <button class="key">5</button>
+                            <button class="key">6</button>
+                            <button class="key">7</button>
+                            <button class="key">8</button>
+                            <button class="key">9</button>
+                            <button class="key delete"><i class="fa-solid fa-delete-left"></i></button>
+                            <button class="key">0</button>
+                            <button class="key">재입력</button>
+                            <button id="earnPointBtn" class="check">확인</button>
+                        </section>
+                    </div>
+                    <!-- 건너뛰기 버튼 -->
+                    <button id="notEarnPointBtn" class="nextBtn">건너뛰기</button>
+
+                </section>
+            </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+        </section>
+
+    </div>
+    <!-- ==script== -->
+    <script>
+        const earnPointBtn = document.getElementById("earnPointBtn");
+        const notEarnPointBtn = document.getElementById("notEarnPointBtn");
+
+        const buttons = [ earnPointBtn, notEarnPointBtn ];
+
+        buttons.forEach( ( button )=>{
+            button.addEventListener("click", ()=>{
+                window.location.href = "/buying";
+            });
+        });
+    </script>
+</body>
+
+</html>

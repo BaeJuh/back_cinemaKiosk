@@ -1,0 +1,163 @@
+<link rel="stylesheet" href="keypad.css">
+
+<section id="keypadArea" class="keypadArea">
+    <p class="keypadTitle">
+        <%= title %>
+    </p>
+    <input id="phoneNumber" class="phoneNumber" type="text" placeholder="010-1111-2222" readonly>
+    <button class="key" data-value="1">1</button>
+    <button class="key" data-value="2">2</button>
+    <button class="key" data-value="3">3</button>
+    <button class="key" data-value="4">4</button>
+    <button class="key" data-value="5">5</button>
+    <button class="key" data-value="6">6</button>
+    <button class="key" data-value="7">7</button>
+    <button class="key" data-value="8">8</button>
+    <button class="key" data-value="9">9</button>
+    <button class="key delete" data-value="delete"><i class="fa-solid fa-delete-left"></i></button>
+    <button class="key" data-value="0">0</button>
+    <button class="key" data-value="reset">재입력</button>
+    <button id="checkBtn" class="check" data-value="check" disabled>확인</button>
+</section>
+
+<script>
+    class InputUserNum {
+        constructor(id) {
+            this.id = id;
+        }
+
+        displayData(item) {
+            document.getElementById(`phoneNumber`).value = item;
+            const result = [
+                    { phone_number: "01011112222" }
+                ]
+                if (item == result[0].phone_number) {
+                    document.getElementById('checkBtn').disabled = false;
+                } else {
+                    document.getElementById('checkBtn').disabled = true;
+                }
+                console.log(item)
+        }
+
+        //Deck 영역
+        inputData(id) {
+            class Deck {
+                constructor(id) {
+                    this.id = id;
+                    this.storage = [];
+                    this.length = 0;
+                }
+                pushItem(item) {
+                    this.storage.push(item);
+                }
+                shiftItem() {
+                    return this.storage.shift();
+                }
+                popItem() {
+                    return this.storage.pop();
+                }
+                getLength() {
+                    this.length = this.storage.length;
+                    return this.storage.length;
+                }
+                getLastItem() {
+                    return this.storage[this.storage.length - 1];
+                }
+            }
+            let tempString = "";
+            const InputUserNumberDeck = new Deck(this.id);
+            //누르는 값을 가져오는 영역
+            document.getElementById(`keypadArea`).addEventListener("click", (e) => {
+                if (
+                    e.target.dataset.value != null &&
+                    e.target.dataset.value != "reset" &&
+                    e.target.dataset.value != "delete" &&
+                    e.target.dataset.value != "check" &&
+                    InputUserNumberDeck.getLength() < 13
+                ) {
+
+                    if (InputUserNumberDeck.getLength() == 3 || InputUserNumberDeck.getLength() == 8) {
+                        InputUserNumberDeck.pushItem("-");
+                    }
+
+                    if (InputUserNumberDeck.getLength() == 9 || InputUserNumberDeck.getLength() == 4) {
+                        // console.log("lastItem" + InputUserNumberDeck.getLastItem());
+                        // console.log(InputUserNumberDeck.storage);
+                        if (InputUserNumberDeck.getLastItem() != "-") {
+                            InputUserNumberDeck.pushItem("-");
+                        }
+                    }
+
+                    InputUserNumberDeck.pushItem(e.target.dataset.value);
+
+                    tempString = "";
+                    for (let i = 0; i < InputUserNumberDeck.storage.length; i++) {
+                        let tempV = "";
+                        tempV = InputUserNumberDeck.shiftItem();
+                        tempString += tempV;
+                        InputUserNumberDeck.pushItem(tempV);
+                    }
+                    this.displayData(tempString);
+                    //console.log(e.target.dataset.value);
+                }
+                let Number = String(InputUserNumberDeck.storage);
+                let realUserNumber = (Number.replace(/-/g, '')).replace(/,/g, '');
+                console.log(realUserNumber)
+
+                const result = [
+                    { phone_number: "01011112222" }
+                ]
+                if (realUserNumber == result[0].phone_number) {
+                    document.getElementById('checkBtn').disabled = false;
+                } else {
+                    document.getElementById('checkBtn').disabled = true;
+                }
+
+
+                switch (e.target.dataset.value) {
+                    case "reset":
+                        InputUserNumberDeck.storage = [];
+                        tempString = "";
+                        this.displayData(tempString);
+                        break;
+                    case "delete":
+                        if (InputUserNumberDeck.getLength() === 10 || InputUserNumberDeck.getLength() === 5) {
+                            // console.log(InputUserNumberDeck.storage);
+                            // console.log(InputUserNumberDeck.getLength());
+                            InputUserNumberDeck.popItem();
+                            InputUserNumberDeck.popItem();
+
+                            tempString = "";
+                            for (let i = 0; i < InputUserNumberDeck.storage.length; i++) {
+                                let tempV = "";
+                                tempV = InputUserNumberDeck.shiftItem();
+                                tempString += tempV;
+                                InputUserNumberDeck.pushItem(tempV);
+                            }
+                            this.displayData(tempString);
+                            break;
+                        } else {
+                            InputUserNumberDeck.popItem();
+
+                            tempString = "";
+                            for (let i = 0; i < InputUserNumberDeck.storage.length; i++) {
+                                let tempV = "";
+                                tempV = InputUserNumberDeck.shiftItem();
+                                tempString += tempV;
+                                InputUserNumberDeck.pushItem(tempV);
+                            }
+                            this.displayData(tempString);
+                            break;
+                        }
+                }
+
+
+            });
+        }
+        control() {
+            this.inputData();
+        }
+    }
+    const userNumber = new InputUserNum('userNumber');
+    userNumber.control();
+</script>

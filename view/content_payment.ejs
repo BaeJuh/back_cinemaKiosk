@@ -1,0 +1,216 @@
+<div id="paymentPoster" class="paymentPoster">
+    <!-- 영화포스터 -->
+</div>
+<!-- #결제/포인트사용 Box# -->
+<section class="paymentContainer">
+    <article class="paymentHeader">
+        <h2 class="paymentTitle">총 결제금액</h2>
+        <input id="paymentAmount" class="paymentAmount" type="text" value="30,000원" readonly>
+    </article>
+    <article class="paymentOptionBox">
+        <!-- 카드결제 -->
+        <div class="cardPayment paymentOptionStyle">
+            <div id="paymentCard" class="paymentImg cardImg"></div>
+            <div id="cardPaymentTouchArea" class="cardPaymentTouchArea"></div>
+        </div>
+        <!-- 포인트사용 -->
+        <div class="pointsUsage paymentOptionStyle">
+            <div class="paymentImg pointImg"></div>
+            <div id="pointsUsageTouchArea" class="pointsUsageTouchArea"></div>
+        </div>
+    </article>
+</section>
+
+<script>
+    const procedurePayment = (selectedMovieData) => {
+        // const [selectedMovieData] = [
+        //     { movie_id: 1, title: '플립', img_path: 'images/플립.jpg' }
+        // ];
+        [selectedMovieData] = selectedMovieData;
+
+        const queryData = <%- JSON.stringify(queryData) %>;
+        console.log(selectedMovieData)
+        const paymentCard = document.getElementById("cardPaymentTouchArea");
+        const pointsUsage = document.getElementById("pointsUsageTouchArea");
+
+        // 총 결제 금액 입력
+        const paymentAmount = document.getElementById("paymentAmount");
+        const priceTable = { adult: 14000, youth: 11000, special: 11000 };
+
+        let price = 0;
+        for (const clientType in priceTable) {
+            price += queryData[clientType] * priceTable[clientType];
+        }
+        paymentAmount.value = price.toLocaleString("kr-KO");
+
+        const makeQuery = (queryData) => {
+            let query = "";
+
+            queryData["price"] = price;
+
+            for (const key in queryData) {
+                query += `${key}=${queryData[key]}&`;
+            }
+            console.log(query);
+            return query;
+        }
+
+        // 카드 결제
+        paymentCard.addEventListener("click", () => {
+            const query = makeQuery(queryData);
+            window.location.href = `/earn_point?${query}`;
+        });
+
+        // 포인트 사용
+        pointsUsage.addEventListener("click", () => {
+            const query = makeQuery(queryData);
+            window.location.href = `/user_verification?${query}`;
+        });
+        const paymentPoster = document.getElementById("paymentPoster");
+        paymentPoster.style.backgroundImage =  `url("${selectedMovieData["img_path"]}")`
+    }
+
+    const runPayment = (async () => {
+        const settings = {
+            method: "POST",
+            headers: {
+                "Accept": 'application/json',
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify(<%- JSON.stringify(queryData) %>)
+        }
+        const response = await fetch("/payment", settings);
+
+        const paymentData = await response.json(); // 서버 응답 처리
+        procedurePayment(paymentData);
+    })();
+
+
+</script>
+
+<style>
+    /* #결제/포인트사용# */
+    .paymentContainer {
+        width: 50%;
+        height: 100%;
+        margin-left: 50%;
+    }
+
+    .paymentHeader {
+        width: 100%;
+        height: 10%;
+        background: #151821;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* 결제 제목 */
+    .paymentTitle {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .paymentImg {
+        width: 30rem;
+        height: 34rem;
+        margin: auto;
+        margin-top: 10rem;
+    }
+
+    .cardImg,
+    .pointImg {
+        background-image: url("./images/card_payment_icon.png");
+        background-repeat: no-repeat;
+        background-position: 49%;
+        background-size: 31.5rem;
+    }
+
+    .pointImg {
+        background-image: url("./images/point_usage_icon.png");
+
+    }
+
+    /* 결제 금액 */
+    .paymentAmount {
+        font-size: 1.7rem;
+        font-weight: 600;
+        background: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 0.3rem;
+        padding: 0.5rem;
+        text-align: center;
+        margin-left: 1rem;
+        outline: none;
+        width: 16rem;
+    }
+
+    .paymentOptionBox {
+        width: 100%;
+        height: 90%;
+        background: #333333;
+        display: flex;
+    }
+
+    .paymentOptionStyle {
+        width: 50%;
+        height: 100%;
+        text-align: center;
+        line-height: 57rem;
+        font-size: 2.4rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    /* 카드 결제 */
+    .cardPayment {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: #323440;
+        border-right: .06rem dotted gray;
+    }
+
+    .cardPaymentTouchArea {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    /* 포인트사용 */
+    .pointsUsage {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: #323440;
+    }
+
+    .pointsUsageTouchArea {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    /* 결제창 > 영화포스터 */
+    .paymentPoster {
+        position: absolute;
+        width: 26rem;
+        height: 39rem;
+        left: 26%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        /* background-image: url("images/베테랑.png"); */
+        /* background-color: wheat; */
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>

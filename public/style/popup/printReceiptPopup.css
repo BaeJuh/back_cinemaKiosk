@@ -1,0 +1,51 @@
+.printReciptPopup {
+    width: 84rem;
+    height: 54rem;
+
+    position: absolute;
+    left: calc( 50% - 42rem );
+    top: calc( 50% - 27rem - 3rem );
+
+    background-color: #ADADAD;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-evenly;
+}
+
+    .popupBar {
+        width: 100%;
+        height: 4.5rem;
+        background-color: #E6E6E6;
+    }
+        
+        .reciptImage {
+            width: 29rem;
+            height: 41rem;
+
+            margin-top: calc( (54rem - 41rem) / 2 - 2.25rem );
+
+            background-color: white;
+        }
+
+    .reciptBtnWrapper {
+        height: 90%;
+        width: 30%;
+
+        display: flex;
+        flex-wrap: wrap;
+
+        align-content: space-evenly;
+    }
+
+        .reciptBtn {
+            width: 100%;
+            height: 5rem;
+
+            background-color: #EDEDED;
+
+            font-size: 3.2rem;
+
+            border: none;
+        }

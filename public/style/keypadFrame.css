@@ -1,0 +1,26 @@
+/* 키패드 영역 */
+.keypadArea {
+    width: 30rem;
+    height: 25rem;
+}
+
+    i { /* 위험한데 */
+        pointer-events: none;
+        font-size: 1.5rem;
+    }
+
+    .key {
+        width: 9rem;
+        height: 4.5rem;
+        margin: 0.4rem;
+        font-size: 1.8rem;
+        background-color: #444444;
+        color: #EDEDED;
+    }
+
+    .check {
+        width: 100%;
+        height: 4.5rem;
+        font-size: 1.8rem;
+        background-color: #EDEDED;
+    }

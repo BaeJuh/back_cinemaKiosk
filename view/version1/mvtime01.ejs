@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+
+    <!-- 외부 CSS 파일 링크 -->
+    <link rel="stylesheet" href="style.css">
+
+
+    <title>Document</title>
+
+    <style>
+        /* 시간선택팝업 */
+        .posterBasicInformation {
+            width: 30rem;
+            height: 50rem;
+        }
+
+        .posterImg {
+            width: 25rem;
+            height: 35rem;
+            background-color: #3b3b3b;
+            position: relative;
+            top: 50%;
+            left: 60%;
+            transform: translate(-50%, -60%);
+        }
+
+        .posterInformation {
+            width: 25rem;
+            height: 5rem;
+            /* margin-left: 4rem;
+            margin-top: 2rem; */
+            text-align: center;
+            line-height: 5rem;
+            margin-left: 5.7rem;
+            margin-top: 5rem;
+
+        }
+
+        .mvName {
+            height: 100%;
+            width: 60%;
+            background-color: #E6E6E6;
+            float: left;
+            font-size: 1.6rem;
+        }
+
+        .mvTime {
+            height: 100%;
+            width: 35%;
+            background-color: #E6E6E6;
+            float: right;
+            font-size: 1.6rem;
+        }
+
+        .allMvTime {
+            width: 50%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+            position: absolute;
+            top: 8.5rem;
+            right: 4rem;
+        }
+
+        .allMvTime li {
+            width: 31%;
+            height: 6rem;
+            list-style: none;
+            background-color: #E6E6E6;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-top: 1.7rem;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <!-- ===사이드바 영역=== -->
+            <section class="progressSidebar">
+                <div class="progressSettings completedStep"><span class="stepLabel">영화 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">시간 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">좌석 선택</span></div>
+                <div class="progressSettings remainingStep"><span class="stepLabel">결제</span></div>
+            </section>
+            <!-- ===팝업 영역=== -->
+            <section class="popupArea">
+                <article class="popupBar">
+                    <p class="popupTitle popupBarTextCommon">팝업제목</p>
+                    <i class="popupBarTextCommon fa-solid fa-x"></i>
+                </article>
+                <section class="popupContent">
+                    <!-- ~여기에 작성~ -->
+
+                    <!-- 시간선택팝업 -->
+                    <div class="timePopupAll">
+                        <div class="posterBasicInformation">
+                            <div class="posterImg"></div>
+                            <div class="posterInformation">
+                                <p class="mvName">영화제목</p>
+                                <p class="mvTime">시간</p>
+                            </div>
+                            <ul class="allMvTime">
+                                <a href='/selectPeople?time=2024년 09월 10일 화요일'>test</a>
+                                <li class="mvTime">2024년 09월 10일 화요일<br>A관 09시00분~12시00분</li>
+                                <li class="mvTime">2024년 09월 10일 화요일<br>A관 09시00분~12시00분</li>
+                                <li class="mvTime">2024년 09월 10일 화요일<br>A관 09시00분~12시00분</li>
+                                <li class="mvTime">2024년 09월 10일 화요일<br>A관 09시00분~12시00분</li>
+                                <li class="mvTime">2024년 09월 10일 화요일<br>A관 09시00분~12시00분</li>
+                                <li class="mvTime">2024년 09월 10일 화요일<br>A관 09시00분~12시00분</li>
+                            </ul>
+                        </div>
+
+                </section>
+            </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+        </section>
+
+    </div>
+    <script>
+        document.getElementById("testLi").addEventListener("click",()=>{})
+    </script>
+</body>
+
+</html>

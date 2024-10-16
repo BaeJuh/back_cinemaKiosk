@@ -1,0 +1,102 @@
+<link rel="stylesheet" href="keypad.css">
+<section id="keypadFrame" class="keypadArea">
+    <p class="bookingNumberText">
+        <%= title %>
+    </p>
+    <input id="phoneNumber" class="phoneNumber" type="text" placeholder="010-1111-2222">
+    <button class="key" value="1">1</button>
+    <button class="key" value="2">2</button>
+    <button class="key" value="3">3</button>
+    <button class="key" value="4">4</button>
+    <button class="key" value="5">5</button>
+    <button class="key" value="6">6</button>
+    <button class="key" value="7">7</button>
+    <button class="key" value="8">8</button>
+    <button class="key" value="9">9</button>
+    <button class="key delete" value="delete"><i class="fa-solid fa-delete-left"></i></button>
+    <button class="key" value="0">0</button>
+    <button class="key" value="reset">재입력</button>
+    <button id="checkBtn" class="check" disabled>확인</button>
+</section>
+
+<script>
+    class Keypad {
+        constructor(id) {
+            this.id = id;
+        }
+        inputNumber() {
+            class Deque {
+                constructor(id) {
+                    this.id = id;
+                    this.storage = [];
+                    this.length = 0;
+                }
+                pushData(data) {
+                    this.storage.push(data);
+                }
+                unshiftData(data) {
+                    this.storage.unshift(data);
+                }
+                popData() {
+                    return this.storage.pop();
+                }
+                shiftData() {
+                    return this.storage.shift();
+                }
+                getLength() {
+                    this.length = this.storage.length;
+                    return this.storage.length;
+                }
+                copyStorage() {
+                    return [...this.storage];
+                }
+            }
+
+            const checkBtn = document.getElementById("checkBtn");
+            const keypad = document.getElementById("keypadFrame");
+
+            const numberDeque = new Deque(`${this.id}Deque`);
+
+            keypad.addEventListener("click", (e) => {
+                const keyValue = e.target.value;
+                if (keyValue) {
+                    //console.log(keyValue);
+                    switch (keyValue) {
+                        case "delete":
+                            numberDeque.popData();
+                            break;
+                        case "reset":
+                            while (numberDeque.getLength() > 0) {
+                                numberDeque.popData();
+                            }
+                            break;
+                        default:
+                            numberDeque.pushData(keyValue);
+                    }
+                }
+                
+                this.showNumber( numberDeque );
+
+                checkBtn.disabled = (numberDeque.getLength() < 10);
+            });
+        }
+
+        showNumber(deque) {
+            const displayNumber = document.getElementById("displayNumber");
+            let displayStr = "";
+            ///console.log( deque.copyStorage() );
+            deque.copyStorage().forEach( number => {
+                displayStr += number;
+            });
+            
+            displayNumber.value = displayStr;
+        }
+
+        runKeypad() {
+            this.inputNumber();
+        }
+    }
+
+    const keypad = new Keypad("keypad");
+    keypad.runKeypad();
+</script>

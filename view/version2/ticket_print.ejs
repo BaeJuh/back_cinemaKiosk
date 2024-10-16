@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+    <title>ticket_print</title>
+    <style>
+        /* main영역 */
+        .mainArea {
+            /* border: 1px solid red; */
+            height: 100%;
+            width: 90rem;
+            /* text-align: center; */
+            margin-left: 19rem;
+            padding-top: 6rem
+        }
+
+        .headArea {
+            display: flex;
+        }
+
+        /* 포스터 사진영역 */
+        .poster {
+            width: 28rem;
+            height: 42rem;
+            /*border: 1px solid blue; */
+            background-color: #D9D9D9;
+            margin-left: 10rem;
+        }
+
+        /* 정보영역 */
+        .movieTitle {
+            margin: .5rem 3.5rem;
+            font-size: 2.4rem; color: #D9D9D9;
+        }
+
+        .listArea {
+            list-style: none;
+            /*border: 1px solid salmon;  */
+            margin-top: 3.2rem;
+        }
+
+        .informationList {
+            width: 40rem;
+            height: 5.5rem;
+            font-size: 1.6rem;
+            color: #D9D9D9;
+            border-bottom: 1px solid white;
+            margin: 2rem 3.5rem;
+        }
+
+        .submitArea {
+            /* border: 1px solid powderblue; */
+            margin-top: 5rem; text-align: center;
+        }
+
+        .submitButton {
+            width: 25rem;
+            height: 4.5rem;
+            font-size: 1.8rem;
+            background-color: #E6E6E6;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <section class="mainArea">
+                <section class="headArea">
+                    <!-- 포스터 영역 -->
+                    <div class="poster"></div>
+                    <!-- 영화 정보 영역 -->
+                    <section class="movieInformation">
+                        <p class="movieTitle">영화제목</p>
+                        <ul class="listArea">
+                            <li class="informationList">일시/시간</li>
+                            <li class="informationList">상영시간</li>
+                            <li class="informationList">티켓매수</li>
+                            <li class="informationList">좌석정보</li>
+                            <li class="informationList">회원정보</li>
+                        </ul>
+                    </section>
+                </section>
+                <!-- 출력 버튼 영역 -->
+                <section class="submitArea">
+                    <button class="submitButton">티켓출력</button>
+                </section>
+            </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+        </section>
+
+    </div>
+
+
+</html>

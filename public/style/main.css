@@ -1,0 +1,36 @@
+.main {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+
+}
+
+    .buyTicketBtn {
+        width: 30rem;
+        height: 30rem;
+    }
+
+    .printResevedTicketMessage {
+        color: white;
+        font-size: 2.4rem;
+        text-align: center;
+
+        margin-bottom: 2rem;
+    }
+
+    .displayKeypad {
+        width: 30rem;
+        height: 5rem;
+
+        border: none;
+        outline: none;
+
+        text-align: center;
+        font-size: 2.0rem;
+
+        margin-bottom: 2rem;
+    }

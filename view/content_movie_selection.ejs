@@ -1,0 +1,367 @@
+<!-- ##영화/시간 토글## -->
+<section class="toggleContainer">
+    <article id="toggleGroup" class="toggleGroup">
+        <div id="movieSelectionStatus" class="toggleItem activeToggle">영화별 선택</div>
+        <div id="timeSelectionStatus" class="toggleItem">시간대별 선택</div>
+    </article>
+</section>
+
+<!-- ##포스터영역## -->
+<section class="mainPosterContainer">
+    <!-- #영화별선택# -->
+    <article id="posterGallery" class="posterGallery">
+
+    </article>
+
+    <!-- #시간대별선택# -->
+    <section id="scheduleGalleryWrap" class="scheduleGalleryWrap">
+
+    </section>
+
+</section>
+<script>
+
+    class SelectionSwitcher {
+        constructor(id) {
+            this.id = id;
+        }
+        setElementId() {
+            const domElement = {
+                toggleGroup: "",
+                movieSelectionStatus: "",
+                timeSelectionStatus: "",
+                posterGallery: "",
+                scheduleGalleryWrap: ""
+            }
+            // dom요소 할당
+            const applyIdToElement = (item) => {
+                for (let key in item) {
+                    if (document.getElementById(key)) {
+                        item[key] = document.getElementById(key);
+                    }
+                }
+            }
+            applyIdToElement(domElement);
+            this.setToggleState(domElement);
+        }//
+        setToggleState(domElement) {
+            const { toggleGroup } = domElement;
+            toggleGroup.addEventListener("click", (event) => {
+                const eventId = event.target.id;
+                this.processSelectionChange(eventId, domElement);
+            })
+        }//
+        processSelectionChange(eventId, domElement) {
+            const { movieSelectionStatus, timeSelectionStatus, posterGallery, scheduleGalleryWrap } = domElement;
+            const selectionStatus = (activate, deactivate) => {
+                if (!activate.classList.contains('activeToggle')) {
+                    activate.classList.add('activeToggle');
+                    deactivate.classList.remove('activeToggle');
+                }
+            }
+            // 이벤트 처리 //
+            switch (eventId) {
+                case "movieSelectionStatus":
+                    selectionStatus(movieSelectionStatus, timeSelectionStatus);
+                    posterGallery.style.display = "flex";
+                    scheduleGalleryWrap.style.display = "none";
+                    break;
+                case "timeSelectionStatus":
+                    selectionStatus(timeSelectionStatus, movieSelectionStatus);
+                    posterGallery.style.display = "none";
+                    scheduleGalleryWrap.style.display = "block";
+            }
+        }//
+        control() {
+            this.setElementId();
+        }//
+    }//$SelectionSwitcher
+
+    const procedureMovieSelection = (posterMovieData, scheduleMovieData) => {
+        // const posterMovieData = [
+        //     { movie_id: 1, duration: '2시간10분', title: '플립', "img_path": 'images/플립.jpg' },
+        //     { movie_id: 2, duration: '2시간10분', title: '아바타2', "img_path": 'images/아바타물의길.jpg' },
+        //     { movie_id: 3, duration: '2시간10분', title: '블라인드', "img_path": 'images/블라인드.jpg' },
+        //     { movie_id: 4, duration: '2시간10분', title: '나 홀로 집에1', "img_path": 'images/나홀로집에.jpg' },
+        //     { movie_id: 5, duration: '2시간10분', title: '1917', "img_path": 'images/1917.jpg' },
+        //     { movie_id: 6, duration: '2시간10분', title: '반지의 제왕', "img_path": 'images/반지의제왕.jpg' },
+        // ];
+
+        // const scheduleMovieData = [
+        //     { "movie_id": 1, "duration": "1시간50분", "title": "플립", start_time: '11:00', "img_path": 'images/플립.jpg' },
+        //     { "movie_id": 1, "duration": "1시간50분", "title": "플립", start_time: '12:00', "img_path": 'images/플립.jpg' },
+        //     { "movie_id": 1, "duration": "1시간50분", "title": "플립", start_time: '13:00', "img_path": 'images/플립.jpg' },
+        //     { "movie_id": 1, "duration": "1시간50분", "title": "플립", start_time: '14:00', "img_path": 'images/플립.jpg' },
+        //     { "movie_id": 1, "duration": "1시간50분", "title": "플립", start_time: '15:00', "img_path": 'images/플립.jpg' },
+
+        //     { "movie_id": 2, "duration": "1시간50분", "title": "아바타2 : 물의 길", start_time: '11:00', "img_path": 'images/아바타물의길.jpg' },
+        //     { "movie_id": 2, "duration": "1시간50분", "title": "아바타2 : 물의 길", start_time: '12:00', "img_path": 'images/아바타물의길.jpg' },
+        //     { "movie_id": 2, "duration": "1시간50분", "title": "아바타2 : 물의 길", start_time: '13:00', "img_path": 'images/아바타물의길.jpg' },
+        //     { "movie_id": 2, "duration": "1시간50분", "title": "아바타2 : 물의 길", start_time: '14:00', "img_path": 'images/아바타물의길.jpg' },
+
+        //     { "movie_id": 3, "duration": "1시간50분", "title": "블라인드", start_time: '11:00', "img_path": 'images/블라인드.jpg' },
+        //     { "movie_id": 3, "duration": "1시간50분", "title": "블라인드", start_time: '12:00', "img_path": 'images/블라인드.jpg' },
+        //     { "movie_id": 3, "duration": "1시간50분", "title": "블라인드", start_time: '13:00', "img_path": 'images/블라인드.jpg' },
+
+        //     { "movie_id": 4, "duration": "1시간50분", "title": "나 홀로 집에1", start_time: '11:00', "img_path": 'images/나홀로집에.jpg' },
+        //     { "movie_id": 4, "duration": "1시간50분", "title": "나 홀로 집에1", start_time: '12:00', "img_path": 'images/나홀로집에.jpg' },
+
+        //     { "movie_id": 5, "duration": "1시간50분", "title": "1917", start_time: '11:00', "img_path": 'images/1917.jpg' },
+
+        //     { "movie_id": 6, "duration": "1시간50분", "title": "반지의 제왕", start_time: '11:00', "img_path": 'images/반지의제왕.jpg' },
+        //     { "movie_id": 6, "duration": "1시간50분", "title": "반지의 제왕", start_time: '11:00', "img_path": 'images/반지의제왕.jpg' },
+        //     { "movie_id": 6, "duration": "1시간50분", "title": "반지의 제왕", start_time: '11:00', "img_path": 'images/반지의제왕.jpg' },
+        // ];
+
+        const posterGallery = document.getElementById("posterGallery");
+
+        posterMovieData.forEach((movie) => {
+            posterGallery.innerHTML += `<div id="poster_${movie["movie_id"]}" value="${movie["title"]}" class="posterItem" style="font-size: 3rem;" style="background-image: url(${movie["poster"]});"></div>`;
+            document.getElementById(`poster_${movie["movie_id"]}`).style.backgroundImage = `url("${movie["img_path"]}")`;
+        });
+
+        const scheduleMovieObj = {};
+
+        scheduleMovieData.forEach((movie) => {
+            if (movie["movie_id"] in scheduleMovieObj) {
+                scheduleMovieObj[movie["movie_id"]]["start_time"].push(movie["start_time"].replace(/:\d{2}$/, ''));
+            } else {
+                scheduleMovieObj[movie["movie_id"]] = {
+                    title: movie["title"],
+                    poster: movie["img_path"],
+                    start_time: [movie["start_time"].replace(/:\d{2}$/, '')]
+                };
+            }
+        });
+
+        const scheduleGalleryWrap = document.getElementById("scheduleGalleryWrap");
+        console.log(scheduleMovieObj);
+
+        for (const movie_id in scheduleMovieObj) {
+            const movieTitle = scheduleMovieObj[movie_id]["title"];
+            const moviePoster = scheduleMovieObj[movie_id]["poster"];
+            let movieTimes = "";
+            scheduleMovieObj[movie_id]["start_time"].forEach((start_time, index) => {
+                movieTimes += `<div id="start_time_${movie_id}_${index}" value=${movieTitle} class="timeSlot">${start_time}</div>`;
+            });
+            scheduleGalleryWrap.innerHTML += `
+            <section class="scheduleGallery">
+                <div id="time_${movie_id}" class="schedulePoster" style="background-image: url(${moviePoster});"></div>
+                <article class="scheduleSection">
+                    <h2 class="movietitle">${movieTitle}</h2>
+                    <div id="time_${movie_id}" class="timeContainer">
+                        ${movieTimes}
+                    </div>
+                </article>
+            </section>
+        `;
+            //document.getElementById(`poster_${movie["movie_id"]}`).style.backgroundImage = `url("${movie["img_path"]}")`;
+        }
+
+        // 클래스 객체 생성
+        const selectionSwitcher = new SelectionSwitcher('selectionSwitcher');
+        selectionSwitcher.control();
+
+        const makeQuery = (title) => {
+            return `title=${title}`;
+        }
+
+        const posters = document.querySelectorAll(".posterItem");
+        posters.forEach((poster) => {
+            poster.addEventListener("click", () => {
+                const query = makeQuery(poster.getAttribute("value"));
+                window.location.href = `/select_movie_time?${query}`;
+            });
+        });
+
+        const timeSlots = document.querySelectorAll(".timeSlot");
+        timeSlots.forEach((timeSlot) => {
+            timeSlot.addEventListener("click", () => {
+                const query = makeQuery(timeSlot.getAttribute("value"));
+                window.location.href = `/select_movie_time?${query}`;
+            });
+        })
+    }
+
+    const runMovieSelection = (async () => {
+        const settings = {
+            method: "POST",
+            headers: {
+                "Accept": 'application/json',
+                "Content-Type": 'application/json',
+            }
+        };
+        try {
+            const [resByPoster, resBySchedule] = await Promise.all([
+                fetch("/movie_selection1", settings),
+                fetch("/movie_selection2", settings)
+            ]);
+            const posterMovieData = await resByPoster.json();
+            const scheduleMovieData = await resBySchedule.json();
+
+            console.log(posterMovieData);
+            console.log(scheduleMovieData);
+            
+            procedureMovieSelection(posterMovieData, scheduleMovieData);
+        } catch (err) {
+            console.error(err);
+        }
+    })();
+
+
+    
+
+    // fetch(`/popup/popup_select_movie_time`)
+    //     .then(response => response.text())
+    //     .then(html => {
+    //         const container = document.getElementById("popupPos")
+    //         container.innerHTML = html;
+
+    //         // 동적으로 로드된 스크립트 태그 실행
+    //         const scripts = container.querySelectorAll("script");
+    //         scripts.forEach(script => {
+    //             const newScript = document.createElement("script");
+    //             newScript.text = script.text;
+    //             container.appendChild(newScript);
+    //         });
+    //         document.getElementById("popupArea").style.display = "block";
+    //     });
+</script>
+
+<style>
+    /* ##영화-시간 토글## */
+    .toggleContainer {
+        width: 100%;
+        height: 20%;
+        padding-top: 4.5rem;
+    }
+
+    .toggleGroup {
+        width: 40rem;
+        height: 6.2rem;
+        background: #444;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: 0 auto;
+        text-align: center;
+        border-radius: 0.5rem;
+    }
+
+    .toggleItem {
+        font-size: 1.5rem;
+        width: 45%;
+        height: 3.8rem;
+        line-height: 3.7rem;
+        border-radius: 0.3rem;
+        background-color: #6d6d6d83;
+        color: #ffffff75;
+        cursor: pointer;
+    }
+
+    .activeToggle {
+        background-color: #DE1E2D;
+        color: #fff;
+    }
+
+    /* ##영화-시간 메인 콘텐츠 영역## */
+    .mainPosterContainer {
+        width: 100%;
+        height: 80%;
+        padding: 0 3rem;
+        overflow-y: scroll;
+    }
+
+    .mainPosterContainer::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* #영화별선택# */
+    .posterGallery {
+        display: flex;
+        width: 62%;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        /* display: none; */
+    }
+
+    .posterItem {
+        width: 21rem;
+        height: 31.5rem;
+        background: #ddd;
+        margin-top: 3rem;
+        margin: 2rem;
+        cursor: pointer;
+
+
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    /* #시간대별선택# */
+    .scheduleGalleryWrap {
+        display: none;
+    }
+
+    .scheduleGallery {
+        width: 65%;
+        height: 25rem;
+        display: flex;
+        border-bottom: 0.2rem solid #a8a8a8;
+        margin-left: 23rem;
+        margin-top: 3rem;
+        padding: 0 0 3rem 0.5rem;
+    }
+
+    .schedulePoster {
+        width: 16rem;
+        height: 100%;
+        background: #ddd;
+        /* background: url("images/베테랑.png") no-repeat; */
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        /* 임시 */
+        font-size: 3rem;
+    }
+
+    .scheduleSection {
+        width: calc(100% - 16rem);
+        height: 100%;
+        padding-left: 2rem;
+    }
+
+    .movietitle {
+        color: #fff;
+        font-size: 1.8rem;
+    }
+
+    .timeContainer {
+        width: 100%;
+        margin-top: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        /* border: 1px solid green; */
+    }
+
+    .timeSlot {
+        width: 7.8rem;
+        height: 4.2rem;
+        line-height: 4.2rem;
+        margin: 1rem;
+        border-radius: 0.3rem;
+        font-size: 1.42rem;
+        font-weight: bold;
+        text-align: center;
+        color: #FFFFFF;
+        border: .06rem solid rgba(255, 255, 255, 0.479);
+        transition: background-color 0.2s ease, transform 0.2s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+    }
+
+    .timeSlot:hover {
+        background-color: #ababab;
+        color: #000;
+    }
+</style>

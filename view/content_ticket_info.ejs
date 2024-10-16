@@ -1,0 +1,182 @@
+<section class="mainArea">
+    <section class="headArea">
+        <!-- 포스터 영역 -->
+        <div id="posterArea" class="poster"></div>
+        <!-- 영화 정보 영역 -->
+        <section class="movieInformation">
+            <p id="movieTitle" class="movieTitle"></p>
+            <ul id="listArea" class="listArea">
+
+            </ul>
+        </section>
+    </section>
+    <!-- 출력 버튼 영역 -->
+    <section class="submitArea">
+        <button id="submitButton" class="submitButton">티켓출력</button>
+    </section>
+</section>
+
+<script>
+    const procedureTicketInfo = (movieData) => {
+        console.log(movieData)
+        // const movieData = [
+        //     {
+        //         movie_id: 1,
+        //         showtime: '11:00',
+        //         duration: '2시간 10분',
+        //         title: '플립',
+        //         ticket_count: 2,
+        //         seats: ['D09', 'D10'],
+        //         today: '2024-09-20',
+        //         img_path:
+        //             'images/베테랑.png'
+        //     }
+        // ];
+
+        const [{ showtime, duration, title, ticket_count, seat_names, img_path }] = movieData;
+        const date = new Date();
+        const today = `${date.getFullYear()} - ${date.getMonth() + 1} - ${date.getDate()}`;
+        
+        document.getElementById("posterArea").style.backgroundImage = `url("${img_path}")`;
+        document.getElementById("movieTitle").innerText = title;
+        const html =
+            `
+                <li class="informationList">일시/시간<span class="gapElement"></span>
+                    <span class="informationDetail letterSpacing" id="moiveDate">${showtime.replace(/:\d{2}$/, '')}</span>
+                </li>
+
+                <li class="informationList letterSpacing">상영일자<span class="gapElement">
+                        <span class="informationDetail" id="memberInfo">${today}</span></li>
+
+                <li class="informationList letterSpacing">상영시간<span class="gapElement">
+                        <span class="informationDetail" id="runningTime">${duration} 분</span></li>
+
+                <li class="informationList letterSpacing">티켓매수<span class="gapElement">
+                        <span class="informationDetail" id="ticketCount">${ticket_count}</span></li>
+
+                <li class="informationList letterSpacing">좌석정보<span class="gapElement">
+                        <span class="informationDetail" id="seatInfo">${seat_names}</span></li>
+            `;
+
+        document.getElementById('listArea').innerHTML = html;
+        const submitButton = document.getElementById("submitButton");
+        submitButton.addEventListener("click", () => {
+            window.location.href = "/printTicket";
+        })
+    }
+
+    const runTimeSelection = (async () => {
+        const queryData = <%- JSON.stringify(queryData) %>;
+        const settings = {
+            method: "POST",
+            headers: {
+                "Accept": 'application/json',
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({ checkInformation: queryData["num"] })
+        }
+        try {
+            const response = await fetch("/checkUser", settings);
+            const reservedData = await response.json();
+
+            
+
+            procedureTicketInfo(reservedData);
+        } catch (err) {
+            console.log(err)
+        }
+
+    })();
+</script>
+
+<style>
+    /* main영역 */
+    .mainArea {
+        /* border: 1px solid red; */
+        height: 100%;
+        width: 90rem;
+        margin-left: 19rem;
+        padding-top: 7.5rem
+    }
+
+    .headArea {
+        display: flex;
+    }
+
+    /* 포스터 사진영역 */
+    .poster {
+        width: 28rem;
+        height: 42rem;
+        /* background-image: url("images/베테랑.png"); */
+        background-size: cover;
+        margin-left: 8.5rem;
+    }
+
+    /* 정보영역 */
+    .movieInformation {
+        margin-top: 0.7rem;
+    }
+
+    .movieTitle {
+        margin: 1rem 6rem;
+        font-size: 2.4rem;
+        padding-bottom: 2rem;
+        color: #ffffff;
+    }
+
+    .listArea {
+        list-style: none;
+    }
+
+    .informationList {
+        width: 40rem;
+        height: 5.5rem;
+        font-size: 1.6rem;
+        color: #b4b4b4;
+        border-bottom: 1px solid white;
+        margin: 1rem 6rem;
+        /* border: 1px solid red; */
+        line-height: 5.5rem;
+    }
+
+    .informationDetail {
+        font-size: 1.6rem;
+        color: #eeeeee;
+    }
+
+    .submitArea {
+        margin-top: 4.7rem;
+        text-align: center;
+    }
+
+    .submitButton {
+        width: 25rem;
+        height: 4.5rem;
+        font-size: 1.8rem;
+        background-color: #DE1E2D;
+        color: #fff;
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .submitButton:hover {
+        background-color: #A8001E;
+    }
+
+    .submitButton:active {
+        background-color: #C8102E;
+        transform: scale(0.99);
+    }
+
+    .gapElement {
+        padding-left: 1rem;
+    }
+
+    .letterSpacing {
+        letter-spacing: 0.05rem;
+    }
+</style>
