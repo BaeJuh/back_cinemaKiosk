@@ -35,11 +35,15 @@
 
         // 총 결제 금액 입력
         const paymentAmount = document.getElementById("paymentAmount");
-        const priceTable = { adult: 14000, youth: 11000, special: 11000 };
-
+        const priceTable = {
+            adult: selectedMovieData["adult_price"],
+            youth: selectedMovieData["youth_price"],
+            special: selectedMovieData["special_price"]
+        };
+        
         let price = 0;
         for (const clientType in priceTable) {
-            price += queryData[clientType] * priceTable[clientType];
+            price += queryData[clientType] * Number(priceTable[clientType]);
         }
         paymentAmount.value = price.toLocaleString("kr-KO");
 

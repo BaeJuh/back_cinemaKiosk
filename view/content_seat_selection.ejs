@@ -252,10 +252,13 @@
                         const targetDOM = document.getElementById(`${targetId}Count`);
                         const currentValue = Number(targetDOM.innerHTML);
                         headCount[targetId] = Number(currentValue + 1);
+                        queryData[targetId] = headCount[targetId]; // 쿼리값 수정
+
                         targetDOM.innerHTML = Number(currentValue + 1);
                         disalbledBtnFunc();
+                        console.log(targetId);
                     }
-
+                    console.log(headCount)
                 } else {
                     // minus 
                     const idTotalLen = Number(event.target.id.length);
@@ -268,12 +271,15 @@
                     } else {
                         const currentValue = Number(targetDOM.innerHTML);
                         headCount[targetId] = Number(currentValue - 1);
+                        queryData[targetId] = headCount[targetId]; // 쿼리값 수정
+
                         targetDOM.innerHTML = Number(currentValue - 1);
                         disalbledBtnFunc();
                     }
                 }
             }
-        })
+
+        });
 
         // 좌석
         document.getElementById("sectionBottom").addEventListener("change", (event) => {
@@ -298,7 +304,6 @@
                 console.log(headCount);
             }
         });
-
         const makeQuery = (queryData) => {
             let query = "";
 

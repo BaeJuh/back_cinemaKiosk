@@ -8,10 +8,10 @@
         <div id="completePaymentPopup" class="completePaymentPopup">
 
             <div id="paymentInfoArea" class="paymentInfoArea">
-                <h2 class="paymentCompleteMessage">결제가 완료 되었습니다.</h2>
+                <!-- <h2 class="paymentCompleteMessage">결제가 완료 되었습니다.</h2>
                 <div id="paymentPrice" class="paymentInfo">
                     <p class="paymentInfoText">금액</p>
-                    <p class="paymentInfoText"><span class="paymentInfoText" id="amountValue">10,000</span>원</p>
+                    <p class="paymentInfoText"><span class="paymentInfoText" id="amountValue">0</span>원</p>
                 </div>
                 <div id="discountPrice" class="paymentInfo">
                     <p class="paymentInfoText">할인</p>
@@ -19,8 +19,8 @@
                 </div>
                 <div id="totalPrice" class="paymentInfo">
                     <p class="paymentInfoText">총 금액</p>
-                    <p class="paymentInfoText"><span class="paymentInfoText" id="totalValue">10,000</span>원</p>
-                </div>
+                    <p class="paymentInfoText"><span class="paymentInfoText" id="totalValue">0</span>원</p>
+                </div> -->
             </div>
             <div id="printReciptQuestion" class="printReciptQuestion">
                 <h2 class="paymentCompleteMessage receiptText"><span id="timer" class="paymentTimerMessage">5</span>초 뒤에
@@ -33,6 +33,36 @@
 </section>
 
 <script>
+    const queryData = <%- JSON.stringify(queryData) %>;
+    console.log(queryData)
+
+    document.getElementById("paymentInfoArea").innerHTML = `
+        <h2 class="paymentCompleteMessage">결제가 완료 되었습니다.</h2>
+            <div id="paymentPrice" class="paymentInfo">
+                <p class="paymentInfoText">금액</p>
+                <p class="paymentInfoText"><span class="paymentInfoText" id="amountValue">${queryData["price"]}</span>원</p>
+            </div>
+            <div id="discountPrice" class="paymentInfo">
+                <p class="paymentInfoText">할인</p>
+                <p class="paymentInfoText"><span class="paymentInfoText" id="discountValue">0</span>원</p>
+            </div>
+            <div id="totalPrice" class="paymentInfo">
+                <p class="paymentInfoText">총 금액</p>
+                <p class="paymentInfoText"><span class="paymentInfoText" id="totalValue">${queryData["price"]}</span>원</p>
+            </div>
+    `;
+
+    // const makeQuery = (queryData) => {
+    //     let query = "";
+
+    //     for (const key in queryData) {
+    //         query += `${key}=${queryData[key]}&`;
+    //     }
+    //     console.log(query);
+    //     return query;
+    // }
+    // const query = makeQuery();
+
     document.addEventListener("DOMContentLoaded", () => { // 5초뒤 종료
         const timer = document.getElementById("timer");
         const timerSecond = 5;

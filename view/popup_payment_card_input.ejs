@@ -10,6 +10,17 @@
     </section>
 
 <script>
+    const queryData = <%- JSON.stringify(queryData) %>;
+    const makeQuery = (queryData) => {
+        let query = "";
+
+        for (const key in queryData) {
+            query += `${key}=${queryData[key]}&`;
+        }
+        console.log(query);
+        return query;
+    }
+    const query = makeQuery(queryData);
 
     document.addEventListener("DOMContentLoaded", () => { // 5초뒤 종료
         const timer = document.getElementById("timer");
@@ -20,7 +31,7 @@
                 timer.innerText = `${(timerSecond + 1) - i}`;
 
                 if (i === timerSecond) {
-                    window.location.href = "/show_payment";
+                    window.location.href = `/show_payment?${query}`;
                 }
             }, i * 1000);
         }

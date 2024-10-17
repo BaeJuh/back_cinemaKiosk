@@ -7,7 +7,7 @@
         <p class="printLabel">티켓 출력을 진행해 주세요.</p>
         <!-- 티켓 부분 -->
         <section id="ticketArea" class="ticketArea">
-            <article class="ticketHeader">
+            <!-- <article class="ticketHeader">
                 <h2 class="ticketTitle">베테랑2</h2>
                 <div class="ticketInfo">2D | 15세이상관람가</div>
             </article>
@@ -33,7 +33,7 @@
                             id="random3Num">333</span>-<span id="random5Num">5555</span></p>
                     <canvas class="barCode" id="canvas" width="220" height="40"></canvas>
                 </article>
-            </section>
+            </section> -->
         </section>
         <section class="confirmButtonArea">
             <button id="printTicketBtn" class="confirmButtons">티켓 출력</button>
@@ -45,6 +45,50 @@
     class TicketPrint {
         constructor(id) {
             this.id = id;
+            this.movieData = null;
+        }
+
+        getMovieData() {
+            this.movieData = <%- JSON.stringify(movieQueryData) %>;
+        }
+
+        visualize() {
+            // this.movieData
+            const {title, theater_name, startTime, seat_names, adult, youth, special} = this.movieData;
+            const date = new Date();
+            console.log(seat_names);
+            
+            document.getElementById("ticketArea").innerHTML = `
+                <article class="ticketHeader">
+                    <h2 class="ticketTitle">${title}</h2>
+                    <div class="ticketInfo">2D | 15세이상관람가</div>
+                </article>
+                <section class="ticketBody">
+                    <article class="ticketContent">
+                        <p class="ticketDetail">상영관 : <span class="ticketDetailValue">${theater_name}</span></p>
+                        <p class="ticketDetail">상영일 : <span class="ticketDetailValue">${date.getMonth()+1}월 ${date.getDay()}일</span></p>
+                        <p class="ticketDetail">상영시간 : <span class="ticketDetailValue">${startTime}</span></p>
+                        <p class="ticketDetail">좌석 : <span class="ticketDetailValue">${Number(adult) + Number(youth) + Number(special)}</span></p>
+                        <div class="seatInfo">
+                            ${this.seatNamesList(seat_names)}
+                        </div>
+                    </article>
+                    <article class="ticketFooter">
+                        <p id="barCodeNumber" class="barCodeNumber"><span id="random4Num">4444</span>-<span
+                                id="random3Num">333</span>-<span id="random5Num">5555</span></p>
+                        <canvas class="barCode" id="canvas" width="220" height="40"></canvas>
+                    </article>
+                </section>
+            `;
+        }
+
+        seatNamesList(seat_names) {
+            const seatList = seat_names.split(",");
+            let HTML_seats = ``;
+            seatList.forEach(seat => {
+                HTML_seats += `<div class="seatNum">${seat}</div>`;
+            });
+            return HTML_seats;
         }
 
         drawBarcode() {
@@ -97,6 +141,8 @@
             console.log(reservedNumber)
         }
         runTicketInfo() {
+            this.getMovieData();
+            this.visualize();
             this.drawBarcode();
             this.makeReserveNum();
         }

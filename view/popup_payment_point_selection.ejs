@@ -7,7 +7,7 @@
         <div id="earnPointPopup" class="earnPointPopup">
             <p id="earnPointTitle" class="earnPointTitle earnPopupMarginTop">포인트를 적립하시겠습니까?</p>
             <div id="showEarnPoint" class="showEarnPoint earnPopupMarginTop">
-                <p class="showEarnPointText">적립 예정 포인트&nbsp;:&nbsp;<span class="showEarnPointTotal">1,000</span>원</p>
+                <p class="showEarnPointText">적립 예정 포인트&nbsp;:&nbsp;<span id="collectedPoint" class="showEarnPointTotal">0</span>원</p>
             </div>
             <div id="earnPointBtnWrapper" class="earnPointBtnWrapper earnPopupMarginTop">
                 <button id="earnPointNo" class="earnPointBtn">아니오</button>
@@ -20,13 +20,26 @@
 <script>
     const earnPointYes = document.getElementById("earnPointYes");
     const earnPointNo = document.getElementById("earnPointNo");
+    const queryData = <%- JSON.stringify(queryData) %>;
 
+    document.getElementById("collectedPoint").innerText = `${Number(queryData["price"])*(10/100)}`;
+
+    const makeQuery = (queryData) => {
+        let query = "";
+
+        for (const key in queryData) {
+            query += `${key}=${queryData[key]}&`;
+        }
+        console.log(query);
+        return query;
+    }
+    const query = makeQuery(queryData);
     earnPointYes.addEventListener("click", () => {
-        window.location.href = "/input_point";
+        window.location.href = `/input_point?${query}`;
     });
 
     earnPointNo.addEventListener("click", () => {
-        window.location.href = "/buying";
+        window.location.href = `/buying?${query}`;
     });
     
 </script>
