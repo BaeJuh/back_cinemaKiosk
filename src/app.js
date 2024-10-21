@@ -355,7 +355,8 @@ app.get("/", (req, res) => {
 
 /* DONGHYUN 추가 */
 app.get('/content_sales_status', (req, res) => {
-    res.render("content_sales_status");
+    //res.render("content_sales_status");
+    res.render("layout", { content: "managePage", sideBar: "", popup: "", bottomBar: "bottomBarFrame", queryData: queryData});
 });
 
 /* DONGHYUN 추가*/
