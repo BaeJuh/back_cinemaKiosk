@@ -12,7 +12,7 @@
     </section>
     <!-- 출력 버튼 영역 -->
     <section class="submitArea">
-        <button id="submitButton" class="submitButton">티켓출력</button>
+        <button id="submitButton" class="submitButton">닫기</button>
     </section>
 </section>
 
@@ -61,7 +61,7 @@
         document.getElementById('listArea').innerHTML = html;
         const submitButton = document.getElementById("submitButton");
         submitButton.addEventListener("click", () => {
-            window.location.href = "/printTicket";
+            window.location.href = "/";
         })
     }
 
@@ -78,8 +78,6 @@
         try {
             const response = await fetch("/checkUser", settings);
             const reservedData = await response.json();
-
-            
 
             procedureTicketInfo(reservedData);
         } catch (err) {

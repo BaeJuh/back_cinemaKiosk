@@ -12,7 +12,7 @@
                 <div class="pointInfoBox howManyPointUse"><span class="inputArea">사용 포인트: <input type="text"
                             id="usePoint" class="inputTextArea" readonly> </span></div>
                 <div class="pointInfoBox howManyLeft"><span class="inputArea">결제 할 금액: <input type="text"
-                            class="inputTextArea" readonly> </span></div>
+                            id="finalPrice" class="inputTextArea" readonly> </span></div>
             </section>
             <section class="pointinputArea">
                 <h2 class="popupTitleText">사용하실 포인트를 입력해주세요.</h2>
@@ -24,23 +24,31 @@
 
 <script>
     // placeholder수정
-    document.getElementById('phoneNumber').placeholder = '1000원부터 사용가능';
+    document.getElementById('phoneNumber').placeholder = '100원부터 사용가능';
 
-    const [pointData] = [
-        { user_id: 1, phone_number: "01011112222", point: 3750 }
-    ];
+    // const [pointData] = [
+    //     { user_id: 1, phone_number: "01011112222", point: 3750 }
+    // ];
 
     class PointUse {
         constructor(id) {
             this.id = id;
+            this.dbData = null;
+            this.queryData = null;
             this.ownedPoint = 0;
+            this.payment_amount = 0;
+            this.use_point = 0;
         }
 
-        setPoint(pointData) {
-            this.ownedPoint = pointData["point"];
+        setData(dbData) {
+            this.dbData = dbData;
+            this.queryData = <%- JSON.stringify(queryData) %>;
         }
 
         displayOwnedPoint() {
+            const [{ point }] = this.dbData;
+            this.ownedPoint = point;
+            console.log(ownedPoint);
             const ownedPointArea = document.getElementById("ownedPoint");
             ownedPointArea.value = `${this.ownedPoint}`;
         }
@@ -49,13 +57,22 @@
             const keypad = document.getElementById("keypadFrame");
             const checkBtn = document.getElementById("checkBtn");
             const usePointArea = document.getElementById("usePoint");
+            const finalPriceArea = document.getElementById("finalPrice");
+
+            const { payment_amount } = this.queryData;
+            this.payment_amount = Number(payment_amount);
+
+            finalPriceArea.value = payment_amount;
 
             keypad.addEventListener("click", (event) => {
                 const keyValue = event.target.value;
                 if (keyValue) {
                     this.displayUsePoint(usePointArea);
 
-                    checkBtn.disabled = ((Number(usePointArea.value) < 1000));
+                    finalPriceArea.value = this.payment_amount - Number(usePointArea.value);
+
+                    checkBtn.disabled = ((Number(usePointArea.value) < 100) && (Number(usePointArea.value) <= this.ownedPoint) && (Number(usePointArea.value) <= this.payment_amount));
+                    this.use_point = Number(usePointArea.value);
                 }
             });
         }
@@ -67,29 +84,66 @@
                 usePointArea.value = this.ownedPoint;
                 document.getElementById("phoneNumber").value = this.ownedPoint;
             }
+            if (Number(usePointArea.value) > this.payment_amount) {
+                usePointArea.value = this.payment_amount;
+                document.getElementById("phoneNumber").value = this.payment_amount;
+            }
         }
 
         goToNextPage() {
             const checkBtn = document.getElementById("checkBtn");
             checkBtn.addEventListener("click", () => {
                 // 보낼 쿼리 데이터는 여기서 처리, usePointArea.value를 기준으로 보내야함.
-                window.location.href = "/buying";
+
+                // this.payment_amount
+                // this.use_point
+
+                this.queryData["total_payment_amount"] = this.payment_amount - this.use_point;
+                this.queryData["use_point"] = this.use_point;
+                this.queryData["points_to_be_earned"] = 0;
+
+                let query = "";
+
+                for (const key in this.queryData) {
+                    query += `${key}=${this.queryData[key]}&`;
+                }
+
+
+                window.location.href = `/buying?${query}`;
             });
         }
 
-        runPage(pointData) {
-            this.setPoint(pointData);
+        runPage(dbData) {
+            this.setData(dbData)
             this.displayOwnedPoint();
             this.updatePoint();
             this.goToNextPage();
         }
     }
 
-    const page = new PointUse("point_confirmation");
-    page.runPage(pointData);
+    const runPointUsing = (() => {
+        const queryData = <%- JSON.stringify(queryData) %>;
+        const settings = {
+            method: "POST",
+            headers: {
+                "Accept": 'application/json',
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({ checkInformation: queryData["phone_number"] })
+        }
+        fetch("/point_confirmation_popup", settings)
+            .then((res) => {
+                return res.json()
+            })
+            .then((dbData) => {
+                const page = new PointUse("point_confirmation");
+                page.runPage(dbData);
+            })
+    })();
 
 
 
+    // http://kkms4001.iptime.org:45120/buying?title=%EB%B8%94%EB%9D%BC%EC%9D%B8%EB%93%9C&theater_name=B%EA%B4%80&startTime=17:20&endTime=18:58&adult=0&youth=1&special=0&seat_names=A1&payment_amount=11000&phone_number=01012341234&use_point=1000&points_to_be_earned=0&total_payment_amount=10000&
 </script>
 
 <style>

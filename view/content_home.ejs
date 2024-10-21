@@ -28,10 +28,13 @@
                 }
             }, i * 1000);
         }
+        const displayNumber = document.getElementById("phoneNumber");
+        displayNumber.placeholder = "1234567890";
     });
     
     const runTimeSelection = async () => {
         const displayNumber = document.getElementById("phoneNumber");
+        
         const settings = {
             method: "POST",
             headers: {
@@ -47,7 +50,7 @@
         if ( reservedData !== "no reservation" ) {
             window.location.href = `/ticket_info?num=${displayNumber.value}`;
         } else {
-            console.log("d여긴가?")
+            console.log("여긴가?")
             displayNumber.value = "잘못된 예매 번호 입니다.";
         }
     };

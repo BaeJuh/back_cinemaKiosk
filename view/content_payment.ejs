@@ -5,7 +5,7 @@
 <section class="paymentContainer">
     <article class="paymentHeader">
         <h2 class="paymentTitle">총 결제금액</h2>
-        <input id="paymentAmount" class="paymentAmount" type="text" value="30,000원" readonly>
+        <input id="paymentAmount" class="paymentAmount" type="text" value="--" readonly>
     </article>
     <article class="paymentOptionBox">
         <!-- 카드결제 -->
@@ -50,7 +50,12 @@
         const makeQuery = (queryData) => {
             let query = "";
 
-            queryData["price"] = price;
+            queryData["payment_amount"] = price;
+            queryData["phone_number"] = "null";
+            //queryData["reservation_num"]
+            queryData["use_point"] = "null";
+            queryData["points_to_be_earned"] = "null";
+            queryData["total_payment_amount"] = price;
 
             for (const key in queryData) {
                 query += `${key}=${queryData[key]}&`;

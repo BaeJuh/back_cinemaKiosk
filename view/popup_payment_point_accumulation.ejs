@@ -1,26 +1,65 @@
-    <article class="popupBar">
-        <p class="popupTitle popupBarTextCommon">포인트 적립 번호 요청</p>
-        <div id="closePopup"><i class="popupBarTextCommon fa-solid fa-x"></i></div>
-    </article>
-    <section class="popupContent">
-        <!-- 키패드 영역 -->
-        <div class="keypadAreaBackgruond">
-            <%- include("keypadFrame", { title: "포인트 적립할 번호를 입력해 주세요" }) %>
-        </div>
-        <!-- 건너뛰기 버튼 -->
-        <button id="notEarnPointBtn" class="nextBtn">건너뛰기</button>
+<article class="popupBar">
+    <p class="popupTitle popupBarTextCommon">포인트 적립 번호 요청</p>
+    <div id="closePopup"><i class="popupBarTextCommon fa-solid fa-x"></i></div>
+</article>
+<section class="popupContent">
+    <!-- 키패드 영역 -->
+    <section class="keypadAreaBackgruond">
+        <%- include("keypadFrame", { title: "전화 번호를 입력해 주세요" }) %>
     </section>
+    <!-- 건너뛰기 버튼 -->
+    <button id="notEarnPointBtn" class="nextBtn">건너뛰기</button>
+</section>
 
 <script>
+    // phone_number에 적용하기
+    const queryData = <%- JSON.stringify(queryData) %>;
+
     const earnPointBtn = document.getElementById("checkBtn");
     const notEarnPointBtn = document.getElementById("notEarnPointBtn");
 
-    const buttons = [ earnPointBtn, notEarnPointBtn ];
+    //const buttons = [earnPointBtn, notEarnPointBtn];
 
-    buttons.forEach( ( button )=>{
-        button.addEventListener("click", ()=>{
-            window.location.href = "/buying";
-        });
+    const makeQuery = (queryData) => {
+        let query = "";
+
+        for (const key in queryData) {
+            query += `${key}=${queryData[key]}&`;
+        }
+        console.log(query);
+        return query;
+    }
+
+    const checkBtn = document.getElementById("checkBtn");
+    const skipBtn = document.getElementById("notEarnPointBtn");
+
+    checkBtn.addEventListener("click", () => {
+        const displayNumber = document.getElementById("phoneNumber");
+
+        if (/^010\d{8}$/.test(displayNumber.value)) {
+            let query = "";
+
+            queryData["phone_number"] = displayNumber.value;
+
+            for (const key in queryData) {
+                query += `${key}=${queryData[key]}&`;
+            }
+
+            window.location.href = `/buying?${query}`;
+        } else {
+            displayNumber.value = `잘못된 전화 번호 입니다.`;
+            console.log(displayNumber.value)
+        }
+    });
+
+    skipBtn.addEventListener("click", () => {
+        let query = "";
+
+        for (const key in queryData) {
+            query += `${key}=${queryData[key]}&`;
+        }
+
+        window.location.href = `/buying?${query}`;
     });
 </script>
 

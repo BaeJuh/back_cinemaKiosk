@@ -3,44 +3,9 @@ import express from "express";
 import mysql from "mysql";
 import path from "path";
 /* DONGHYUN*/
-
-import dbconfig from '../config/dbconfig.js';
-const db = mysql.createConnection( dbconfig );
-/*let dbData = null;
-async function fetchDataFromDatabase() {
-            try {
-                const [data1, data2] = await Promise.all([
-                    new Promise((resolve, reject) => {
-                        connection.query('select * from movies where 1', (error, results) => {
-                            if (error) reject(error);
-                            resolve(results);
-                        });
-                    }),
-                    new Promise((resolve, reject) => {
-                        connection.query('select B.movie_id, B.duration, B.title,  A.start_time, B.img_path from showtimes A join movies B on A.movie_id = B.movie_id', (error, results) => {
-                            if (error) reject(error);
-                            resolve(results);
-                        });
-                    })
-                ]);
-        
-                // 결과를 객체로 묶기
-                const result = {
-                    movie_selection_data: data1,
-                    movie_time_selection_data: data2,
-                };
-                return result;
-        
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-}
-
-fetchDataFromDatabase().then(result => {
-    dbData = result; // 데이터 출력
-    console.log(dbData);
-});*/
-
+import sqlCommand from "./sqlTemplate/sqlCommand.js"
+import dbconfig from './config/dbconfig.js';
+const db = mysql.createConnection(dbconfig);
 /* END DONGHYUN */
 const app = express();
 
@@ -58,10 +23,7 @@ app.listen(45120, () => {
 //DONGHYUN DB ROUTING
 
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
-
-
 db.connect((err) => {
     if (err) {
         console.error('Database connection failed: ' + err.stack);
@@ -71,213 +33,237 @@ db.connect((err) => {
 });
 
 app.post("/movie_selection1", (req, res) => {
-    db.query('SELECT * FROM movies WHERE 1', (err, dbData) => {
+    db.query(sqlCommand.movie_selection1, (err, dbData) => {
         if (err) {
             console.error(err); // 쿼리 오류 처리
             res.status(500).send('Database query error');
         } else {
-            res.json(dbData); // 정상적으로 dbData를 클라이언트에 반환
+            res.json(dbData);
         }
     });
 });
 
 app.post("/movie_selection2", (req, res) => {
-    const sql = 'SELECT B.movie_id, B.duration, B.title, A.start_time, B.img_path FROM showtimes A JOIN movies B ON A.movie_id = B.movie_id'
-    db.query(sql, (err, dbData) => {
+    db.query(sqlCommand.movie_selection2, (err, dbData) => {
         if (err) {
             console.error(err); // 쿼리 오류 처리
             res.status(500).send('Database query error');
         } else {
-
-            res.json(dbData); // 정상적으로 dbData를 클라이언트에 반환
+            res.json(dbData);
         }
     });
 });
 
 app.post("/checkUser", (req, res) => {
+    const checkInformation = req.body.checkInformation;
+    const values = [checkInformation];
+    db.query(sqlCommand.checkUser, values, (err, dbData) => {
+        if (err) {
+            console.error(err); // 쿼리 오류 처리
+            res.status(500).send('Database query error');
+        } else {
+            if (dbData && dbData.length > 0) {
+                res.json(dbData);
+                console.log("예약된 정보가 있다.");
+            } else {
+                console.log("예약된 정보가 없다.");
+                res.json("no reservation");
+            }
+        }
+    });
+});
+
+app.post("/user_verification_popup", (req, res) => {
     console.log(req.body.checkInformation)
     const checkInformation = req.body.checkInformation;
-    const sql = `select M.movie_id, M.duration, M.title, R.showtime, (R.adult_count + R.youth_count + special_count) ticket_count, R.seat_names, M.img_path 
-    from reservations R join movies M on R.movie_id = M.movie_id where reservation_num = "${checkInformation}";`
-    // const sql = `select * from reservations where reservation_num = "${checkInformation}"`;
-    console.log(sql);
-    db.query(sql, (err, dbData) => {
+    const values = [checkInformation];
+
+    db.query(sqlCommand.checkPhoneNumber, values, (err, dbData) => {
         if (err) {
             console.error(err); // 쿼리 오류 처리
             res.status(500).send('Database query error');
         } else {
-            if (dbData && dbData.length > 0) { // 데이터가 있으면
-                res.json(dbData);
-                console.log( "checkUser : " + dbData )
-		console.log(dbData);
-                console.log("예약된 정보가 있다.");
-                // res.redirect(`/ticket_info?reservation_num=${checkInformation}`)
-            } else { // 데이터가 없으면
-                console.log("예약된 정보가 없다.");
-                res.json("no reservation"); // 데이터가 없을 때 리다이렉트할 페이지
+            if (dbData && dbData.length > 0) {
+                console.log("user_verification_popup 유저 데이터 있다.");
+                res.json("유저 데이터 있다");
+            } else {
+                console.log("user_verification_popup 유저 데이터 없다.");
             }
         }
     });
 });
 
-/*app.post("/checkUser",(req,res)=>{
-	console.log(req.body.checkInformation)
+app.post("/point_confirmation_popup", (req, res) => {
+    console.log(req.body.checkInformation)
     const checkInformation = req.body.checkInformation;
-    const sql = `select * from reservations where reservation_num = "${checkInformation}"`;
-    
-    db.query(sql, (err, dbData) => {
+    const values = [checkInformation];
+    db.query(sqlCommand.checkPhoneNumber, values, (err, dbData) => {
         if (err) {
             console.error(err); // 쿼리 오류 처리
             res.status(500).send('Database query error');
         } else {
-            if (dbData && dbData.length > 0) { // 데이터가 있으면
-                console.log("Dbdata: ", dbData);
-                console.log("데이터 있다.");
-                // req.body.checkInformation
-		console.log( `/ticket_info?num=${checkInformation}` )
-		res.json("데이터있다");
-                //res.redirect(`/ticket_info?num=${checkInformation}`)
-            } else { // 데이터가 없으면
-                console.log("Dbdata: ", dbData);
-                console.log("데이터 없다.");
-                res.json(undefined); // 데이터가 없을 때 리다이렉트할 페이지
-            }
+            res.json(dbData);
         }
     });
-});*/
+});
 
+// app.post("/payment_point_accumulation_popup", (req, res) => {
+//     console.log(req.body.checkInformation)
+//     const checkInformation = req.body.checkInformation;
+//     const values = [checkInformation];
+//     db.query(sqlCommand.checkPhoneNumber, values, (err, dbData) => {
+//         if (err) {
+//             console.error(err); // 쿼리 오류 처리
+//             res.status(500).send('Database query error');
+//         } else {
+//             if (dbData && dbData.length > 0) {
+//                 console.log("user_verification_popup 유저 데이터 있다.");
+//                 res.json("유저 데이터 있다");
+//             } else {
+//                 console.log("user_verification_popup 유저 데이터 없다.");
+//                 res.json("유저 데이터 없다");
+//             }
+//         }
+//     });
+// });
 
 app.post("/select_movie_time", (req, res) => {
-    console.log("post접속 : " + req.body.title); // 타이틀 확인
     const title = req.body.title;
-    const sql = `
-            select B.movie_id, B.duration, B.title,  A.start_time, B.img_path, C.theater_name,
-            C.total_seats,
-            (select count(*) from seats D where reservation_status = 0 and A.start_time = D.start_time and B.movie_id = D.movie_id) as reservable_seats
-            from showtimes A
-            join movies B
-            on A.movie_id = B.movie_id
-            join theaters C
-            on C.theater_id = A.theater_id
-            where B.title = "${title}"
-	    order by start_time;`
+    const values = [title];
 
-    db.query(sql, (err, dbData) => {
+    db.query(sqlCommand.select_movie_time, values, (err, dbData) => {
         if (err) {
             console.error(err); // 쿼리 오류 처리
             res.status(500).send('Database query error');
         } else {
-            res.json(dbData); // 정상적으로 dbData를 클라이언트에 반환
+            res.json(dbData);
         }
     });
 });
 
-app.post("/select_seat",(req,res)=>{
-    console.log(req.body);
+app.post("/select_seat", (req, res) => {
     const title = req.body.title;
     const start_time = req.body.startTime;
-    console.log( start_time+":00" );
     const theater_name = req.body.theater_name.charAt(0);
-    console.log( theater_name );
+    const values = [title, start_time, theater_name];
+    db.query(sqlCommand.select_seat, values, (err, dbData) => {
 
-    const sql = `  select A.movie_id, A.title, B.start_time, C.theater_name, D.seat_name, D.reservation_status
-            from movies A join showtimes B
-            on A.movie_id = B.movie_id
-            join theaters C 
-            on B.theater_id = C.theater_id
-            join seats D
-            on B.theater_id = D.theater_id and B.start_time = D.start_time
-            where A.title = "${title}" and B.start_time = '${start_time}' and C.theater_name="${theater_name}" and reservation_status = 1
-        
-        `
-        db.query(sql, (err, dbData) => {
-            if (err) {
-                console.error(err); // 쿼리 오류 처리
-                res.status(500).send('Database query error');
-            } else {
-                res.json(dbData); // 정상적으로 dbData를 클라이언트에 반환
-            }
-        });
-    
-});
-
-app.post("/payment",(req,res)=>{
-    console.log(req.body);
-   const sql = `SELECT movie_id, title, img_path, 
-                (SELECT adult_price FROM prices) as adult_price,
-                (SELECT youth_price FROM prices) as youth_price,
-                (SELECT special_price FROM prices) as special_price
-                FROM movies
-                WHERE title = "${req.body.title}"`;	
-
-    db.query(sql, (err, dbData) => {
         if (err) {
             console.error(err); // 쿼리 오류 처리
             res.status(500).send('Database query error');
         } else {
-		console.log(dbData)
-            res.json(dbData); // 정상적으로 dbData를 클라이언트에 반환
+            res.json(dbData);
         }
     });
-	
+});
+
+
+
+app.post("/payment", (req, res) => {
+    const title = req.body.title;
+    const values = [title];
+    db.query(sqlCommand.payment, values, (err, dbData) => {
+        if (err) {
+            console.error(err); // 쿼리 오류 처리
+            res.status(500).send('Database query error');
+        } else {
+            res.json(dbData);
+        }
+    });
+
 })
 
+app.post("/content_sales_status", (req, res) => {
+    db.query(sqlCommand.content_sales_status, (err, dbData) => {
+        if (err) {
+            console.log("content_sales_status DB SELECT 오류 : " + err)
+        } else {
+            res.json(dbData)
+        }
+    })
+})
 
 app.post('/complete', (req, res) => {
-    const data = {
-        title: '플립',
-        showtime: '13:10',
-        theater: 'A',
-        adult: '1',
-        youth: '1',
-        special: '1',
-        seat_names: 'A1,B1,C1',
-        phone_number: '01011112222', // 포인트 적립 안 하면 생략 가능
-        movie_id: 1000005,
-        reservation_id: 12345678901, //랜덤값 
-        payment_method: 'both', //   결제방식, point or card or both 
-        payment_amount: 20000, // 결제 금액
-        use_point: 10000, // 사용한 포인트
-        points_to_be_earned: 200, // '
-        total_payment_amount: 10000 // 실제 결제 금액
-    }
 
-    //** 유저 포인트 적립 및 유저 테이블 추가 UPDATE, INSERT문 **/
-    const sql_point_confirmation_popup = "SELECT point FROM users WHERE phone_number = ?"; // ? ==> 플레이스홀더
-    db.query(sql_point_confirmation_popup, [data.phone_number], (err, results) => { //['0101111222'] ? 값 바인딩
-        if (err) {
-            console.err("쿼리실행 오류: 기존 포인트 조회"+err);
-        } else {
-            if (results.length > 0) {
-                const currentPoints = results[0].point; // 현재 포인트 값
-                const newPoints = currentPoints + data.points_to_be_earned; // 데이터에서 가져온 포인트 추가
+    console.log("*******************************complete 로그 : **********************************");
+    console.log(req.body);
+    console.log("*******************************complete 로그 : **********************************");
 
-                // UPDATE 문 실행 (파라미터화된 쿼리 사용)
-                const sql_update_user_points = `UPDATE users SET point = ? WHERE phone_number = ?`;
-                db.query(sql_update_user_points, [newPoints, data.phone_number], (err, results) => {
-                    if (err) {
-                        console.log("쿼리실행 오류: 포인트 업데이트", err);
-                    } else {
-                        console.log("포인트 업데이트 완료");
-                    }
-                });
+    const data = req.body;
+    data["theater_name"] = data["theater_name"].charAt(0);
+    // const data = {
+    //     title: '나 홀로 집에1',
+    //     showtime: '22:00',
+    //     theater: 'A',
+    //     adult: '1',
+    //     youth: '1',
+    //     special: '1',
+    //     seat_names: 'A1,B1,C1',
+    //     phone_number: '01011112222', // 포인트 적립 안 하면 생략 가능
+    //     movie_id: 1000005,
+    //     reservation_id: 12345678901, //랜덤값 
+    //     payment_method: 'both', //   결제방식, point or card or both 
+    //     payment_amount: 20000, // 결제 금액
+    //     use_point: 1000, // 사용한 포인트
+    //     points_to_be_earned: 200, // '
+    //     total_payment_amount: 19000 // 실제 결제 금액
+    // }
+
+    //** UPDATE SEAT_TABLE (예약좌석 사용 불가능으로 업데이트 )**/
+    const seats = data.seat_names.split(",");
+    seats.forEach((seat, i, a) => {
+        const sql_seat_update = `update seats set reservation_status = 1 
+            where seat_name = "${seat}" 
+            and start_time = "${data.startTime}" 
+            and theater_id = (select theater_id from theaters where theater_name = "${data.theater_name}")`
+
+        db.query(sql_seat_update, (err, results) => {
+            if (err) {
+                console.log("쿼리실행 오류: seats 테이블 update 실패!!", err);
             } else {
-                console.log("해당 전화번호 사용자가 없으므로 인설트합니다.");
-
-                const sql_insert_user_points = `insert into users values( ? , ? )`;
-                db.query(sql_insert_user_points, [data.phone_number, data.points_to_be_earned], (err, results) => {
-                    if (err) {
-                        console.log("쿼리실행 오류: 신규유저 추가", err);
-                    } else {
-                        console.log("신규 유저 추가 완료");
-                    }
-                });
+                console.log("seats 테이블 update 성공!!");
             }
-        }
+        });
+
     });
 
-    //** payments insert **/
-    const sql_payment_insert = `insert into payments values( null,"${data.reservation_id}","${data.total_payment_amount}",now(),"${data.adult}","${data.use_point}" )`
+    //** UPDATE, INSERT USER_TABLE (기존 유저 포인트 적립 및 신규 유저 추가) **/
+    if (data.phone_number != 'null') {
+        const sql_point_confirmation_popup = "SELECT point FROM users WHERE phone_number = ?"; // ? ==> 플레이스홀더
+        db.query(sql_point_confirmation_popup, [data.phone_number], (err, results) => { //['0101111222'] ? 값 바인딩
+            if (err) {
+                console.err("쿼리실행 오류: 기존 포인트 조회" + err);
+            } else {
+                if (results.length > 0) {
+                    const currentPoints = results[0].point; // 현재 포인트 값
+                    const newPoints = Number(currentPoints) + Number(data.points_to_be_earned); // 데이터에서 가져온 포인트 추가
+
+                    // UPDATE 문 
+                    const sql_update_user_points = `UPDATE users SET point = ? WHERE phone_number = ?`;
+                    db.query(sql_update_user_points, [newPoints, data.phone_number], (err, results) => {
+                        if (err) {
+                            console.log("쿼리실행 오류: 포인트 업데이트", err);
+                        } else {
+                            console.log("기존 유저 적립 포인트 업데이트 완료");
+                        }
+                    });
+                } else {
+                    console.log("해당 전화번호 사용자가 없으므로 인설트합니다.");
+                    const sql_insert_user_points = `insert into users values( null, ? , ? )`;
+                    db.query(sql_insert_user_points, [data.phone_number, Number(data.points_to_be_earned)], (err, results) => {
+                        if (err) {
+                            console.log("쿼리실행 오류: 신규유저 추가", err);
+                        } else {
+                            console.log("신규 유저 추가 완료");
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    //** INSERT PAYMENTS TABLE ( 매출관리 테이블 데이터 추가 ) **/
+    const sql_payment_insert = `insert into payments values( null,"${data.reservation_id}","${data.total_payment_amount}",now(),null,0 )`
 
     db.query(sql_payment_insert, (err, results) => {
         if (err) {
@@ -289,26 +275,26 @@ app.post('/complete', (req, res) => {
     });
 
 
-    //** 유저 포인트 적립 및 유저 테이블 추가 UPDATE, INSERT문 **/
+    //** INSERT RESERVATIONS TABLE ( 예약 정보 추가 ) **/
     const sql_complete_insert_reservations = `
-    INSERT INTO reservations (
-        reservation_num, phone_number, showtime, seat_names, theater_name, 
-        adult_count, youth_count, special_count, title, movie_id, duration
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT movie_id FROM movies WHERE title = ?), (SELECT duration FROM movies WHERE title = ?))
-`;
+        INSERT INTO reservations (
+            reservation_num, phone_number, showtime, seat_names, theater_name, 
+            adult_count, youth_count, special_count, title, movie_id, duration
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT movie_id FROM movies WHERE title = ?), (SELECT duration FROM movies WHERE title = ?))
+    `;
 
     const values = [
         data.reservation_id,
         data.phone_number || null, // phone_number가 없을 경우 null 처리
-        data.showtime,
+        data.startTime,
         data.seat_names,
-        data.theater,
+        data.theater_name,
         data.adult,
         data.youth,
         data.special,
-        data.title, // title을 movie_id를 찾기 위한 서브쿼리에서 사용
-        data.title, // 서브쿼리 안의 title 값 전달
-        data.title // duration을 위한 서브쿼리에서 사용
+        data.title,
+        data.title,
+        data.title
     ];
 
     db.query(sql_complete_insert_reservations, values, (err, results) => {
@@ -319,9 +305,33 @@ app.post('/complete', (req, res) => {
             console.log("reservations 테이블 INSERT 성공!!");
         }
     });
-
-
-})
+    /** UPDATE USER_TABLE  (유저 사용 포인트 차감)  **/
+    if (data.use_point != 'null') {
+        console.log("UPDATE USER_TABLE  (유저 사용 포인트 차감)");
+        const sql = `select point from users where phone_number="${data.phone_number}"`;
+        let leftPoint = 0;
+        db.query(sql, (err, dbData) => {
+            if (err) {
+                console.error(err);
+            } else {
+                leftPoint = Number(dbData[0]["point"]) - Number(data.use_point);
+                console.log(leftPoint);
+                const updateSql = `update users set point=${leftPoint} where phone_number =${data.phone_number}`
+                console.log(updateSql);
+                db.query(updateSql, (err, dbResult) => {
+                    if (err) {
+                        console.log("userupate_Err")
+                        console.error(err)
+                    } else {
+                        console.log("users 사용포인트 업데이트");
+                        console.log(dbResult);
+                    }
+                })
+            }
+        });
+    }
+    res.json("END!!!!")
+});
 
 
 //DONGHYUN DB ROUTING
@@ -339,8 +349,16 @@ let movieQueryData = {} // 오직 주환이만 씀 // Dont use this Object only 
 
 // [touch_page] 화면을 터치해주세요  
 app.get("/", (req, res) => {
-    res.render("touch_page");
+    res.render("touch_page_final");
 });
+
+
+/* DONGHYUN 추가 */
+app.get('/content_sales_status', (req, res) => {
+    res.render("content_sales_status");
+});
+
+/* DONGHYUN 추가*/
 
 // [admin_password] 관리자 > 비밀번호 화면
 app.get("/admin_password", (req, res) => {
@@ -362,9 +380,6 @@ app.get("/movie_selection", (req, res) => {
 // [content_select_movie_time] 상영시간선택
 app.get("/select_movie_time", (req, res) => {
     const queryData = req.query;
-    /* DONGHYUN */
-	console.log("select_movie_time / get : "+ queryData);
-    /* END DONGHYUN*/
     res.render("layout", { content: "content_select_movie_time", sideBar: "sideBarFrame", popup: "", bottomBar: "bottomBarFrame", queryData: queryData });
 });
 
@@ -372,14 +387,15 @@ app.get("/select_movie_time", (req, res) => {
 // === 2. 예매티켓조회 ===
 // [content_ticket_info] 티켓정보
 app.get("/ticket_info", (req, res) => {
-	const queryData = req.query;
+    const queryData = req.query;
     res.render("layout", { content: "content_ticket_info", sideBar: "", popup: "", bottomBar: "bottomBarFrame", queryData: queryData });
 });
+
 // ===================
 // app.get("/popup/:popupId", (req, res) => {
 //     const popupId = req.params.popupId; // URL에서 경로 매개변수 'popupId'를 가져옵니다.
 //     console.log(popupId);
-    
+
 //     res.render( "popup_layout", { popupContent: popupId } );
 // });
 // ===================
@@ -400,7 +416,7 @@ app.get("/select_seat", (req, res) => {
 app.get("/payment", (req, res) => {
     const queryData = req.query;
     //movieQueryData = {...queryData};
-    res.render("layout", { content: "content_payment", sideBar: "sideBarFrame", popup: "", bottomBar: "bottomBarFrame", queryData: queryData});
+    res.render("layout", { content: "content_payment", sideBar: "sideBarFrame", popup: "", bottomBar: "bottomBarFrame", queryData: queryData });
 });
 
 // ## 포인트 사용 ##
@@ -408,45 +424,49 @@ app.get("/payment", (req, res) => {
 // [popup_user_verification] 회원번호 입력
 app.get("/user_verification", (req, res) => {
     const queryData = req.query;
-    res.render("layout", { content: "content_payment", sideBar: "sideBarFrame", popup: "popup_user_verification", bottomBar: "bottomBarFrame", queryData: queryData});
+    res.render("layout", { content: "content_payment", sideBar: "sideBarFrame", popup: "popup_user_verification", bottomBar: "bottomBarFrame", queryData: queryData });
 });
+
 
 // [popup_point_confirmation] 사용 포인트 입력
 app.get("/point_confirmation", (req, res) => {
     const queryData = req.query;
-    res.render("layout", { content: "content_payment", sideBar: "sideBarFrame", popup: "popup_point_confirmation", bottomBar: "bottomBarFrame", queryData: queryData});
+    res.render("layout", { content: "content_payment", sideBar: "sideBarFrame", popup: "popup_point_confirmation", bottomBar: "bottomBarFrame", queryData: queryData });
 });
 
 // ## 카드 결제 ## 
 // [popup_payment_point_selection] 포인트를 적랍하시겠습니까?
 app.get("/earn_point", (req, res) => {
     const queryData = req.query;
-    movieQueryData = {...queryData};
+
     //res.render("layout", { content: "content_payment", sideBar: "sideBarFrame", popup: "popup_payment_point_selection", bottomBar: "bottomBarFrame", queryData: queryData });
     res.render("layout", { content: "content_payment", sideBar: "sideBarFrame", popup: "popup_payment_point_selection", bottomBar: "bottomBarFrame", queryData: queryData });
 });
 
 // [popup_payment_point_accumulation] 포인트 적립 번호 입력
 app.get("/input_point", (req, res) => {
+    const queryData = req.query;
     res.render("layout", { content: "content_payment", sideBar: "sideBarFrame", popup: "popup_payment_point_accumulation", bottomBar: "bottomBarFrame", queryData: queryData });
 });
 
 // === 결제 공통 ===
 
- // [popup_payment_card_input] 카드 입력 대기 [setTimeout]
+// [popup_payment_card_input] 카드 입력 대기 [setTimeout]
 app.get("/buying", (req, res) => {
     const queryData = req.query;
     res.render("layout", { content: "", sideBar: "", popup: "popup_payment_card_input", bottomBar: "bottomBarFrame", queryData: queryData });
 });
 
 // [popup_payment_summary] 결제가 완료되었습니다 [setTimeout]
-app.get("/show_payment", (req, res) => { 
+app.get("/show_payment", (req, res) => {
     const queryData = req.query;
+    movieQueryData = { ...queryData };
     res.render("layout", { content: "", sideBar: "", popup: "popup_payment_summary", bottomBar: "bottomBarFrame", queryData: queryData });
 });
 
 // [popup_ticket_print] 티켓 출력 
 app.get("/printTicket", (req, res) => {
+    const queryData = req.query;
     res.render("layout", { content: "", sideBar: "", popup: "popup_ticket_print", bottomBar: "bottomBarFrame", movieQueryData: movieQueryData });
 });
 

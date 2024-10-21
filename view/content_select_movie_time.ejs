@@ -68,6 +68,21 @@
             const [durationHour, druationMinute] = this.minuteToHour(movieDataObj["duration"]).split(":");
             mvTime.innerText = `${durationHour}시간 ${druationMinute}분`;
 
+            // movieDataObj["slot"].forEach((slot, index) => {
+            //     allMvTime.innerHTML += slot["reservable"] ? `
+            //             <li class="mvTimeList" id="list0${index + 1}">
+            //                 <p class="theater">${slot["theater_name"]}관</p>
+            //                 <p class="startAndEndTime">${slot["start_time"]}</p>
+            //                 <p class="startAndEndTime">~${this.getEndtime(slot["start_time"], movieDataObj["duration"])}</p>
+            //             </li>
+            //         ` : `
+            //             <li class="mvTimeList blockClick" id="list0${index + 1}">
+            //                 <p class="theater">${slot["theater_name"]}관</p>
+            //                 <p class="startAndEndTime">${slot["start_time"]}</p>
+            //                 <p class="startAndEndTime">~${this.getEndtime(slot["start_time"], movieDataObj["duration"])}</p>
+            //             </li>
+            //         `;
+            // });
             movieDataObj["slot"].forEach((slot, index) => {
                 allMvTime.innerHTML += slot["reservable"] ? `
                         <li class="mvTimeList" id="list0${index + 1}">
@@ -76,7 +91,7 @@
                             <p class="startAndEndTime">~${this.getEndtime(slot["start_time"], movieDataObj["duration"])}</p>
                         </li>
                     ` : `
-                        <li class="mvTimeList blockClick" id="list0${index + 1}">
+                        <li class="mvTimeList" id="list0${index + 1}">
                             <p class="theater">${slot["theater_name"]}관</p>
                             <p class="startAndEndTime">${slot["start_time"]}</p>
                             <p class="startAndEndTime">~${this.getEndtime(slot["start_time"], movieDataObj["duration"])}</p>

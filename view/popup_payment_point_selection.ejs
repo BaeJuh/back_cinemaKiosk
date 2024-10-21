@@ -7,7 +7,8 @@
         <div id="earnPointPopup" class="earnPointPopup">
             <p id="earnPointTitle" class="earnPointTitle earnPopupMarginTop">포인트를 적립하시겠습니까?</p>
             <div id="showEarnPoint" class="showEarnPoint earnPopupMarginTop">
-                <p class="showEarnPointText">적립 예정 포인트&nbsp;:&nbsp;<span id="collectedPoint" class="showEarnPointTotal">0</span>원</p>
+                <p class="showEarnPointText">적립 예정 포인트&nbsp;:&nbsp;<span id="collectedPoint"
+                        class="showEarnPointTotal">0</span>원</p>
             </div>
             <div id="earnPointBtnWrapper" class="earnPointBtnWrapper earnPopupMarginTop">
                 <button id="earnPointNo" class="earnPointBtn">아니오</button>
@@ -22,26 +23,30 @@
     const earnPointNo = document.getElementById("earnPointNo");
     const queryData = <%- JSON.stringify(queryData) %>;
 
-    document.getElementById("collectedPoint").innerText = `${Number(queryData["price"])*(10/100)}`;
+    const points_to_be_earned = Number(queryData["payment_amount"]) * (1 / 100); // 1%만 적립
+    document.getElementById("collectedPoint").innerText = `${points_to_be_earned}`;
+    
+    earnPointYes.addEventListener("click", () => {
+        let query = "";
 
-    const makeQuery = (queryData) => {
+        queryData["points_to_be_earned"] = points_to_be_earned;
+
+        for (const key in queryData) {
+            query += `${key}=${queryData[key]}&`;
+        }
+        window.location.href = `/input_point?${query}`;
+    });
+
+    earnPointNo.addEventListener("click", () => {
         let query = "";
 
         for (const key in queryData) {
             query += `${key}=${queryData[key]}&`;
         }
-        console.log(query);
-        return query;
-    }
-    const query = makeQuery(queryData);
-    earnPointYes.addEventListener("click", () => {
-        window.location.href = `/input_point?${query}`;
-    });
 
-    earnPointNo.addEventListener("click", () => {
         window.location.href = `/buying?${query}`;
     });
-    
+
 </script>
 
 <style>
@@ -78,9 +83,9 @@
         border: none;
         border-radius: 0.5rem;
         box-shadow:
-        rgba(0, 0, 0, 0.4) 0px 2px 4px,
-        rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
-        rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+            rgba(0, 0, 0, 0.4) 0px 2px 4px,
+            rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+            rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
         cursor: pointer;
     }
 
@@ -108,7 +113,7 @@
         color: #ffffff;
     }
 
-    .showEarnPointTotal{
+    .showEarnPointTotal {
         color: #ffffff;
     }
 

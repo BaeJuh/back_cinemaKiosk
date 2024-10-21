@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+  <!-- icon -->
+  <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+  <!-- css -->
+  <link rel="stylesheet" href="style.css">
+  <title>touch_page</title>
+  <style>
+    .adminModeBtn {
+      position: relative;
+      width: 4rem;
+      height: 4rem;
+      background-color: #353742a2;
+      color: #cacfd1;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s, box-shadow 0.3s, transform 0.2s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      margin-left: -3.5rem;
+      z-index: 1100;
+    }
+    .adminModeBtn:hover{
+      background: rgb(88, 88, 88);
+    }
+    .adminModeIcon {
+      pointer-events: none;
+    }
+
+    .fa-solid {
+      font-size: 1.6rem;
+    }
+
+    .logoImg {
+      padding-left: 23.7rem;
+    }
+
+    .topBar {
+      width: 100%;
+      height: 9%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #24242C;
+      padding: 0 5rem;
+    }
+
+    /* 영상 예고편 광고 */
+    .movieTeaserArea {
+      width: 72rem;
+      height: 59.61rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('image/파일럿.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .movieTeaser {
+      background-color: #515151;
+      width: 72rem;
+      height: 40.5rem;
+    }
+
+    /* 설명 이미지 */
+    .informationArea {
+      background-image: url("images/information.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      float: right;
+      position: relative;
+      top: -59.6rem;
+      width: 56rem;
+      height: 59.65rem;
+    }
+
+    .bottomBar {
+      box-shadow: 0px 0px 0px 0px;
+      position: relative;
+      top: -60rem;
+    }
+
+    /* 하단바 영역 */
+    .tapTarget {
+      color: #EDEDED;
+      font-size: 2.4rem;
+      letter-spacing: 0.5rem;
+      padding-left: 45.3rem;
+    }
+
+    .touchScreenArea {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      left: 0;
+      top: 0;
+      cursor: pointer;
+      z-index: 999;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===최상위 컨테이너=== -->
+  <div class="wrap">
+    <!-- ===레이아웃 영역=== -->
+    <section class="layoutArea">
+      <!-- 상단바 -->
+      <section class="topBar">
+        <button id="adminModeBtn" class="adminModeBtn"><i class="adminModeIcon fa-solid fa-screwdriver-wrench"></i></button>
+        <img class="logoImg" src="images/logo.png" alt="로고이미지">
+        <article class="clockArea">
+          <i class="bottomBarIcon fa-regular fa-clock"></i>
+          <span class="timeDisplay" id="touchPageClock">12:00</span>
+        </article>
+      </section>
+
+      <!-- 비디오 영역 -->
+      <section class="movieTeaserArea">
+        <video id="movieTeaser" class="movieTeaser" autoplay muted controls>
+          <source src="./videos/플립.mp4" type="video/mp4">
+          비디오가 지원되지 않습니다.
+        </video>
+      </section>
+      <!-- 설명 이미지 영역 -->
+      <section class="informationArea">
+        <!-- <img src="images/infomation.png"> -->
+      </section>
+      <!-- 하단바 -->
+      <section class="bottomBar">
+        <p class="tapTarget">화면을 터치해 주세요.</p>
+      </section>
+
+      <!-- 터치영역 -->
+      <section id="touchScreen" class="touchScreenArea"></section>
+    </section>
+  </div>
+
+  <!-- 스크립트 -->
+  <script>
+    // 시계 업데이트 함수
+    const clock = document.getElementById("touchPageClock");
+
+    function updateClock() {
+      const time = new Date();
+      const hour = String(time.getHours()).padStart(2, "0");
+      const minute = String(time.getMinutes()).padStart(2, "0");
+      clock.innerText = `${hour}:${minute}`;
+    }
+    updateClock();
+    setInterval(updateClock, 5000); // 5초마다 시간 업데이트
+
+    // 비디오 플레이어 클래스
+    class VideoPlayer {
+      constructor(videoElement, data) {
+        this.videoElement = videoElement;
+        this.data = data;
+        this.currentIndex = Math.floor(Math.random() * (((this.data.length) - 1) + 1));
+        // console.log(this.currentIndex);
+        this.init();
+      }
+
+      // 초기 설정
+      init() {
+        this.videoElement.addEventListener('ended', () => this.playNextVideo());
+        this.playVideo(this.currentIndex);
+      }
+      // 비디오 재생
+      playVideo(index) {
+        const { title, video_path } = this.data[index];
+        this.videoElement.src = video_path;
+        this.videoElement.play();
+        // console.log(`Now playing: ${title}`);
+      }
+
+      // 다음 비디오 재생
+      playNextVideo() {
+        this.currentIndex = (this.currentIndex + 1) % this.data.length;
+        this.playVideo(this.currentIndex);
+      }
+    }
+
+    // 비디오 데이터  json 으로 받았다고 가정
+    const dbData = [
+      { title: '플립', video_path: 'videos/플립.mp4' },
+      { title: '아바타2', video_path: 'videos/아바타2.mp4' },
+      { title: '블라인드', video_path: 'videos/블라인드.mp4' },
+      { title: '나 홀로 집에1', video_path: 'videos/나 홀로 집에1.mp4' },
+      { title: '1917', video_path: 'videos/1917.mp4' },
+      { title: '반지의 제왕', video_path: 'videos/반지의제왕.mp4' }
+    ];
+
+    // 비디오 플레이어 인스턴스 생성
+    const videoElement = document.getElementById('movieTeaser');
+    const player = new VideoPlayer(videoElement, dbData);
+
+    // 터치 이벤트 설정
+    const touchScreen = document.getElementById("touchScreen");
+    touchScreen.addEventListener("click", () => {
+      window.location.href = "/home"; // 터치 시 페이지 이동
+    });
+
+    const adminModeBtn = document.getElementById("adminModeBtn");
+    adminModeBtn.addEventListener("click",()=>{
+      window.location.href="/admin_password"
+    })
+
+
+  </script>
+</body>
+
+</html>

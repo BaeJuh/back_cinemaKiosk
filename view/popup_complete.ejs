@@ -16,6 +16,32 @@
 </section>
 
 <script>
+    // const finalProcess = async () => {
+    //     const settings = {
+    //         method: "POST",
+    //         headers: {
+    //             "Accept": 'application/json',
+    //             "Content-Type": 'application/json',
+    //         },
+    //         body: JSON.stringify(this.movieData)
+    //     }
+    //     fetch("/complete", settings)
+    //         .then(res => {
+    //             const timer = document.getElementById("timer");
+    //             timer.style.color = "white";
+    //             const timerSecond = 5;
+    //             for (let i = 1; i <= timerSecond; i++) {
+    //                 setTimeout(() => {
+    //                     timer.innerText = `${(timerSecond + 1) - i}`;
+
+    //                     if (i === timerSecond) {
+    //                         window.location.href = "/";
+    //                     }
+    //                 }, i * 1000);
+    //             }
+    //         })
+    //         .catch(err => { console.log(err) });
+    // }
     document.addEventListener("DOMContentLoaded", () => {// 5초뒤 종료
         const timer = document.getElementById("timer");
         timer.style.color = "white";

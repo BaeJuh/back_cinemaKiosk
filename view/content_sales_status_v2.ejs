@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/611c1b2c45.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="keypad.css">
+    <title>sales_status</title>
+    <style>
+        .sectionHeader {
+            width: 100%;
+            height: 9%;
+            padding-top: 2rem;
+        }
+
+        .salesPageTitle {
+            color: #fff;
+            margin-left: 3rem;
+            font-size: 1.6rem;
+        }
+
+        .sectionBody {
+            display: flex;
+            width: 100%;
+            height: 91%;
+        }
+
+        .tableArea {
+            position: relative;
+            width: 60%;
+            height: 100%;
+            background-color: #011A24;
+        }
+
+        /* == 여기서 부터 정임이가 작성하고 있습니다. == */
+
+        /* == 날짜표시 영역 박스 == */
+        .dateArea {
+            display: inline-block;
+            position: relative;
+            width: 20rem;
+            top: 5rem;
+            left: 20rem;
+            border-radius: 5px;
+            border: 1px solid #ababab;
+            margin-left: -15rem;
+            height: 14rem;
+        }
+
+        .today {
+            color: white;
+            margin: 2rem;
+            border-radius: 5px;
+        }
+
+        .todayMonth,
+        .todayYear {
+            display: block;
+            font-size: 2rem;
+            padding: 0.5rem;
+        }
+
+        .todayMonth {
+            position: relative;
+            left: 7rem;
+            top: 0.5rem;
+        }
+
+        /* === 왼쪽 박스 부분 === */
+        .sales {
+            width: 40rem;
+            position: relative;
+            top: -10rem;
+            margin-left: 20rem;
+            color: white;
+            padding: 3rem;
+        }
+
+        /* === 매출액 인풋 영역 === */
+        .salesInput {
+            padding: 2rem;
+            width: 20rem;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            text-align: right;
+
+        }
+
+        /* === 판매 수량 인풋 영역 === */
+
+        .salesAmount {
+            margin-left: 5rem;
+            font-size: 2rem;
+            margin-top: -2rem;
+            width: 20rem;
+            height: 14rem;
+            border-radius: 5px;
+            border: 1px solid #ababab;
+        }
+
+        .salesQuantity {
+            font-size: 2rem;
+            margin-top: -14rem;
+            margin-left: 28rem;
+            width: 20rem;
+            height: 14rem;
+            border-radius: 5px;
+            border: 1px solid #ababab;
+        }
+
+        /* === 인풋박스 초기화 영역 === */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+
+        /* ===오름차순 내림차순 설정 버튼 === */
+        .upDownBtn {
+            font-size: 1.5rem;
+            /* display: none; */
+        }
+
+        .downUpBtn {
+            display: none;
+            font-size: 1.5rem;
+        }
+
+        .upDownBtn,
+        .downUpBtn {
+            color: #ddd;
+        }
+
+        .upDownBtn:hover,
+        .downUpBtn:hover {
+            cursor: pointer;
+            color: #fff;
+        }
+
+
+        .salesAmountText,
+        .salesQuantityText {
+            display: inline-block;
+            padding: 2rem;
+            font-size: 2rem;
+        }
+
+        /* === 매출 순위 표시 박스 === */
+        .rankingSales {
+            position: relative;
+            border: 1px solid #ADADAD;
+            width: 90%;
+            margin-top: -10rem;
+            border-radius: 5px;
+            margin-left: 3.8rem;
+        }
+
+        .rankingSalesProductBox {
+            height: 34rem;
+            overflow: scroll;
+        }
+
+        .rankingSalesProduct {
+            height: 4rem;
+            line-height: 4rem;
+            border-bottom: 1px solid #ababab;
+            color: white;
+        }
+
+        .rankingSalesProductRanking {
+            font-size: 2rem;
+            margin-left: 2rem;
+        }
+
+        .rankingSalesProductName {
+            font-size: 2rem;
+            margin-left: 10.5rem;
+            /* margin-left: 30%; */
+        }
+
+        .rankingSalesProductCount {
+            font-size: 2rem;
+            margin-left: 14.7rem;
+        }
+
+        .rankingSalesProductHowmuch {
+            font-size: 2rem;
+            margin-left: 8rem;
+        }
+
+        /* === 랭킹 순위 데이터 출력 영역 === */
+        .rankingSalesProductInfo {
+            height: 3rem;
+            line-height: 3rem;
+            color: white;
+            text-align: center;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .rankingSalesProductInfoValue {
+            background: none;
+            border: none;
+            border-bottom: 1px solid rgb(255, 255, 255);
+            color: white;
+            outline: none;
+            font-size: 1.6rem;
+            text-align: center;
+            margin-left: 0.2rem;
+            height: 3rem;
+            line-height: 2rem;
+        }
+
+        .rankingSalesProductInputRanking {
+            width: 5rem;
+        }
+
+        .rankingSalesProductInputName {
+            width: 30rem;
+        }
+
+        .rankingSalesProductInputCount {
+            width: 10rem;
+        }
+
+        .rankingSalesProductInputHowmuch {
+            width: 20rem;
+        }
+
+        /* =====[영화비율현황]유진 작성===== */
+        .graphArea {
+            position: relative;
+            width: 40%;
+            height: 100%;
+            background-color: #011a249a;
+            padding: 1.7rem;
+        }
+
+        .ChartContainer {
+            width: 100%;
+            height: 48%;
+            /* display: flex; */
+            background-color: rgba(108, 108, 108, 0.186);
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chartWrapper {
+            position: relative;
+            display: flex;
+            padding: 1rem;
+        }
+
+        .analyticsHeading {
+            width: 100%;
+            height: 3rem;
+            line-height: 3rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            background: #0000002c;
+            color: #fff;
+            padding-left: 1rem;
+            font-size: 1.35rem;
+            letter-spacing: 0.05rem;
+        }
+
+        .pieChartCanvas {
+            margin-left: 1rem;
+        }
+
+        .movieRankList {
+            width: 27%;
+            /* border: 1px solid orange; */
+        }
+
+        .movieRankData {
+            display: flex;
+            list-style: none;
+            color: #fff;
+            padding: 0.8rem 1rem;
+            font-size: 1.3rem;
+            border-bottom: 1px solid transparent;
+            transition: 0.5s;
+        }
+
+        .movieRankListStyle {
+            width: 1.2rem;
+            height: 0.5rem;
+            /* background: red; */
+            border-radius: 1px;
+            margin-right: 1rem;
+            margin-top: .6rem;
+        }
+
+        .viewerCountArea {
+            position: absolute;
+            right: 2rem;
+            bottom: 1.5rem;
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        .viewerCount {
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        /* barChart */
+        .barChartCanvas {
+            /* border: 1px solid red; */
+            margin: 0.5rem 4rem 0;
+        }
+
+        /* graphInfo */
+        .graphInfo {
+            position: relative;
+            top: 1rem;
+            left: 33rem;
+            width: 17em;
+            height: 2rem;
+            /* border: 1px solid white; */
+            font-size: 1.15rem;
+            color: #ADADAD;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- ===최상위 컨테이너=== -->
+    <div class="wrap">
+        <!-- ===레이아웃 영역=== -->
+        <section class="layoutArea">
+            <section class="sectionHeader">
+                <h2 class="salesPageTitle">매출 현황</h2>
+            </section>
+            <section class="sectionBody">
+                <section class="tableArea">
+                    <!-- ==조미미꺼== -->
+
+                    <!-- 날짜 표시 영역 -->
+                    <section class="dateArea">
+                        <span class="today todayYear" id="todayYear"></span>
+                        <span class="today todayMonth" id="todayMonth"></span>
+                        <!-- <span class="today todayDay" id="todayDay"></span> -->
+                    </section>
+                    <!-- 매출액, 총 관객 수 표시 영역-->
+                    <section class="sales">
+                        <section class="salesAmount">
+                            <span class="salesAmountText">총 매출액</span>
+                            <input type="text" id="salesAmountInput" class="salesInput salesAmountInput" readonly>
+                        </section>
+                        <section class="salesQuantity">
+                            <span class="salesQuantityText">총 관객수</span>
+                            <input type="text" id="salesQuantityInput" class="salesInput salesQuantityInput" readonly>
+                        </section>
+                    </section>
+                    <!-- 순위표 영역 -->
+                    <section class="salesRanking" id="salesRanking">
+                        <section class="rankingSales">
+                            <section class="rankingSalesProductBox">
+                                <div class="rankingSalesProduct">
+                                    <span class="rankingSalesProductRanking">순위</span>
+                                    <span id="upDownBtn" class="upDownBtn">⬆️</span>
+                                    <span id="downUpBtn" class="downUpBtn">⬇️</span>
+                                    <span class="rankingSalesProductName">영화명</span>
+                                    <span class="rankingSalesProductCount">관객수</span>
+                                    <span class="rankingSalesProductHowmuch">일별 매출</span>
+                                </div>
+                                <div id="rankingSalesProductInfoBox" class="rankingSalesProductInfoBox">
+                                </div>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+                <section class="graphArea">
+                    <!-- 원그래프 -->
+                    <article class="pieChartContainer ChartContainer">
+                        <h2 class="analyticsHeading">관객수 분포</h2>
+                        <div class="chartWrapper">
+                            <ul id="movieRankList" class="movieRankList"></ul>
+                            <canvas id="pieChartCanvas" class="pieChartCanvas" width="220" height="220"></canvas>
+                            <div class="viewerCountArea">총 관객 수 : <span id="viewerCount"
+                                class="viewerCount">0</span> 명</div>
+                        </div>
+                    </article>
+                    <!-- 막대그래프 -->
+                    <article class="barChartContainer ChartContainer">
+                        <h2 class="analyticsHeading">매출 분포</h2>
+                        <!-- 필터 -->
+                        <!-- <div class="analyticsFilter">
+                            <input type="checkbox" id="trend" name="salesTrend" checked />
+                            <label for="trend">추이</label>
+
+                            <input type="checkbox" id="highest" name="salesHighest" checked />
+                            <label for="highest">최고</label>
+
+                            <input type="checkbox" id="lowest" name="salesLowest" checked />
+                            <label for="lowest">최저</label>
+                        </div> -->
+                        <!-- 설명서 넣는 곳 -->
+                        <div class="graphInfo">매출 분포 (단위: 10,000원)</div>
+                        <canvas id="barChartCanvas" class="barChartCanvas" width="400" height="210"></canvas>
+                    </article>
+
+                </section>
+            </section>
+        </section>
+        <!-- ===하단바 영역=== -->
+        <section class="bottomBar">
+            <article class="barButtonsArea">
+                <button class="barButtons staffCallButton">직원호출</button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-house"></i></button>
+                <button class="barButtons"><i class="bottomBarIcon fa-solid fa-backward"></i></button>
+            </article>
+            <img class="logoImg" src="images/logo.png" alt="로고이미지">
+            <article class="clockArea"><i class="bottomBarIcon fa-regular fa-clock"></i><span
+                    class="timeDisplay">12:00</span>
+            </article>
+        </section>
+
+    </div>
+    <script>
+        // 그래프에 사용되는 색 입니다.
+        const pieChartColors = ['#06D001', '#F9E400', '#FF8F00', '#15F5BA', '#6499E9', '#F9D371', '#E26EE5', '#A076F9', '#F8FF95', '#E26EE5'];
+        // [JMM] 날짜를 받아오는 곳 입니다.
+        class NowDate {
+            constructor(id) {
+                this.id = id;
+            }
+
+            date() {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = today.getMonth() + 1;
+                const date = today.getDate();
+                return [year, month, date];
+            }
+
+            displayDate() {
+                const [year, month, date] = this.date();
+                document.getElementById('todayYear').innerHTML = year + "년";
+                document.getElementById('todayMonth').innerHTML = month + "월" + " " + date + "일";
+            }
+        }
+
+        class RankingSales {
+            constructor(id, result) {
+                this.id = id;
+                this.result = result;
+            }
+
+            jsonHere() {
+                let sortResult = [...this.result].sort((a, b) => b.amount - a.amount); // MAX >> MIN 정렬
+
+                // 초기 데이터 그리기
+                this.movieRankingBtn(sortResult);
+
+                // MIN >> MAX 으로 정렬
+                document.getElementById("upDownBtn").addEventListener('click', () => {
+                    document.getElementById("downUpBtn").style.display = 'inline';
+                    document.getElementById("upDownBtn").style.display = 'none';
+                    sortResult = [...this.result].sort((a, b) => a.amount - b.amount);
+                    this.updateRankingInfo(sortResult);
+                });
+
+                // MAX >> MIN 으로 정렬
+                document.getElementById("downUpBtn").addEventListener('click', () => {
+                    document.getElementById("upDownBtn").style.display = 'inline';
+                    document.getElementById("downUpBtn").style.display = 'none';
+                    sortResult = [...this.result].sort((a, b) => b.amount - a.amount);
+                    this.movieRankingBtn(sortResult);
+                });
+            }
+
+            updateRankingInfo(sortResult) {
+                let totalAmount = 0;
+                let totalAudienceCount = 0;
+                const rankingHtml = sortResult.map((v, i) => {
+                    totalAmount += Number(v.amount);
+                    totalAudienceCount += Number(v.audience_count);
+                    return `
+                <div class="rankingSalesProductInfo">
+                    <input type="text" value="${i + 1}" readonly id="reset1" class="rankingSalesProductInfoValue rankingSalesProductInputRanking">
+                    <input type="text" value="${v.title}" readonly id="reset2" class="rankingSalesProductInfoValue rankingSalesProductInputName">
+                    <input type="text" value="${Number(v.audience_count).toLocaleString()}" readonly id="reset3" class="rankingSalesProductInfoValue rankingSalesProductInputCount">
+                    <input type="text" value="${Number(v.amount).toLocaleString()}" readonly id="reset4" class="rankingSalesProductInfoValue rankingSalesProductInputHowmuch">
+                </div>`;
+                }).join('');
+
+                document.getElementById('rankingSalesProductInfoBox').innerHTML = rankingHtml;
+                document.getElementById('salesAmountInput').value = `${totalAmount.toLocaleString()} 원`;
+                document.getElementById('salesQuantityInput').value = `${totalAudienceCount.toLocaleString()} 명`;
+            }
+
+            movieRankingBtn(sortResult) {
+                this.updateRankingInfo(sortResult);
+            }
+
+            control() {
+                this.jsonHere();
+                console.log("rankingSales : ", this.result);
+            }
+        }
+
+        // [YJ_PieChart]
+        class PieChart {
+            constructor(id) {
+                this.id = id;
+                this.canvas = '';
+                this.pen = '';
+                this.width = 0;
+                this.height = 0;
+            }//
+            fetchElement() {
+                const domIds = {
+                    pieChartCanvas: ''
+                }
+                for (let key in domIds) {
+                    if (document.getElementById(key)) {
+                        domIds[key] = document.getElementById(key);
+                    }
+                }
+                this.canvas = domIds.pieChartCanvas;
+                this.pen = this.canvas.getContext("2d");
+                this.width = Number(this.canvas.getAttribute("width"));
+                this.height = Number(this.canvas.getAttribute("height"));
+                this.pen.fillStyle = "#fff";
+            }//
+            modiDot(x, y) {
+                this.pen.fillRect(x + (this.width / 2), -y + (this.height / 2), 1, 1);
+            }//
+            renderCircleGraph(dataSource, pieChartColors) {
+                const movieRankList = document.getElementById("movieRankList");
+                const dataPoints = [...dataSource]; // DB값
+                const radius = 95;
+                let totalAttendees = 0;
+                const AttendeesList = [];
+                dataPoints.forEach((objItem) => {
+                    const audienceCount = objItem["audience_count"];
+                    totalAttendees += audienceCount;
+                    AttendeesList.push(audienceCount);
+                });
+                const degree = 360 / totalAttendees;
+                // 
+                let startPoint = 0;
+                for (let i = 0; i < dataPoints.length; i++) {
+                    for (let x = startPoint; x <= startPoint + AttendeesList[i] * degree; x += 0.3) {
+                        for (let y = radius / 2.4; y <= radius; y += 0.3) {
+                            const renewXValue = (-x + 90) % 360;
+                            const cos = Math.cos(renewXValue * Math.PI / 180) * y;
+                            const sin = Math.sin(renewXValue * Math.PI / 180) * y;
+                            this.modiDot(cos, sin);
+                            this.pen.fillStyle = pieChartColors[i];
+                        }
+                    }
+                    startPoint += (AttendeesList[i] * degree);
+                    const HtmlElement = `
+                        <li class="movieRankData movieRankData${i + 1}">
+                            <div class="movieRankListStyle" style="background-color:${pieChartColors[i]};"></div>
+                            ${dataPoints[i]["title"]}
+                        </li>
+                    `;
+                    const CssPart = `
+                        <style>
+                            .movieRankData${i + 1}:hover{
+                                border-bottom: 1px solid ${pieChartColors[i]};
+                            } 
+                        </style>
+                    `
+                    movieRankList.innerHTML += `${HtmlElement}${CssPart}`;
+                }
+
+                // ==그래프 비율 text==
+                const percent = 100 / totalAttendees;
+                let cumulativeAngle = 0;
+
+                for (let i = 0; i < dataPoints.length; i++) {
+                    this.pen.fillStyle = "#222";
+                    const sliceAngle = (AttendeesList[i] / totalAttendees) * 360;
+                    const middleAngle = cumulativeAngle + (sliceAngle / 2) - 10;
+                    const renewXValue = (-middleAngle + 90) % 360 - 10;
+                    const cos = Math.cos(renewXValue * Math.PI / 180) * (radius / 1.4);
+                    const sin = Math.sin(renewXValue * Math.PI / 180) * (radius / 1.4);
+                    // percentValue
+                    const percentValue = (Number.isInteger(percent * Number(AttendeesList[i]))
+                        ? (percent * Number(AttendeesList[i])).toFixed(0)
+                        : (percent * Number(AttendeesList[i])).toFixed(1)) + "%";
+
+                    const textWidth = this.pen.measureText(percentValue).width;
+                    const textHeight = 10;
+                    this.pen.fillText(
+                        percentValue,
+                        cos + (this.width / 2) - (textWidth / 2),
+                        -sin + (this.height / 2) + (textHeight / 2) - 2,
+                        textWidth
+                    );
+                    cumulativeAngle += sliceAngle;
+                }
+                // ==viewerCount==
+                document.getElementById("viewerCount").innerHTML = totalAttendees.toLocaleString();
+            }//
+            control(dataSource, pieChartColors) {
+                this.fetchElement();
+                this.renderCircleGraph(dataSource, pieChartColors);
+            }//
+        }
+
+        // [YJ_BarChart]
+        class BarChart {
+            constructor(id) {
+                this.id = id;
+                this.canvas = '';
+                this.pen = '';
+                this.width = 0;
+                this.height = 0;
+            }//
+            fetchElement() {
+                const domIds = {
+                    barChartCanvas: ''
+                }
+                for (let key in domIds) {
+                    if (document.getElementById(key)) {
+                        domIds[key] = document.getElementById(key);
+                    }
+                }
+                this.canvas = domIds.barChartCanvas;
+                this.pen = this.canvas.getContext("2d");
+                this.width = Number(this.canvas.getAttribute("width"));
+                this.height = Number(this.canvas.getAttribute("height"));
+                this.pen.fillStyle = "#fff";
+            }//
+            modiDot(x, y) {
+                this.pen.fillRect((x + 30), -(y + 30) + this.height, 1, 1);
+            }//
+            renderCrossAxes() {
+                for (let x = 0; x < this.width; x++) {
+                    this.modiDot(x, 0);
+                }
+                for (let y = 0; y < this.height; y++) {
+                    this.modiDot(0, y);
+                }
+            }//
+            renderBarGraph(Dbdata) {
+                const dataPoints = [...Dbdata]; // DB값
+                const amountList = [];
+                dataPoints.forEach((objItem) => {
+                    const amountCount = Math.ceil(Number(objItem["amount"]) * 0.0001);
+                    amountList.push(amountCount);
+                });
+                console.log(amountList)
+
+                // ==그래프 그리기==
+                for (let i = 0; i < amountList.length; i++) {
+                    for (let k = 0; k < (amountList[i]) * 3.35; k++) {
+                        for (let j = 0; j < 30; j++) {
+                            this.pen.fillStyle = pieChartColors[i];
+                            this.modiDot(j + (i * 55) + 30, k);
+                        }
+                    }
+                }
+
+                // ==Y축 scaleFactor==
+                for (let i = 0; i <= 10; i++) {
+                    this.pen.fillStyle = "#fff";
+                    for (let j = -4; j < 4; j++) {
+                        this.modiDot(j, (i + 1) * 17);
+                    }
+                    const text = `${(i) * 10}`;
+                    // this.pen.fillText(text, 7, ((this.height/10) * -i) + (this.height) - 40, 10);
+                    this.pen.fillText(text, 8, ((this.height / 6.5) * -i) + (this.height) - 32, 20);
+                }
+
+                // ==X축 Text==
+                for (let i = 0; i < dataPoints.length; i++) {
+                    this.pen.fillStyle = "#fff";
+                    const title = dataPoints[i]["title"];
+                    const textWidth = this.pen.measureText(title).width;
+                    const xPosition = (i * 56) + 73 - (textWidth / 2);
+                    this.pen.fillText(title, xPosition, (this.height) - 13);
+                }
+
+
+            }//
+            control(Dbdata) {
+                this.fetchElement();
+                this.renderCrossAxes();
+                this.renderBarGraph(Dbdata);
+            }//
+        }
+
+        // == [비동기 fetch 요청] == 
+        fetch("http://kkms4001.iptime.org:45120/content_sales_status", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+        })
+            .then((res) => res.json())
+            .then((responseData) => {
+                let DbJsondata = responseData || [];
+
+                const DbLength = DbJsondata.length
+                const Dbdata = []; // 유진사용
+                // 랜덤값 구현
+                while (DbJsondata.length > 0) {
+                    const randomNum = Math.floor(Math.random() * DbJsondata.length);
+                    const selectedData = DbJsondata.splice(randomNum, 1)[0];
+                    Dbdata.push(selectedData);
+                }
+
+                console.log("Dbdata : ", Dbdata);
+
+                // === Class 객체 선언  ===
+                // 현재 날짜 표시
+                const nowDate = new NowDate('date');
+                nowDate.displayDate();
+
+                // RankingSales 
+                const rankingSales = new RankingSales('rankingSales', Dbdata);
+                rankingSales.control();
+
+                // PieChart 
+                const pieChart = new PieChart("pieChart");
+                pieChart.control(Dbdata, pieChartColors);
+
+                // BarChart 
+                const barChart = new BarChart("BarChart");
+                barChart.control(Dbdata);
+            })
+            .catch((err) => {
+                console.log("[ERROR] content_sales_status / " + err);
+            });
+
+    </script>
+</body>
+
+</html>

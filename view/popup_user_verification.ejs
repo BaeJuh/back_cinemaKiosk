@@ -1,47 +1,63 @@
 <!-- ===팝업 영역=== -->
-    <article class="popupBar">
-        <p class="popupTitle popupBarTextCommon">회원번호 입력 안내</p>
-        <div id="closePopup"><i class="popupBarTextCommon fa-solid fa-x"></i></div>
-    </article>
-    <section class="popupContent">
-        <!-- 키패드 영역 -->
-        <section class="keypadBoxArea">
-            <%- include("keypadFrame", { title: "회원번호를 입력해주세요" }) %>
-        </section>
-
+<article class="popupBar">
+    <p class="popupTitle popupBarTextCommon">회원번호 입력 안내</p>
+    <div id="closePopup"><i class="popupBarTextCommon fa-solid fa-x"></i></div>
+</article>
+<section class="popupContent">
+    <!-- 키패드 영역 -->
+    <section class="keypadBoxArea">
+        <%- include("keypadFrame", { title: "회원번호를 입력해주세요" }) %>
     </section>
+
+</section>
 
 
 <script>
+    // phone_number
     const checkBtn = document.getElementById("checkBtn");
-    //const queryData_popup = <%- JSON.stringify(queryData) %>;
-
-    // const makeQuery = (queryData) => {
-    //     let query = "";
-
-    //     for (const key in queryData) {
-    //         query += `${key}=${queryData[key]}&`;
-    //     }
-    //     console.log(query);
-    //     return query;
-    // }
+    const queryData = <%- JSON.stringify(queryData) %>;
 
     checkBtn.addEventListener("click", () => {
-        const query = makeQuery(queryData);
-        window.location.href = `/point_confirmation?${query}`;
+        const displayNumber = document.getElementById("phoneNumber");
+        if (/^010\d{8}$/.test(displayNumber.value)) {
+            let query = "";
+
+            queryData["phone_number"] = displayNumber.value;
+
+            for (const key in queryData) {
+                query += `${key}=${queryData[key]}&`;
+            }
+
+            const settings = {
+                method: "POST",
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify({ checkInformation: displayNumber.value })
+            }
+            fetch("/user_verification_popup", settings)
+                .then((res) => {
+                    window.location.href = `/point_confirmation?${query}`;
+                });
+        } else {
+            displayNumber.value = `잘못된 전화 번호 입니다.`;
+            console.log(displayNumber.value)
+        }
     });
 </script>
 
 <style>
-    .keypadBoxArea{
-        padding-top: 5.5rem;;
+    .keypadBoxArea {
+        padding-top: 5.5rem;
+        ;
     }
 
     .popupContent {
         padding-top: 3.5rem;
     }
 
-    .popupTitleText{
+    .popupTitleText {
         font-size: 2rem;
         letter-spacing: 1px;
         color: #FFFFFF;
@@ -53,5 +69,4 @@
     .keypadArea {
         height: 37.5rem;
     }
-    
 </style>

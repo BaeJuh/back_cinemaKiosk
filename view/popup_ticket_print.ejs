@@ -46,6 +46,7 @@
         constructor(id) {
             this.id = id;
             this.movieData = null;
+            this.reservation_num = "";
         }
 
         getMovieData() {
@@ -139,25 +140,56 @@
                 reservedNumber += partOfReservedNumber;
             }
             console.log(reservedNumber)
+            this.reservation_num = reservedNumber;
+            this.movieData["reservation_id"] = reservedNumber;
         }
+
+        // goToNextPage () {
+        //     const printTicketBtn = document.getElementById("printTicketBtn");
+        //     const ticketArea = document.getElementById("ticketArea");
+
+        //     printTicketBtn.addEventListener("click", () => {
+        //         window.print();
+        //         window.location.href = "/complete";
+        //     });
+        // }
+
+        fetchData() {
+            const settings = {
+                method: "POST",
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify(this.movieData)
+            }
+            fetch("/complete", settings)
+                .then(res => {
+                    console.log(this.movieData)
+                    const printTicketBtn = document.getElementById("printTicketBtn");
+                    const ticketArea = document.getElementById("ticketArea");
+
+                    printTicketBtn.addEventListener("click", () => {
+                        window.print();
+                        window.location.href = "/complete";
+                    });
+                })
+                .catch(err => { console.log(err) });
+        }
+
         runTicketInfo() {
             this.getMovieData();
             this.visualize();
             this.drawBarcode();
             this.makeReserveNum();
+            this.fetchData();
         }
     }
-    const ticket_info = new TicketPrint("ticket_info");
-    ticket_info.runTicketInfo();
-
-    const printTicketBtn = document.getElementById("printTicketBtn");
-    const ticketArea = document.getElementById("ticketArea");
-
+    
+    const ticketPrint = new TicketPrint("main");
+    ticketPrint.runTicketInfo();
     /// 페이지 이동 ///
-    printTicketBtn.addEventListener("click", () => {
-        window.print();
-        window.location.href = "/complete";
-    });
+    
 
     /// 바코드 랜덤 구현 ///
     // const canvas = document.getElementById("canvas");
