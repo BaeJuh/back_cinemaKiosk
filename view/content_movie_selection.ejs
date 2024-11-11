@@ -142,7 +142,7 @@
             const moviePoster = scheduleMovieObj[movie_id]["poster"];
             let movieTimes = "";
             scheduleMovieObj[movie_id]["start_time"].forEach((start_time, index) => {
-                movieTimes += `<div id="start_time_${movie_id}_${index}" value=${movieTitle} class="timeSlot">${start_time}</div>`;
+                movieTimes += `<div id="start_time_${movie_id}_${index}" value="${movieTitle}" class="timeSlot">${start_time}</div>`;
             });
             scheduleGalleryWrap.innerHTML += `
             <section class="scheduleGallery">
