@@ -170,7 +170,6 @@ app.post("/payment", (req, res) => {
             res.json(dbData);
         }
     });
-
 })
 
 app.post("/content_sales_status", (req, res) => {
@@ -333,6 +332,33 @@ app.post('/complete', (req, res) => {
     res.json("END!!!!")
 });
 
+
+/* 2024.11.11 admin DB 추가 */
+
+app.post("/admin_password", (req, res) => {
+    console.log("==================================")
+    console.log("admin_password 접속했따")
+    console.log("==================================")
+    const checkInformation = req.body.checkInformation;
+    const values = [checkInformation];
+    console.log(checkInformation);
+    db.query(sqlCommand.checkAdmin, values, (err, dbData) => {
+        if (err) {
+            console.error(err); // 쿼리 오류 처리
+            res.status(500).send('Database query error');
+        } else {
+            if (dbData && dbData.length > 0) {
+                res.json({"result" : true});
+                console.log( "admin_password : " + dbData )
+            } else {
+                res.json({"result" : false});
+                console.log( "admin_password 조회했는데 결과가 없음 " )
+            }
+        }
+    });
+});
+
+/* 2024.11.11 admin DB */
 
 //DONGHYUN DB ROUTING
 /*******************************************************************/
