@@ -1,12 +1,8 @@
-import { log } from "console";
 import express from "express";
 import mysql from "mysql";
-import path from "path";
-/* DONGHYUN*/
 import sqlCommand from "./sqlTemplate/sqlCommand.js"
 import dbconfig from './config/dbconfig.js';
 const db = mysql.createConnection(dbconfig);
-/* END DONGHYUN */
 const app = express();
 
 app.use(express.static("public"));
@@ -17,10 +13,6 @@ app.set("views", "view");
 app.listen(45120, () => {
     console.log("http://kkms4001.iptime.org:45120    45120 Port is ready");
 });
-
-
-/*******************************************************************/
-//DONGHYUN DB ROUTING
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -42,7 +34,6 @@ app.post("/movie_selection1", (req, res) => {
         }
     });
 });
-
 app.post("/movie_selection2", (req, res) => {
     db.query(sqlCommand.movie_selection2, (err, dbData) => {
         if (err) {
@@ -53,7 +44,6 @@ app.post("/movie_selection2", (req, res) => {
         }
     });
 });
-
 app.post("/checkUser", (req, res) => {
     const checkInformation = req.body.checkInformation;
     const values = [checkInformation];
@@ -64,17 +54,13 @@ app.post("/checkUser", (req, res) => {
         } else {
             if (dbData && dbData.length > 0) {
                 res.json(dbData);
-                console.log("예약된 정보가 있다.");
             } else {
-                console.log("예약된 정보가 없다.");
                 res.json("no reservation");
             }
         }
     });
 });
-
 app.post("/user_verification_popup", (req, res) => {
-    console.log(req.body.checkInformation)
     const checkInformation = req.body.checkInformation;
     const values = [checkInformation];
 
@@ -92,7 +78,6 @@ app.post("/user_verification_popup", (req, res) => {
         }
     });
 });
-
 app.post("/point_confirmation_popup", (req, res) => {
     console.log(req.body.checkInformation)
     const checkInformation = req.body.checkInformation;
@@ -106,27 +91,6 @@ app.post("/point_confirmation_popup", (req, res) => {
         }
     });
 });
-
-// app.post("/payment_point_accumulation_popup", (req, res) => {
-//     console.log(req.body.checkInformation)
-//     const checkInformation = req.body.checkInformation;
-//     const values = [checkInformation];
-//     db.query(sqlCommand.checkPhoneNumber, values, (err, dbData) => {
-//         if (err) {
-//             console.error(err); // 쿼리 오류 처리
-//             res.status(500).send('Database query error');
-//         } else {
-//             if (dbData && dbData.length > 0) {
-//                 console.log("user_verification_popup 유저 데이터 있다.");
-//                 res.json("유저 데이터 있다");
-//             } else {
-//                 console.log("user_verification_popup 유저 데이터 없다.");
-//                 res.json("유저 데이터 없다");
-//             }
-//         }
-//     });
-// });
-
 app.post("/select_movie_time", (req, res) => {
     const title = req.body.title;
     const values = [title];
@@ -140,7 +104,6 @@ app.post("/select_movie_time", (req, res) => {
         }
     });
 });
-
 app.post("/select_seat", (req, res) => {
     const title = req.body.title;
     const start_time = req.body.startTime;
@@ -156,9 +119,6 @@ app.post("/select_seat", (req, res) => {
         }
     });
 });
-
-
-
 app.post("/payment", (req, res) => {
     const title = req.body.title;
     const values = [title];
@@ -171,7 +131,6 @@ app.post("/payment", (req, res) => {
         }
     });
 })
-
 app.post("/content_sales_status", (req, res) => {
     db.query(sqlCommand.content_sales_status, (err, dbData) => {
         if (err) {
@@ -181,42 +140,16 @@ app.post("/content_sales_status", (req, res) => {
         }
     })
 })
-
 app.post('/complete', (req, res) => {
-
-    console.log("*******************************complete 로그 : **********************************");
-    console.log(req.body);
-    console.log("*******************************complete 로그 : **********************************");
-
     const data = req.body;
     data["theater_name"] = data["theater_name"].charAt(0);
-    // const data = {
-    //     title: '나 홀로 집에1',
-    //     showtime: '22:00',
-    //     theater: 'A',
-    //     adult: '1',
-    //     youth: '1',
-    //     special: '1',
-    //     seat_names: 'A1,B1,C1',
-    //     phone_number: '01011112222', // 포인트 적립 안 하면 생략 가능
-    //     movie_id: 1000005,
-    //     reservation_id: 12345678901, //랜덤값 
-    //     payment_method: 'both', //   결제방식, point or card or both 
-    //     payment_amount: 20000, // 결제 금액
-    //     use_point: 1000, // 사용한 포인트
-    //     points_to_be_earned: 200, // '
-    //     total_payment_amount: 19000 // 실제 결제 금액
-    // }
-
+   
     //** UPDATE SEAT_TABLE (예약좌석 사용 불가능으로 업데이트 )**/
     const seats = data.seat_names.split(",");
     seats.forEach((seat, i, a) => {
-        const sql_seat_update = `update seats set reservation_status = 1 
-            where seat_name = "${seat}" 
-            and start_time = "${data.startTime}" 
-            and theater_id = (select theater_id from theaters where theater_name = "${data.theater_name}")`
+        const values = [seat, data.startTime, data.theater_name]
 
-        db.query(sql_seat_update, (err, results) => {
+        db.query(sqlCommand.sql_seat_update, values, (err, results) => {
             if (err) {
                 console.log("쿼리실행 오류: seats 테이블 update 실패!!", err);
             } else {
@@ -228,8 +161,7 @@ app.post('/complete', (req, res) => {
 
     //** UPDATE, INSERT USER_TABLE (기존 유저 포인트 적립 및 신규 유저 추가) **/
     if (data.phone_number != 'null') {
-        const sql_point_confirmation_popup = "SELECT point FROM users WHERE phone_number = ?"; // ? ==> 플레이스홀더
-        db.query(sql_point_confirmation_popup, [data.phone_number], (err, results) => { //['0101111222'] ? 값 바인딩
+        db.query(sqlCommand.sql_point_confirmation_popup, [data.phone_number], (err, results) => { 
             if (err) {
                 console.err("쿼리실행 오류: 기존 포인트 조회" + err);
             } else {
@@ -238,8 +170,7 @@ app.post('/complete', (req, res) => {
                     const newPoints = Number(currentPoints) + Number(data.points_to_be_earned); // 데이터에서 가져온 포인트 추가
 
                     // UPDATE 문 
-                    const sql_update_user_points = `UPDATE users SET point = ? WHERE phone_number = ?`;
-                    db.query(sql_update_user_points, [newPoints, data.phone_number], (err, results) => {
+                    db.query(sqlCommand.sql_update_user_points, [newPoints, data.phone_number], (err, results) => {
                         if (err) {
                             console.log("쿼리실행 오류: 포인트 업데이트", err);
                         } else {
@@ -248,8 +179,7 @@ app.post('/complete', (req, res) => {
                     });
                 } else {
                     console.log("해당 전화번호 사용자가 없으므로 인설트합니다.");
-                    const sql_insert_user_points = `insert into users values( null, ? , ? )`;
-                    db.query(sql_insert_user_points, [data.phone_number, Number(data.points_to_be_earned)], (err, results) => {
+                    db.query(sqlCommand.sql_insert_user_points, [data.phone_number, Number(data.points_to_be_earned)], (err, results) => {
                         if (err) {
                             console.log("쿼리실행 오류: 신규유저 추가", err);
                         } else {
@@ -262,9 +192,8 @@ app.post('/complete', (req, res) => {
     }
 
     //** INSERT PAYMENTS TABLE ( 매출관리 테이블 데이터 추가 ) **/
-    const sql_payment_insert = `insert into payments values( null,"${data.reservation_id}","${data.total_payment_amount}",now(),null,0 )`
-
-    db.query(sql_payment_insert, (err, results) => {
+    const sql_payment_insert_values = [ data.reservation_id, data.total_payment_amount ];
+    db.query(sqlCommand.sql_payment_insert, sql_payment_insert_values, (err, results) => {
         if (err) {
             console.log("쿼리실행 오류: payment 테이블 INSERT 실패!!", err);
         } else {
@@ -275,13 +204,6 @@ app.post('/complete', (req, res) => {
 
 
     //** INSERT RESERVATIONS TABLE ( 예약 정보 추가 ) **/
-    const sql_complete_insert_reservations = `
-        INSERT INTO reservations (
-            reservation_num, phone_number, showtime, seat_names, theater_name, 
-            adult_count, youth_count, special_count, title, movie_id, duration
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT movie_id FROM movies WHERE title = ?), (SELECT duration FROM movies WHERE title = ?))
-    `;
-
     const values = [
         data.reservation_id,
         data.phone_number || null, // phone_number가 없을 경우 null 처리
@@ -296,7 +218,7 @@ app.post('/complete', (req, res) => {
         data.title
     ];
 
-    db.query(sql_complete_insert_reservations, values, (err, results) => {
+    db.query(sqlCommand.sql_complete_insert_reservations, values, (err, results) => {
         if (err) {
             console.log("쿼리실행 오류: reservations 테이블 INSERT 실패!!", err);
         } else {
@@ -307,17 +229,15 @@ app.post('/complete', (req, res) => {
     /** UPDATE USER_TABLE  (유저 사용 포인트 차감)  **/
     if (data.use_point != 'null') {
         console.log("UPDATE USER_TABLE  (유저 사용 포인트 차감)");
-        const sql = `select point from users where phone_number="${data.phone_number}"`;
         let leftPoint = 0;
-        db.query(sql, (err, dbData) => {
+        db.query(sqlCommand.sql_deduct_usage_points, [data.phone_number], (err, dbData) => {
             if (err) {
                 console.error(err);
             } else {
                 leftPoint = Number(dbData[0]["point"]) - Number(data.use_point);
                 console.log(leftPoint);
-                const updateSql = `update users set point=${leftPoint} where phone_number =${data.phone_number}`
-                console.log(updateSql);
-                db.query(updateSql, (err, dbResult) => {
+                const sql_deduct_usage_points2_values = [leftPoint, data.phone_number]
+                db.query(sqlCommand.sql_deduct_usage_points2, sql_deduct_usage_points2_values, (err, dbResult) => {
                     if (err) {
                         console.log("userupate_Err")
                         console.error(err)
@@ -334,7 +254,6 @@ app.post('/complete', (req, res) => {
 
 
 /* 2024.11.11 admin DB 추가 */
-
 app.post("/admin_password", (req, res) => {
     console.log("==================================")
     console.log("admin_password 접속했따")

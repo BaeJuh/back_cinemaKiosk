@@ -23,9 +23,6 @@
 
 <script>
     const procedurePayment = (selectedMovieData) => {
-        // const [selectedMovieData] = [
-        //     { movie_id: 1, title: '플립', img_path: 'images/플립.jpg' }
-        // ];
         [selectedMovieData] = selectedMovieData;
 
         const queryData = <%- JSON.stringify(queryData) %>;
@@ -52,7 +49,6 @@
 
             queryData["payment_amount"] = price;
             queryData["phone_number"] = "null";
-            //queryData["reservation_num"]
             queryData["use_point"] = "null";
             queryData["points_to_be_earned"] = "null";
             queryData["total_payment_amount"] = price;
@@ -90,11 +86,9 @@
         }
         const response = await fetch("/payment", settings);
 
-        const paymentData = await response.json(); // 서버 응답 처리
+        const paymentData = await response.json();
         procedurePayment(paymentData);
     })();
-
-
 </script>
 
 <style>

@@ -173,14 +173,6 @@
 <script>
     // 임시 데이터
     procedureSeatSelection = (DbValue) => {
-        // const DbValue = [
-        //     { showtime: '11:00', theather: 'A관', seat_name: 'A1', reservation_status: true },
-        //     { showtime: '11:00', theather: 'A관', seat_name: 'B1', reservation_status: true },
-        //     { showtime: '11:00', theather: 'A관', seat_name: 'C1', reservation_status: true },
-        //     { showtime: '11:00', theather: 'A관', seat_name: 'D1', reservation_status: true },
-        //     { showtime: '11:00', theather: 'A관', seat_name: 'E1', reservation_status: true },
-        // ];
-
         // 예약된 자석 확인
         DbValue.forEach((item, index) => {
             const label = document.querySelector(`label[for="${item.seat_name}"]`);
@@ -227,7 +219,7 @@
         // 버튼 예외처리
         const disalbledBtnFunc = () => {
             const totalCount = (headCount.adult + headCount.youth + headCount.special);
-            if (totalCount == headCount.seatCount) {
+            if (totalCount === headCount.seatCount && totalCount !== 0) {
                 choosenSeat.classList.remove("disalbledBtn");
             } else {
                 choosenSeat.classList.add("disalbledBtn");
@@ -245,7 +237,6 @@
                         youthCount.innerText = headCount.youth;
                         specialCount.innerText = headCount.special;
                         disalbledBtnFunc();
-
                     } else {
                         const idTotalLen = Number(event.target.id.length);
                         const targetId = event.target.id.slice(0, (idTotalLen - 12));
@@ -276,6 +267,9 @@
                         targetDOM.innerHTML = Number(currentValue - 1);
                         disalbledBtnFunc();
                     }
+                    // if (Number(adultCount.innerText) + Number(youthCount.innerText) + Number(specialCount.innerText) == 0) {
+                    //     disalbledBtnFunc();
+                    // }
                 }
             }
 
@@ -332,7 +326,7 @@
         }
         const response = await fetch("/select_seat", settings);
 
-        const seatData = await response.json(); // 서버 응답 처리
+        const seatData = await response.json();
         procedureSeatSelection(seatData);
         console.log("select_seat")
     })();

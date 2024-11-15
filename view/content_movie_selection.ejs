@@ -78,40 +78,6 @@
     }//$SelectionSwitcher
 
     const procedureMovieSelection = (posterMovieData, scheduleMovieData) => {
-        // const posterMovieData = [
-        //     { movie_id: 1, duration: '2시간10분', title: '플립', "img_path": 'images/플립.jpg' },
-        //     { movie_id: 2, duration: '2시간10분', title: '아바타2', "img_path": 'images/아바타물의길.jpg' },
-        //     { movie_id: 3, duration: '2시간10분', title: '블라인드', "img_path": 'images/블라인드.jpg' },
-        //     { movie_id: 4, duration: '2시간10분', title: '나 홀로 집에1', "img_path": 'images/나홀로집에.jpg' },
-        //     { movie_id: 5, duration: '2시간10분', title: '1917', "img_path": 'images/1917.jpg' },
-        //     { movie_id: 6, duration: '2시간10분', title: '반지의 제왕', "img_path": 'images/반지의제왕.jpg' },
-        // ];
-
-        // const scheduleMovieData = [
-        //     { "movie_id": 1, "duration": "1시간50분", "title": "플립", start_time: '11:00', "img_path": 'images/플립.jpg' },
-        //     { "movie_id": 1, "duration": "1시간50분", "title": "플립", start_time: '12:00', "img_path": 'images/플립.jpg' },
-        //     { "movie_id": 1, "duration": "1시간50분", "title": "플립", start_time: '13:00', "img_path": 'images/플립.jpg' },
-        //     { "movie_id": 1, "duration": "1시간50분", "title": "플립", start_time: '14:00', "img_path": 'images/플립.jpg' },
-        //     { "movie_id": 1, "duration": "1시간50분", "title": "플립", start_time: '15:00', "img_path": 'images/플립.jpg' },
-
-        //     { "movie_id": 2, "duration": "1시간50분", "title": "아바타2 : 물의 길", start_time: '11:00', "img_path": 'images/아바타물의길.jpg' },
-        //     { "movie_id": 2, "duration": "1시간50분", "title": "아바타2 : 물의 길", start_time: '12:00', "img_path": 'images/아바타물의길.jpg' },
-        //     { "movie_id": 2, "duration": "1시간50분", "title": "아바타2 : 물의 길", start_time: '13:00', "img_path": 'images/아바타물의길.jpg' },
-        //     { "movie_id": 2, "duration": "1시간50분", "title": "아바타2 : 물의 길", start_time: '14:00', "img_path": 'images/아바타물의길.jpg' },
-
-        //     { "movie_id": 3, "duration": "1시간50분", "title": "블라인드", start_time: '11:00', "img_path": 'images/블라인드.jpg' },
-        //     { "movie_id": 3, "duration": "1시간50분", "title": "블라인드", start_time: '12:00', "img_path": 'images/블라인드.jpg' },
-        //     { "movie_id": 3, "duration": "1시간50분", "title": "블라인드", start_time: '13:00', "img_path": 'images/블라인드.jpg' },
-
-        //     { "movie_id": 4, "duration": "1시간50분", "title": "나 홀로 집에1", start_time: '11:00', "img_path": 'images/나홀로집에.jpg' },
-        //     { "movie_id": 4, "duration": "1시간50분", "title": "나 홀로 집에1", start_time: '12:00', "img_path": 'images/나홀로집에.jpg' },
-
-        //     { "movie_id": 5, "duration": "1시간50분", "title": "1917", start_time: '11:00', "img_path": 'images/1917.jpg' },
-
-        //     { "movie_id": 6, "duration": "1시간50분", "title": "반지의 제왕", start_time: '11:00', "img_path": 'images/반지의제왕.jpg' },
-        //     { "movie_id": 6, "duration": "1시간50분", "title": "반지의 제왕", start_time: '11:00', "img_path": 'images/반지의제왕.jpg' },
-        //     { "movie_id": 6, "duration": "1시간50분", "title": "반지의 제왕", start_time: '11:00', "img_path": 'images/반지의제왕.jpg' },
-        // ];
 
         const posterGallery = document.getElementById("posterGallery");
 
@@ -121,7 +87,6 @@
         });
 
         const scheduleMovieObj = {};
-
         scheduleMovieData.forEach((movie) => {
             if (movie["movie_id"] in scheduleMovieObj) {
                 scheduleMovieObj[movie["movie_id"]]["start_time"].push(movie["start_time"].replace(/:\d{2}$/, ''));
@@ -135,8 +100,6 @@
         });
 
         const scheduleGalleryWrap = document.getElementById("scheduleGalleryWrap");
-        console.log(scheduleMovieObj);
-
         for (const movie_id in scheduleMovieObj) {
             const movieTitle = scheduleMovieObj[movie_id]["title"];
             const moviePoster = scheduleMovieObj[movie_id]["poster"];
@@ -145,17 +108,16 @@
                 movieTimes += `<div id="start_time_${movie_id}_${index}" value="${movieTitle}" class="timeSlot">${start_time}</div>`;
             });
             scheduleGalleryWrap.innerHTML += `
-            <section class="scheduleGallery">
-                <div id="time_${movie_id}" class="schedulePoster" style="background-image: url(${moviePoster});"></div>
-                <article class="scheduleSection">
-                    <h2 class="movietitle">${movieTitle}</h2>
-                    <div id="time_${movie_id}" class="timeContainer">
-                        ${movieTimes}
-                    </div>
-                </article>
-            </section>
-        `;
-            //document.getElementById(`poster_${movie["movie_id"]}`).style.backgroundImage = `url("${movie["img_path"]}")`;
+                <section class="scheduleGallery">
+                    <div id="time_${movie_id}" class="schedulePoster" style="background-image: url(${moviePoster});"></div>
+                    <article class="scheduleSection">
+                        <h2 class="movietitle">${movieTitle}</h2>
+                        <div id="time_${movie_id}" class="timeContainer">
+                            ${movieTimes}
+                        </div>
+                    </article>
+                </section>
+            `;
         }
 
         // 클래스 객체 생성
@@ -198,34 +160,12 @@
             ]);
             const posterMovieData = await resByPoster.json();
             const scheduleMovieData = await resBySchedule.json();
-
-            console.log(posterMovieData);
-            console.log(scheduleMovieData);
             
             procedureMovieSelection(posterMovieData, scheduleMovieData);
         } catch (err) {
             console.error(err);
         }
     })();
-
-
-    
-
-    // fetch(`/popup/popup_select_movie_time`)
-    //     .then(response => response.text())
-    //     .then(html => {
-    //         const container = document.getElementById("popupPos")
-    //         container.innerHTML = html;
-
-    //         // 동적으로 로드된 스크립트 태그 실행
-    //         const scripts = container.querySelectorAll("script");
-    //         scripts.forEach(script => {
-    //             const newScript = document.createElement("script");
-    //             newScript.text = script.text;
-    //             container.appendChild(newScript);
-    //         });
-    //         document.getElementById("popupArea").style.display = "block";
-    //     });
 </script>
 
 <style>

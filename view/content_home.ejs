@@ -15,7 +15,26 @@
         window.location.href = "/movie_selection";
     });
 
+    const runTimeSelection = async () => {
+        const displayNumber = document.getElementById("phoneNumber");
 
+        const settings = {
+            method: "POST",
+            headers: {
+                "Accept": 'application/json',
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({ checkInformation: displayNumber.value })
+        }
+        const response = await fetch("/checkUser", settings);
+        const reservedData = await response.json();
+
+        if (reservedData !== "no reservation") {
+            window.location.href = `/ticket_info?num=${displayNumber.value}`;
+        } else {
+            displayNumber.value = "잘못된 예매 번호 입니다.";
+        }
+    };
 
     document.addEventListener("DOMContentLoaded", () => {
         const returnTouchPageSecond = 15;
@@ -31,31 +50,8 @@
         const displayNumber = document.getElementById("phoneNumber");
         displayNumber.placeholder = "1234567890";
     });
-    
-    const runTimeSelection = async () => {
-        const displayNumber = document.getElementById("phoneNumber");
-        
-        const settings = {
-            method: "POST",
-            headers: {
-                "Accept": 'application/json',
-                "Content-Type": 'application/json',
-            },
-            body: JSON.stringify({ checkInformation: displayNumber.value })
-        }
-        const response = await fetch("/checkUser", settings);
-        const reservedData = await response.json();
-        console.log(reservedData)
-        //alert("?")
-        if ( reservedData !== "no reservation" ) {
-            window.location.href = `/ticket_info?num=${displayNumber.value}`;
-        } else {
-            console.log("여긴가?")
-            displayNumber.value = "잘못된 예매 번호 입니다.";
-        }
-    };
+
     checkBtn.addEventListener("click", () => {
-        //window.location.href = "/ticket_info";
         runTimeSelection();
     });
 </script>

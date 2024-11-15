@@ -26,10 +26,6 @@
     // placeholder수정
     document.getElementById('phoneNumber').placeholder = '100원부터 사용가능';
 
-    // const [pointData] = [
-    //     { user_id: 1, phone_number: "01011112222", point: 3750 }
-    // ];
-
     class PointUse {
         constructor(id) {
             this.id = id;
@@ -50,7 +46,8 @@
             this.ownedPoint = point;
             console.log(ownedPoint);
             const ownedPointArea = document.getElementById("ownedPoint");
-            ownedPointArea.value = `${this.ownedPoint}`;
+            // ownedPointArea.value = `${this.ownedPoint}`;
+            ownedPointArea.value = Number(this.ownedPoint).toLocaleString("ko-KR");
         }
 
         updatePoint() {
@@ -62,14 +59,14 @@
             const { payment_amount } = this.queryData;
             this.payment_amount = Number(payment_amount);
 
-            finalPriceArea.value = payment_amount;
+            finalPriceArea.value = this.payment_amount.toLocaleString("ko-KR");
 
             keypad.addEventListener("click", (event) => {
                 const keyValue = event.target.value;
                 if (keyValue) {
                     this.displayUsePoint(usePointArea);
 
-                    finalPriceArea.value = this.payment_amount - Number(usePointArea.value);
+                    finalPriceArea.value = (this.payment_amount - Number(usePointArea.value)).toLocaleString("ko-KR");
 
                     checkBtn.disabled = ((Number(usePointArea.value) < 100) && (Number(usePointArea.value) <= this.ownedPoint) && (Number(usePointArea.value) <= this.payment_amount));
                     this.use_point = Number(usePointArea.value);
@@ -81,11 +78,11 @@
             const displayNumber = document.getElementById("phoneNumber");
             usePointArea.value = displayNumber.value;
             if (Number(usePointArea.value) > this.ownedPoint) {
-                usePointArea.value = this.ownedPoint;
+                usePointArea.value = Number(this.ownedPoint).toLocaleString("ko-KR");
                 document.getElementById("phoneNumber").value = this.ownedPoint;
             }
             if (Number(usePointArea.value) > this.payment_amount) {
-                usePointArea.value = this.payment_amount;
+                usePointArea.value = Number(this.payment_amount).toLocaleString("ko-KR");
                 document.getElementById("phoneNumber").value = this.payment_amount;
             }
         }

@@ -84,21 +84,21 @@
             <!-- ===사이드바 영역=== -->
             <% if ( sideBar !=="" ) { %>
                 <%- include( sideBar ) %>
-                    <% } %>
-                        <!-- 페이지 콘텐츠 영역 -->
-                        <% if ( content !=="" ) { %>
-                            <%- include( content, {queryData: queryData}) %>
-                                <% } %>
+            <% } %>
+            <!-- 페이지 콘텐츠 영역 -->
+            <% if ( content !=="" ) { %>
+                <%- include( content, {queryData: queryData}) %>
+            <% } %>
 
-                                    <!-- 팝업 영역 -->
-                                    <% if ( popup !=="" ) { %>
-                                        <%- include( "popup_layout" , { popupContent: popup } ) %>
-                                            <% } %>
+            <!-- 팝업 영역 -->
+                <% if ( popup !=="" ) { %>
+                    <%- include( "popup_layout" , { popupContent: popup } ) %>
+                <% } %>
         </section>
         <!-- ===하단바 영역=== -->
         <% if ( bottomBar !=="" ) { %>
             <%- include( bottomBar ) %>
-                <% } %>
+        <% } %>
 
         <!-- /////////////////////////////////////////////////////////////////////////// -->
         <!-- 직원호출 팝업 [1021]-->

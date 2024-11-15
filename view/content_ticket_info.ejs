@@ -19,19 +19,6 @@
 <script>
     const procedureTicketInfo = (movieData) => {
         console.log(movieData)
-        // const movieData = [
-        //     {
-        //         movie_id: 1,
-        //         showtime: '11:00',
-        //         duration: '2시간 10분',
-        //         title: '플립',
-        //         ticket_count: 2,
-        //         seats: ['D09', 'D10'],
-        //         today: '2024-09-20',
-        //         img_path:
-        //             'images/베테랑.png'
-        //     }
-        // ];
 
         const [{ showtime, duration, title, ticket_count, seat_names, img_path }] = movieData;
         const date = new Date();

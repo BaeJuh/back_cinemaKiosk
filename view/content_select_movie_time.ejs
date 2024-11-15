@@ -15,18 +15,13 @@
 
 <!-- ==script== -->
 <script>
-    //const mvTime = document.getElementById("mvTime");
     class Select_movie_Time {
         constructor(id) {
             this.id = id;
-            //this.DBData = null;
         }
 
         getData() {
             this.queryData = <%- JSON.stringify(queryData) %>;
-            //this.DBData = {};
-            //console.log(this.queryData);
-
         }
 
         processData(movieTimeData = []) { // DB데이터 가공
@@ -50,10 +45,6 @@
                     }];
                 }
             });
-
-            //console.log(movieDataObj);
-
-
             return movieDataObj;
         }
 
@@ -68,21 +59,6 @@
             const [durationHour, druationMinute] = this.minuteToHour(movieDataObj["duration"]).split(":");
             mvTime.innerText = `${durationHour}시간 ${druationMinute}분`;
 
-            // movieDataObj["slot"].forEach((slot, index) => {
-            //     allMvTime.innerHTML += slot["reservable"] ? `
-            //             <li class="mvTimeList" id="list0${index + 1}">
-            //                 <p class="theater">${slot["theater_name"]}관</p>
-            //                 <p class="startAndEndTime">${slot["start_time"]}</p>
-            //                 <p class="startAndEndTime">~${this.getEndtime(slot["start_time"], movieDataObj["duration"])}</p>
-            //             </li>
-            //         ` : `
-            //             <li class="mvTimeList blockClick" id="list0${index + 1}">
-            //                 <p class="theater">${slot["theater_name"]}관</p>
-            //                 <p class="startAndEndTime">${slot["start_time"]}</p>
-            //                 <p class="startAndEndTime">~${this.getEndtime(slot["start_time"], movieDataObj["duration"])}</p>
-            //             </li>
-            //         `;
-            // });
             movieDataObj["slot"].forEach((slot, index) => {
                 allMvTime.innerHTML += slot["reservable"] ? `
                         <li class="mvTimeList" id="list0${index + 1}">
@@ -126,8 +102,6 @@
             const mvTimeList = document.querySelectorAll(".mvTimeList");
             const timeSelectionBtn = document.getElementById("timeSelectionCompleteBtn");
 
-            //const movieData = {};
-
             mvTimeList.forEach((item) => {
                 // click event : 클릭된 item -> movieData 값 할당 //
                 item.addEventListener("click", (event) => {
@@ -135,11 +109,6 @@
 
                     const [theaterInfo, startTimeInfo, endTimeInfo] = paragraphs;
 
-                    // movieData["name"] = document.getElementById("mvName").innerText;
-                    // movieData["theater"] = theaterInfo.innerText;
-                    // movieData["startTime"] = startTimeInfo.innerText;
-                    // movieData["endTime"] = endTimeInfo.innerText.slice(1);
-                    // console.log(movieData);
                     this.queryData["theater_name"] = theaterInfo.innerText;
                     this.queryData["startTime"] = startTimeInfo.innerText;
                     this.queryData["endTime"] = endTimeInfo.innerText.slice(1);
@@ -153,7 +122,6 @@
                 });
             });
 
-            //this.goWithQuery(movieData);
             this.goWithQuery(this.queryData);
         }
 
@@ -184,18 +152,6 @@
         }
     }
 
-    // const movieTimeData = [
-    //     { "movie_id": 1, "duration": 110, "title": "플립", showtime: '11:00', theater: 'A관', img_path: 'images/플립.jpg' },
-    //     { "movie_id": 1, "duration": 110, "title": "플립", showtime: '12:00', theater: 'B관', img_path: 'images/플립.jpg' },
-    //     { "movie_id": 1, "duration": 110, "title": "플립", showtime: '13:00', theater: 'C관', img_path: 'images/플립.jpg' },
-    //     { "movie_id": 1, "duration": 110, "title": "플립", showtime: '14:00', theater: 'D관', img_path: 'images/플립.jpg' },
-    //     { "movie_id": 1, "duration": 110, "title": "플립", showtime: '15:00', theater: 'A관', img_path: 'images/플립.jpg' },
-    //     { "movie_id": 1, "duration": 110, "title": "플립", showtime: '20:00', theater: 'B관', img_path: 'images/플립.jpg' },
-    //     { "movie_id": 1, "duration": 110, "title": "플립", showtime: '21:00', theater: 'C관', img_path: 'images/플립.jpg' },
-    //     { "movie_id": 1, "duration": 110, "title": "플립", showtime: '22:00', theater: 'D관', img_path: 'images/플립.jpg' }
-    // ];
-
-    // <%- JSON.stringify(queryData) %>;
     const runTimeSelection = (async () => {
         const settings = {
             method: "POST",
@@ -208,9 +164,9 @@
         const response = await fetch("/select_movie_time", settings);
 
         const movieTimeData = await response.json(); // 서버 응답 처리
+        
         const page = new Select_movie_Time("select_movie_time_popup");
         page.controller(movieTimeData);
-        console.log(movieTimeData)
     })();
 
 </script>

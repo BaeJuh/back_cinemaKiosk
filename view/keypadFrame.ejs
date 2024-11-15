@@ -16,7 +16,9 @@
     <button type="button" class="key delete" value="delete"><i class="fa-solid fa-delete-left"></i></button>
     <button type="button" class="key" value="0">0</button>
     <button type="button" class="key" value="reset">재입력</button>
-    <button type="submit" id="checkBtn" class="check" disabled>확인</button>
+    <button type="submit" id="checkBtn" class="check" disabled>
+        확인
+    </button>
 </section>
 
 <script>
@@ -91,7 +93,7 @@
                             }
                             break;
                         default:
-                            ( e.target.id === "" ) && (numberDeque.pushData(keyValue));
+                            (e.target.id === "") && (numberDeque.pushData(keyValue));
                     }
                 }
 
